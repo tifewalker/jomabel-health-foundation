@@ -1,159 +1,155 @@
-import React from "react";
-import {
-  Heart,
-  Stethoscope,
-  Award,
-  Users,
-  Phone,
-  ArrowRight,
-} from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-import droneVideo from "../../assests/images/drone.mp4";
-import floatingDoctor from "../../assests/images/young-african-american-male-doctor-white-coat-with-stethoscope-posed-outdoor.jpg";
+import heroImage1 from "../../assests/images/imag1.png";
+import heroImage2 from "../../assests/images/img2.png";
+import heroImage3 from "../../assests/images/img3.png";
 
 const Hero = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const slides = [
+    { type: "image", src: heroImage1, alt: "Medical Center Building" },
+    { type: "image", src: heroImage2, alt: "Community Healthcare" },
+    { type: "image", src: heroImage3, alt: "Medical Training" },
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [slides.length]);
+
+  const goToSlide = (index: number): void => setCurrentSlide(index);
+  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
+  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+
   return (
-    <>
-      {/* HERO SECTION */}
-      <section className="relative min-h-screen bg-gradient-to-br from-blue-50 via-white to-teal-50 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 py-16 md:py-24">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            
-            {/* LEFT COLUMN */}
-            <div className="z-10 space-y-6">
-              <p className="text-blue-900 font-semibold tracking-wide text-sm uppercase">
-                JoMabel Healthcare Foundation USA Inc.
-              </p>
+    <section className="relative h-screen overflow-hidden">
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight">
-                Advanced Medicine.
-                <br />
-                <span className="text-blue-900">Compassionate Care.</span>
-              </h1>
-
-              <p className="text-lg text-gray-700 leading-relaxed max-w-xl">
-                Healing Lives. Empowering Communities. Transforming Futures.
-                Our mission is to provide compassionate medical care and empower
-                underserved communities with life-changing opportunities.
-              </p>
-
-              {/* CTA BUTTONS */}
-              <div className="flex flex-wrap gap-4 pt-4">
-                <button className="bg-teal-500 hover:bg-teal-600 text-white px-6 py-3.5 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl hover:scale-105">
-                  <Phone className="w-5 h-5" />
-                  Call Us Today: 888-123-4097
-                </button>
-
-                <button className="bg-blue-900 hover:bg-blue-800 text-white px-6 py-3.5 rounded-lg font-semibold transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl hover:scale-105">
-                  Appointment
-                  <ArrowRight className="w-5 h-5" />
-                </button>
-              </div>
-            </div>
-
-            {/* RIGHT COLUMN – VIDEO WITH OVERLAY */}
-            <div className="relative flex justify-center items-center">
-              {/* Main video container */}
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                <video
-                  src={droneVideo}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-[500px] md:h-[600px] object-cover"
-                />
-                
-                {/* Optional: Subtle gradient overlay for better text readability if you add text on video */}
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/30 to-transparent pointer-events-none"></div>
-              </div>
-
-              {/* Floating doctor image overlay */}
-              <div className="absolute -bottom-10 -left-10 hidden lg:block">
-                <img
-                  src={floatingDoctor}
-                  alt="Doctor"
-                  className="w-48 h-64 object-cover rounded-2xl shadow-2xl border-4 border-white"
-                />
-              </div>
-
-              {/* Decorative elements */}
-              <div className="absolute -z-10 -top-8 -right-8 w-72 h-72 bg-teal-100 rounded-full opacity-40 blur-3xl"></div>
-              <div className="absolute -z-10 -bottom-8 -left-8 w-64 h-64 bg-blue-100 rounded-full opacity-40 blur-3xl"></div>
-            </div>
+      {/* Background Image Slider */}
+      <div className="absolute inset-0">
+        {slides.map((slide, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
+              index === currentSlide ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <img
+              src={slide.src}
+              alt={slide.alt}
+              className="w-full h-full object-cover object-center"
+            />
           </div>
-        </div>
+        ))}
+        {/* Dark gradient overlay — heavier on left for text legibility */}
+        <div className="absolute inset-0" style={{
+          background: "linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.15) 100%)"
+        }} />
+      </div>
 
-        {/* Curved transition to stats section */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-blue-900" 
-             style={{clipPath: "ellipse(100% 100% at 50% 100%)"}}></div>
-      </section>
+      {/* Navigation Arrows */}
+      <button
+        onClick={prevSlide}
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover:bg-white/25 text-white p-2 rounded-full backdrop-blur-sm transition-all"
+        aria-label="Previous slide"
+      >
+        <ChevronLeft className="w-6 h-6" />
+      </button>
+      <button
+        onClick={nextSlide}
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover:bg-white/25 text-white p-2 rounded-full backdrop-blur-sm transition-all"
+        aria-label="Next slide"
+      >
+        <ChevronRight className="w-6 h-6" />
+      </button>
 
-      {/* STATS SECTION */}
-      <section className="bg-blue-900 text-white py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          
-          {/* Header */}
-          <div className="grid md:grid-cols-2 gap-8 mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold leading-tight">
-              Our Only Priority Is To Keep
-              <br />
-              You Healthy
-            </h2>
+      {/* Slide Indicators */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
+        {slides.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === currentSlide ? "w-8 bg-white" : "w-2 bg-white/40 hover:bg-white/70"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+      </div>
 
-            <p className="text-gray-300 text-lg leading-relaxed flex items-center">
-              Stay updated with the latest news from JoMabel, along with impactful
-              medical developments and global healthcare trends. Designed to deliver
-              premier and compassionate care.
+      {/* Content — top-left aligned, matching image */}
+      <div className="relative z-10 h-full flex items-start pt-16 md:pt-20">
+        <div className="w-full px-6 sm:px-10 lg:px-14 text-white">
+          <div className="max-w-2xl">
+
+            {/* Foundation name — bold, small caps, white */}
+            <p
+              className="font-bold text-white mb-5"
+              style={{ fontSize: '13px', letterSpacing: '0.15em' }}
+            >
+              JOMABEL HEALTHCARE FOUNDATION
             </p>
-          </div>
 
-          {/* STATS GRID */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            
-            {/* Stat 1 */}
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-8 rounded-2xl text-center hover:bg-white/20 transition-all duration-300 hover:scale-105">
-              <div className="w-16 h-16 bg-teal-400/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="w-8 h-8 text-teal-400" />
-              </div>
-              <div className="text-5xl font-bold text-teal-400 mb-2">16K+</div>
-              <p className="text-gray-200 font-medium">Square Meters</p>
-              <p className="text-gray-300 text-sm">Medical Campus</p>
+            {/* Main headline — large, bold, wide tracking like the image */}
+           <h1
+  className="font-bold text-white mb-5 leading-tight"
+  style={{
+    fontSize: 'clamp(28px, 4vw, 56px)',
+    letterSpacing: '0.04em',
+    whiteSpace: 'nowrap',
+  }}
+>
+  Building a World-Class<br />
+  Community Medical &<br />
+  Training Center
+</h1>
+
+            {/* Tagline with pipe separators */}
+            <p className="text-gray-200 mb-5" style={{ fontSize: '15px' }}>
+              Transforming Healthcare in Nigeria
+              <span className="mx-2">|</span>
+              Powered by Compassion
+              <span className="mx-2">|</span>
+              Designed for Generational Impact
+            </p>
+
+            {/* Description */}
+            <p className="text-gray-300 mb-10 leading-relaxed" style={{ fontSize: '15px', maxWidth: '520px' }}>
+              A Texas-based non-profit organisation developing a 16,000+ Square
+              meter medical and training campus in Ufuma, Anambra State, Nigeria.
+            </p>
+
+            {/* CTA Buttons — green + blue as in the image */}
+            <div className="flex flex-wrap gap-4">
+              <button
+                className="font-semibold px-7 py-3 rounded transition-all duration-200 hover:opacity-90 hover:scale-105"
+                style={{
+                  backgroundColor: '#22c55e',
+                  color: '#ffffff',
+                  fontSize: '15px',
+                }}
+              >
+                Join The Campaign
+              </button>
+              <button
+                className="font-semibold px-7 py-3 rounded transition-all duration-200 hover:opacity-90 hover:scale-105"
+                style={{
+                  backgroundColor: '#2563eb',
+                  color: '#ffffff',
+                  fontSize: '15px',
+                }}
+              >
+                Learn Our Story
+              </button>
             </div>
 
-            {/* Stat 2 */}
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-8 rounded-2xl text-center hover:bg-white/20 transition-all duration-300 hover:scale-105">
-              <div className="w-16 h-16 bg-teal-400/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Stethoscope className="w-8 h-8 text-teal-400" />
-              </div>
-              <div className="text-5xl font-bold text-teal-400 mb-2">100+</div>
-              <p className="text-gray-200 font-medium">Healthcare</p>
-              <p className="text-gray-300 text-sm">Professionals Trained</p>
-            </div>
-
-            {/* Stat 3 */}
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-8 rounded-2xl text-center hover:bg-white/20 transition-all duration-300 hover:scale-105">
-              <div className="w-16 h-16 bg-teal-400/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-teal-400" />
-              </div>
-              <div className="text-5xl font-bold text-teal-400 mb-2">5K+</div>
-              <p className="text-gray-200 font-medium">Community Members</p>
-              <p className="text-gray-300 text-sm">Served Annually</p>
-            </div>
-
-            {/* Stat 4 */}
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 p-8 rounded-2xl text-center hover:bg-white/20 transition-all duration-300 hover:scale-105">
-              <div className="w-16 h-16 bg-teal-400/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Award className="w-8 h-8 text-teal-400" />
-              </div>
-              <div className="text-5xl font-bold text-teal-400 mb-2">50+</div>
-              <p className="text-gray-200 font-medium">Youth Empowered</p>
-              <p className="text-gray-300 text-sm">Through Skills Training</p>
-            </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 };
 

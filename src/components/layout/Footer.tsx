@@ -1,177 +1,198 @@
-import React, { useState } from 'react';
-import { Heart, Facebook, Twitter, Linkedin, Mail, Phone, MapPin, Send } from 'lucide-react';
+import React from 'react';
+import { Facebook, Linkedin, Twitter } from 'lucide-react';
+import logo from '../../assests/images/logo.jpeg';
 
 const Footer = () => {
-  const [email, setEmail] = useState('');
-
-  const handleSubscribe = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    console.log('Subscribing:', email);
-    setEmail('');
-  };
-
   return (
-    <footer className="bg-blue-950 text-gray-300">
-      {/* Newsletter Section */}
-      <div className="bg-blue-900 py-6 px-4">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-          <div className="flex items-start gap-4">
-            <div className="bg-blue-800 rounded-full p-3 flex-shrink-0">
-              <Send className="w-5 h-5 sm:w-6 sm:h-6 text-teal-400" />
+    <footer style={{ fontFamily: "'Inter', 'Segoe UI', sans-serif" }}>
+
+      {/* Main Footer — dark green */}
+      <div style={{
+        backgroundColor: '#14532d',
+        padding: '48px 48px 40px',
+      }}>
+        <div style={{
+          maxWidth: '1080px',
+          margin: '0 auto',
+          display: 'grid',
+          gridTemplateColumns: '1.4fr 1fr 1.2fr 1fr 0.8fr',
+          gap: '32px',
+          alignItems: 'start',
+        }}>
+
+          {/* Col 1: Logo + About */}
+          <div>
+            <div style={{
+              backgroundColor: '#ffffff',
+              borderRadius: '8px',
+              padding: '6px',
+              display: 'inline-block',
+              marginBottom: '16px',
+            }}>
+              <img
+                src={logo}
+                alt="JoMabel"
+                style={{ height: '56px', width: 'auto', display: 'block' }}
+              />
             </div>
-            <div>
-              <h3 className="text-white font-bold text-lg sm:text-xl">Important Updates Waiting For You</h3>
-              <p className="text-gray-300 text-xs sm:text-sm mt-1">Stay informed about our healthcare initiatives and community programs.</p>
+            <p style={{
+              color: '#d1fae5',
+              fontSize: '12.5px',
+              lineHeight: '1.7',
+              margin: 0,
+            }}>
+              "JoMabel Healthcare Foundation USA Inc. is a faith-guided, U.S.-based nonprofit developing a world-class medical and healthcare training campus in Nigeria."
+            </p>
+          </div>
+
+          {/* Col 2: Quick Links */}
+          <div>
+            <h4 style={{ color: '#ffffff', fontSize: '15px', fontWeight: '700', marginBottom: '16px' }}>
+              Quick Links
+            </h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {['About Us', 'Programs', 'Capital Campaign', 'Gallery', 'FAQ'].map((item) => (
+                <li key={item}>
+                  <a href="#" style={{ color: '#bbf7d0', fontSize: '13px', textDecoration: 'none' }}
+                    onMouseOver={e => e.currentTarget.style.color = '#ffffff'}
+                    onMouseOut={e => e.currentTarget.style.color = '#bbf7d0'}
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Col 3: Programs */}
+          <div>
+            <h4 style={{ color: '#ffffff', fontSize: '15px', fontWeight: '700', marginBottom: '16px' }}>
+              Programs
+            </h4>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {['Medical Center', 'Skills Center', 'Outreach Mission', 'Maternal Health', 'Health Education', 'Infrastructure'].map((item) => (
+                <li key={item}>
+                  <a href="#" style={{ color: '#bbf7d0', fontSize: '13px', textDecoration: 'none' }}
+                    onMouseOver={e => e.currentTarget.style.color = '#ffffff'}
+                    onMouseOut={e => e.currentTarget.style.color = '#bbf7d0'}
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Col 4: Contacts */}
+          <div>
+            <h4 style={{ color: '#ffffff', fontSize: '15px', fontWeight: '700', marginBottom: '16px' }}>
+              Contacts
+            </h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {['info@jomabel.org', 'support@jomabel.org', 'donation@jomabel.org'].map((email) => (
+                <a key={email} href={`mailto:${email}`}
+                  style={{ color: '#bbf7d0', fontSize: '13px', textDecoration: 'none' }}
+                  onMouseOver={e => e.currentTarget.style.color = '#ffffff'}
+                  onMouseOut={e => e.currentTarget.style.color = '#bbf7d0'}
+                >
+                  {email}
+                </a>
+              ))}
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-2 w-full lg:w-auto">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Your Email Address"
-              className="px-4 sm:px-6 py-2 sm:py-3 rounded-full w-full sm:w-64 lg:w-80 text-gray-800 focus:outline-none focus:ring-2 focus:ring-teal-400 text-sm"
-            />
-            <button
-              onClick={handleSubscribe}
-              className="bg-teal-400 hover:bg-teal-500 text-white px-6 sm:px-8 py-2 sm:py-3 rounded-full font-semibold transition text-sm whitespace-nowrap"
+
+          {/* Col 5: Donate Now button */}
+          <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-start', paddingTop: '4px' }}>
+            <a
+              href="#donate"
+              style={{
+                backgroundColor: '#ffffff',
+                color: '#14532d',
+                fontWeight: '700',
+                fontSize: '14px',
+                padding: '10px 24px',
+                borderRadius: '6px',
+                textDecoration: 'none',
+                whiteSpace: 'nowrap',
+                display: 'inline-block',
+              }}
+              onMouseOver={e => e.currentTarget.style.backgroundColor = '#f0fdf4'}
+              onMouseOut={e => e.currentTarget.style.backgroundColor = '#ffffff'}
             >
-              Subscribe Now
-            </button>
+              Donate Now
+            </a>
           </div>
         </div>
       </div>
 
-      {/* Main Footer Content */}
-      <div className="max-w-7xl mx-auto py-8 sm:py-12 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {/* About Section */}
-        <div className="sm:col-span-2 lg:col-span-1">
-          <div className="flex items-center gap-2 mb-4">
-            <Heart className="w-7 h-7 sm:w-8 sm:h-8 text-teal-400" fill="currentColor" />
-            <div>
-              <h3 className="text-white font-bold text-lg sm:text-xl">JOMABEL</h3>
-              <p className="text-teal-400 text-xs">Revitalize Your Health</p>
-            </div>
-          </div>
-          <p className="text-gray-400 mb-6 text-sm leading-relaxed">
-            Building a healthier, stronger, and more prosperous future—one community at a time through affordable healthcare and support.
+      {/* Divider */}
+      <div style={{ backgroundColor: '#166534', height: '1px' }} />
+
+      {/* Bottom bar */}
+      <div style={{
+        backgroundColor: '#14532d',
+        padding: '18px 48px',
+        borderTop: '1px solid rgba(255,255,255,0.1)',
+      }}>
+        <div style={{
+          maxWidth: '1080px',
+          margin: '0 auto',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '12px',
+        }}>
+          {/* Copyright */}
+          <p style={{ color: '#bbf7d0', fontSize: '12.5px', margin: 0 }}>
+            © JOMABEL. HEALTHCARE FOUNDATION!
           </p>
-          <div className="flex gap-3">
-            <div className="bg-blue-900 hover:bg-teal-400 p-2 rounded-full cursor-pointer transition">
-              <Linkedin className="w-5 h-5 text-white" />
-            </div>
-            <div className="bg-blue-900 hover:bg-teal-400 p-2 rounded-full cursor-pointer transition">
-              <Facebook className="w-5 h-5 text-white" />
-            </div>
-            <div className="bg-blue-900 hover:bg-teal-400 p-2 rounded-full cursor-pointer transition">
-              <Twitter className="w-5 h-5 text-white" />
-            </div>
-          </div>
-        </div>
 
-        {/* Our Services */}
-        <div>
-          <h4 className="text-white font-bold text-base sm:text-lg mb-4">Our Services</h4>
-          <ul className="space-y-3">
-            <li>
-              <a href="#health-education" className="text-gray-400 hover:text-teal-400 transition text-sm block">
-                Health Education Programs
-              </a>
-            </li>
-            <li>
-              <a href="#community-outreach" className="text-gray-400 hover:text-teal-400 transition text-sm block">
-                Community Outreach
-              </a>
-            </li>
-            <li>
-              <a href="#wellness-screenings" className="text-gray-400 hover:text-teal-400 transition text-sm block">
-                Wellness Screenings
-              </a>
-            </li>
-            <li>
-              <a href="#support-services" className="text-gray-400 hover:text-teal-400 transition text-sm block">
-                Support Services
-              </a>
-            </li>
-          </ul>
-        </div>
+          {/* Follow us + icons */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{ color: '#bbf7d0', fontSize: '13px' }}>Follow us:</span>
 
-        {/* Quick Links */}
-        <div>
-          <h4 className="text-white font-bold text-base sm:text-lg mb-4">Quick Links</h4>
-          <ul className="space-y-3">
-            <li>
-              <a href="#about" className="text-gray-400 hover:text-teal-400 transition text-sm block">
-                About Us
-              </a>
-            </li>
-            <li>
-              <a href="#contact" className="text-gray-400 hover:text-teal-400 transition text-sm block">
-                Contact
-              </a>
-            </li>
-            <li>
-              <a href="#volunteer" className="text-gray-400 hover:text-teal-400 transition text-sm block">
-                Volunteer
-              </a>
-            </li>
-            <li>
-              <a href="#donate" className="text-gray-400 hover:text-teal-400 transition text-sm block">
-                Donate
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        {/* Contact Us */}
-        <div className="sm:col-span-2 lg:col-span-1">
-          <h4 className="text-white font-bold text-base sm:text-lg mb-4">Contact Us</h4>
-          <div className="space-y-4">
-            <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-teal-400 mt-1 flex-shrink-0" />
-              <p className="text-gray-400 text-sm">
-                725 Pinnacle View Drive,<br />Georgetown, TX 78628
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <Phone className="w-5 h-5 text-teal-400 flex-shrink-0" />
-              <a href="tel:+15551234567" className="text-gray-400 hover:text-teal-400 transition text-sm">
-                +1 (555) 123-4567
-              </a>
-            </div>
-            <div className="flex items-center gap-3">
-              <Mail className="w-5 h-5 text-teal-400 flex-shrink-0" />
-              <a href="mailto:info@jomabelhealth.org" className="text-gray-400 hover:text-teal-400 transition text-sm break-all">
-                info@jomabelhealth.org
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Bar */}
-      <div className="border-t border-blue-900">
-        <div className="max-w-7xl mx-auto py-6 px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-          <p className="text-gray-400 text-center md:text-left text-xs sm:text-sm">
-            Copyright © 2024 JoMabel Healthcare Foundation USA Inc. All rights reserved.
-          </p>
-          <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-gray-400 text-xs sm:text-sm">
-            <a href="#social" className="hover:text-teal-400 transition whitespace-nowrap">
-              Visit us on social networks
+            {/* Threads */}
+            <a href="#" style={iconStyle} onMouseOver={e => e.currentTarget.style.backgroundColor = '#22c55e'} onMouseOut={e => e.currentTarget.style.backgroundColor = '#ffffff'}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#111827">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+              </svg>
             </a>
-            <span className="hidden sm:inline">|</span>
-            <a href="#terms" className="hover:text-teal-400 transition whitespace-nowrap">
-              Terms and Conditions
+
+            {/* X / Twitter */}
+            <a href="#" style={iconStyle} onMouseOver={e => e.currentTarget.style.backgroundColor = '#22c55e'} onMouseOut={e => e.currentTarget.style.backgroundColor = '#ffffff'}>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="#111827">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L2.25 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
+              </svg>
             </a>
-            <span className="hidden sm:inline">|</span>
-            <a href="#privacy" className="hover:text-teal-400 transition whitespace-nowrap">
-              Privacy Policy
+
+            {/* LinkedIn */}
+            <a href="#" style={iconStyle} onMouseOver={e => e.currentTarget.style.backgroundColor = '#22c55e'} onMouseOut={e => e.currentTarget.style.backgroundColor = '#ffffff'}>
+              <Linkedin size={15} color="#111827" />
+            </a>
+
+            {/* Facebook */}
+            <a href="#" style={iconStyle} onMouseOver={e => e.currentTarget.style.backgroundColor = '#22c55e'} onMouseOut={e => e.currentTarget.style.backgroundColor = '#ffffff'}>
+              <Facebook size={15} color="#111827" />
             </a>
           </div>
         </div>
       </div>
     </footer>
   );
+};
+
+const iconStyle = {
+  width: '32px',
+  height: '32px',
+  borderRadius: '50%',
+  backgroundColor: '#ffffff',
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  textDecoration: 'none',
+  transition: 'background-color 0.2s',
+  cursor: 'pointer',
 };
 
 export default Footer;

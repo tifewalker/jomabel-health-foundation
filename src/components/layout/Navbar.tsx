@@ -1,149 +1,102 @@
 import React, { useState } from 'react';
-import { Heart, Search, ChevronDown, Plus, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import logo from '../../assests/images/logo.jpeg';
 
-const Navbar = () => {
-  const [activeMenu, setActiveMenu] = useState('home');
+const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeMenu, setActiveMenu] = useState('home');
+
+  const menuItems = [
+    { id: 'home',        label: 'Home',        href: '#home' },
+    { id: 'programs',    label: 'Programs',    href: '#programs' },
+    { id: 'campaign',    label: 'Campaign',    href: '#campaign' },
+    { id: 'testimonies', label: 'Testimonies', href: '#testimonies' },
+    { id: 'about',       label: 'About Us',    href: '#about' },
+  ];
 
   return (
-    <nav className="bg-blue-950 py-4 px-4 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        {/* Logo */}
-        <div className="flex items-center gap-3">
-          <div className="bg-white rounded-lg p-2">
-            <Heart className="w-6 h-6 sm:w-8 sm:h-8 text-teal-400" fill="currentColor" />
-          </div>
-          <div className="text-white">
-            <div className="text-xl sm:text-2xl font-bold tracking-wide">JOMABEL</div>
-            <div className="text-xs text-teal-400 -mt-1">Revitalize Your Health</div>
-          </div>
-        </div>
+    <header className="w-full bg-white shadow-sm sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20 md:h-24">
 
-        {/* Desktop Navigation Menu */}
-        <div className="hidden lg:flex items-center gap-8 text-white">
-          <a 
-            href="#home" 
-            className={`flex items-center gap-1 font-medium hover:text-teal-400 transition ${activeMenu === 'home' ? 'text-teal-400' : ''}`}
-            onClick={() => setActiveMenu('home')}
-          >
-            HOME
+          {/* Logo */}
+          <a href="#home" onClick={() => setActiveMenu('home')} className="flex-shrink-0">
+            <img
+              src={logo}
+              alt="JoMabel Healthcare Foundation"
+              className="h-16 md:h-20 w-auto object-contain"
+            />
           </a>
-          <a 
-            href="#pages" 
-            className="flex items-center gap-1 font-medium hover:text-teal-400 transition"
-          >
-            ABOUT
-          </a>
-          <a 
-            href="#services" 
-            className="flex items-center gap-1 font-medium hover:text-teal-400 transition"
-          >
-            SERVICES
-            <ChevronDown className="w-4 h-4" />
-          </a>
-          <a 
-            href="#involved" 
-            className="flex items-center gap-1 font-medium hover:text-teal-400 transition"
-          >
-            GET INVOLVED
-          </a>
-          <a 
-            href="#blog" 
-            className="flex items-center gap-1 font-medium hover:text-teal-400 transition"
-          >
-            BLOG
-          </a>
-        </div>
 
-        {/* Desktop Right Side Actions */}
-        <div className="hidden md:flex items-center gap-3 lg:gap-4">
-          <button className="bg-blue-900 hover:bg-blue-800 p-2 lg:p-3 rounded-full transition">
-            <Search className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
-          </button>
-          <button className="bg-white hover:bg-gray-100 text-blue-950 px-4 py-2 lg:px-6 lg:py-3 rounded-full font-semibold flex items-center gap-2 transition text-sm lg:text-base">
-            Appointment
-            <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M10 3l7 7-7 7V3z" />
-            </svg>
-          </button>
-          <button className="bg-red-500 hover:bg-red-600 p-2 lg:p-3 rounded-full transition">
-            <Plus className="w-4 h-4 lg:w-5 lg:h-5 text-white" />
+          {/* Desktop Navigation — centered */}
+          <nav className="hidden md:flex items-center space-x-8">
+            {menuItems.map((item) => (
+              <a
+                key={item.id}
+                href={item.href}
+                onClick={() => setActiveMenu(item.id)}
+                className="relative text-sm font-medium transition-colors pb-1"
+                style={{
+                  color: activeMenu === item.id ? '#22c55e' : '#374151',
+                  borderBottom: activeMenu === item.id ? '2px solid #22c55e' : '2px solid transparent',
+                }}
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+
+          {/* Donate Now Button */}
+          <a
+            href="#donate"
+            onClick={() => setActiveMenu('donate')}
+            className="hidden md:inline-block px-6 py-2.5 text-sm font-semibold text-white rounded-md transition-all hover:opacity-90 hover:scale-105"
+            style={{ backgroundColor: '#22c55e' }}
+          >
+            Donate Now
+          </a>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden text-white p-2"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-      </div>
-
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="md:hidden mt-4 pb-4 border-t border-blue-900">
-          <div className="flex flex-col gap-4 mt-4 text-white">
-            <a 
-              href="#home" 
-              className={`flex items-center gap-1 font-medium hover:text-teal-400 transition px-2 py-2 ${activeMenu === 'home' ? 'text-teal-400 bg-blue-900 rounded-lg' : ''}`}
-              onClick={() => {
-                setActiveMenu('home');
-                setMobileMenuOpen(false);
-              }}
-            >
-              HOME
-            </a>
-            <a 
-              href="#pages" 
-              className="flex items-center gap-1 font-medium hover:text-teal-400 transition px-2 py-2"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              ABOUT
-            </a>
-            <a 
-              href="#services" 
-              className="flex items-center gap-1 font-medium hover:text-teal-400 transition px-2 py-2"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              SERVICES
-              <ChevronDown className="w-4 h-4" />
-            </a>
-            <a 
-              href="#involved" 
-              className="flex items-center gap-1 font-medium hover:text-teal-400 transition px-2 py-2"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              GET INVOLVED
-            </a>
-            <a 
-              href="#blog" 
-              className="flex items-center gap-1 font-medium hover:text-teal-400 transition px-2 py-2"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              BLOG
-            </a>
-
-            {/* Mobile Actions */}
-            <div className="flex items-center gap-3 mt-4 px-2">
-              <button className="bg-blue-900 hover:bg-blue-800 p-3 rounded-full transition">
-                <Search className="w-5 h-5 text-white" />
-              </button>
-              <button className="bg-white hover:bg-gray-100 text-blue-950 px-6 py-3 rounded-full font-semibold flex items-center gap-2 transition flex-1 justify-center">
-                Appointment
-                <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor">
-                  <path d="M10 3l7 7-7 7V3z" />
-                </svg>
-              </button>
-              <button className="bg-red-500 hover:bg-red-600 p-3 rounded-full transition">
-                <Plus className="w-5 h-5 text-white" />
-              </button>
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden py-4 border-t border-gray-100">
+            <div className="flex flex-col space-y-1">
+              {menuItems.map((item) => (
+                <a
+                  key={item.id}
+                  href={item.href}
+                  onClick={() => { setActiveMenu(item.id); setMobileMenuOpen(false); }}
+                  className="px-4 py-3 text-sm font-medium rounded-lg"
+                  style={{
+                    color: activeMenu === item.id ? '#22c55e' : '#374151',
+                    backgroundColor: activeMenu === item.id ? '#f0fdf4' : 'transparent',
+                  }}
+                >
+                  {item.label}
+                </a>
+              ))}
+              <a
+                href="#donate"
+                onClick={() => { setActiveMenu('donate'); setMobileMenuOpen(false); }}
+                className="mx-4 mt-3 px-5 py-3 text-sm font-semibold text-center text-white rounded-md"
+                style={{ backgroundColor: '#22c55e' }}
+              >
+                Donate Now
+              </a>
             </div>
           </div>
-        </div>
-      )}
-    </nav>
+        )}
+      </div>
+    </header>
   );
 };
 
-export default Navbar;
+export default Header;
