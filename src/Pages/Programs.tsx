@@ -4,6 +4,9 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import RecentProjects from '../components/sections/RecentProjects';
 import CampaignBanner from '../components/sections/CampaignBanner';
+import logo2 from '../assests/images/logo2.png';
+import logo3 from '../assests/images/logo3.png'; 
+
 
 // ─── ICONS ───────────────────────────────────────────────────────────────────
 const StethoscopeIcon = () => (
@@ -102,49 +105,63 @@ const ProgramsOverview = () => (
     <div style={{ maxWidth: '1080px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px' }}>
 
       {/* Row 1 — two large feature cards */}
-      <div className="programs-feature-row">
-        {/* Medical Center — green */}
-        <div style={{ backgroundColor: '#16a34a', borderRadius: '16px', overflow: 'hidden', padding: '28px 28px 0' }}>
-          <div style={{ backgroundColor: '#ffffff', borderRadius: '10px', padding: '16px 20px', marginBottom: '16px', display: 'inline-flex', alignItems: 'center', gap: '12px' }}>
-            <img src="https://via.placeholder.com/32x32/16a34a/ffffff?text=+" alt="" style={{ width: '32px' }} />
-            <div>
-              <p style={{ fontSize: '13px', fontWeight: '800', color: '#16a34a', margin: 0 }}>JoMabel</p>
-              <p style={{ fontSize: '10px', color: '#6b7280', margin: 0 }}>MEDICAL CENTER</p>
-            </div>
-          </div>
-          <div style={{ borderRadius: '10px 10px 0 0', overflow: 'hidden', marginTop: '8px' }}>
-            <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&q=80" alt="Medical Center"
-              style={{ width: '100%', height: '200px', objectFit: 'cover', display: 'block' }} />
-          </div>
-          <div style={{ padding: '20px 0 24px' }}>
-            <p style={{ color: '#d1fae5', fontSize: '13.5px', lineHeight: '1.6', marginBottom: '12px' }}>
-              A growing hub for primary care, diagnostics, maternal health services and healthcare workforce training.
-            </p>
-            <a href="#" style={{ color: '#ffffff', fontSize: '13px', fontWeight: '700', textDecoration: 'none' }}>Learn More →</a>
-          </div>
-        </div>
+     <div className="programs-feature-row">
+  {/* Medical Center — green */}
+ <div style={{ backgroundColor: '#16a34a', borderRadius: '16px', overflow: 'hidden', padding: '28px 28px 0' }}>
+  <div style={{ 
+    backgroundColor: '#ffffff', 
+    borderRadius: '10px', 
+    padding: '24px',  
+    marginBottom: '16px', 
+    display: 'inline-flex', 
+    alignItems: 'center', 
+    justifyContent: 'center',  
+    gap: '12px',
+    minWidth: '100%',
+    boxSizing: 'border-box'
+  }}>
+       <img src={logo2} alt="JoMabel Medical Center Logo" style={{ width: '200px', height: 'auto' }} />
+  </div>
+    <div style={{ borderRadius: '10px 10px 0 0', overflow: 'hidden', marginTop: '8px' }}>
+      <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=600&q=80" alt="Medical Center"
+        style={{ width: '100%', height: '200px', objectFit: 'cover', display: 'block' }} />
+    </div>
+    <div style={{ padding: '20px 0 24px' }}>
+      <p style={{ color: '#d1fae5', fontSize: '13.5px', lineHeight: '1.6', marginBottom: '12px' }}>
+        A growing hub for primary care, diagnostics, maternal health services and healthcare workforce training.
+      </p>
+      <a href="#" style={{ color: '#ffffff', fontSize: '13px', fontWeight: '700', textDecoration: 'none' }}>Learn More →</a>
+    </div>
+  </div>
 
-        {/* Skills Acquisition — dark blue */}
-        <div style={{ backgroundColor: '#1e3a8a', borderRadius: '16px', overflow: 'hidden', padding: '28px 28px 0' }}>
-          <div style={{ backgroundColor: '#ffffff', borderRadius: '10px', padding: '16px 20px', marginBottom: '16px', display: 'inline-flex', alignItems: 'center', gap: '12px' }}>
-            <img src="https://via.placeholder.com/32x32/1e3a8a/ffffff?text=S" alt="" style={{ width: '32px' }} />
-            <div>
-              <p style={{ fontSize: '13px', fontWeight: '800', color: '#1e3a8a', margin: 0 }}>JoMabel</p>
-              <p style={{ fontSize: '10px', color: '#6b7280', margin: 0 }}>SKILLS ACQUISITION CENTER</p>
-            </div>
-          </div>
-          <div style={{ borderRadius: '10px 10px 0 0', overflow: 'hidden', marginTop: '8px' }}>
-            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80" alt="Skills Center"
-              style={{ width: '100%', height: '200px', objectFit: 'cover', display: 'block' }} />
-          </div>
-          <div style={{ padding: '20px 0 24px' }}>
-            <p style={{ color: '#bfdbfe', fontSize: '13.5px', lineHeight: '1.6', marginBottom: '12px' }}>
-              Hands-on training for young people in healthcare, leadership, and community service — building a pipeline of future professionals.
-            </p>
-            <a href="#" style={{ color: '#ffffff', fontSize: '13px', fontWeight: '700', textDecoration: 'none' }}>Learn More →</a>
-          </div>
-        </div>
-      </div>
+  {/* Skills Acquisition — dark blue */}
+  <div style={{ backgroundColor: '#1e3a8a', borderRadius: '16px', overflow: 'hidden', padding: '28px 28px 0' }}>
+  <div style={{ 
+    backgroundColor: '#ffffff', 
+    borderRadius: '10px', 
+    padding: '24px',  
+    marginBottom: '16px', 
+    display: 'inline-flex', 
+    alignItems: 'center', 
+    justifyContent: 'center',  
+    gap: '12px',
+    minWidth: '100%',
+    boxSizing: 'border-box'
+  }}>
+   <img src={logo3} alt="JoMabel Skills Center Logo" style={{ width: '200px', height: 'auto' }} />
+  </div>
+    <div style={{ borderRadius: '10px 10px 0 0', overflow: 'hidden', marginTop: '8px' }}>
+      <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80" alt="Skills Center"
+        style={{ width: '100%', height: '200px', objectFit: 'cover', display: 'block' }} />
+    </div>
+    <div style={{ padding: '20px 0 24px' }}>
+      <p style={{ color: '#bfdbfe', fontSize: '13.5px', lineHeight: '1.6', marginBottom: '12px' }}>
+        Hands-on training for young people in healthcare, leadership, and community service — building a pipeline of future professionals.
+      </p>
+      <a href="#" style={{ color: '#ffffff', fontSize: '13px', fontWeight: '700', textDecoration: 'none' }}>Learn More →</a>
+    </div>
+  </div>
+</div>
 
       {/* Row 2 — four smaller cards */}
       <div className="programs-small-row">

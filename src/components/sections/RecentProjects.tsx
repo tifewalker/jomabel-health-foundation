@@ -19,7 +19,7 @@ const projects = [
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1541544537156-7627a7a4aa1c?w=600&q=80',
+   image: 'https://images.unsplash.com/photo-1594398901394-4e34939a4fd0?w=600&q=80',
     status: 'Completed',
     statusColor: '#2563eb',
     title: 'Clean Water Provision',
