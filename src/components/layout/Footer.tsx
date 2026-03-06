@@ -41,7 +41,7 @@ const Footer = () => {
               lineHeight: '1.7',
               margin: 0,
             }}>
-              "JoMabel Healthcare Foundation USA Inc. is a faith-guided, U.S.-based nonprofit developing a world-class medical and healthcare training campus in Nigeria."
+              JoMabel Healthcare Foundation USA Inc. is a faith-guided, U.S.-based nonprofit developing a world-class medical and healthcare training campus in Nigeria.
             </p>
           </div>
 
@@ -145,7 +145,7 @@ const Footer = () => {
         }}>
           {/* Copyright */}
           <p style={{ color: '#bbf7d0', fontSize: '12.5px', margin: 0 }}>
-            © JOMABEL. HEALTHCARE FOUNDATION!
+            © JOMABEL. HEALTHCARE FOUNDATION 2026. All rights reserved.
           </p>
 
           {/* Follow us + icons */}

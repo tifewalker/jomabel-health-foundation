@@ -124,10 +124,7 @@ const MissionVision = () => {
               maxWidth: '380px',
               margin: 0,
             }}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-              ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-              aent, sunt in culpa qui officia deserunt mollit anim id est laborum.
+             A world where every person regardless of geography, income, or social status — has access to dignified, life-saving healthcare.
             </p>
           </div>
 
