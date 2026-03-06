@@ -49,37 +49,85 @@ const socials = [
 ];
 
 const OurSocials = () => (
-  <section style={{
-    backgroundColor: '#f9fafb',
-    padding: '64px 64px 72px',
-    fontFamily: "'Inter', 'Segoe UI', sans-serif",
-    textAlign: 'center',
-  }}>
-    <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#111827', marginBottom: '40px' }}>
-      Our Socials
-    </h2>
-    <div style={{
-      border: '1px solid #e5e7eb',
-      borderRadius: '16px',
-      padding: '40px 32px',
-      maxWidth: '1080px',
-      margin: '0 auto',
-      display: 'grid',
-      gridTemplateColumns: 'repeat(4, 1fr)',
-      gap: '24px',
-      backgroundColor: '#ffffff',
-    }}>
+  <section className="socials-section">
+    <style>{`
+      .socials-section {
+        background-color: #f9fafb;
+        padding: clamp(40px, 6vw, 64px) clamp(16px, 5vw, 64px) clamp(48px, 7vw, 72px);
+        font-family: 'Inter', 'Segoe UI', sans-serif;
+        text-align: center;
+      }
+      .socials-heading {
+        font-size: clamp(20px, 4vw, 24px);
+        font-weight: 700;
+        color: #111827;
+        margin-bottom: 40px;
+      }
+      .socials-grid {
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        padding: clamp(24px, 4vw, 40px) clamp(16px, 3vw, 32px);
+        max-width: 1080px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        background-color: #ffffff;
+      }
+      .social-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        padding: 16px 12px;
+        border-right: 1px solid #f3f4f6;
+      }
+      .social-card:last-child {
+        border-right: none;
+      }
+
+      /* Tablet — 2×2 grid */
+      @media (max-width: 760px) {
+        .socials-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .social-card {
+          padding: 24px 16px;
+          border-right: none;
+          border-bottom: 1px solid #f3f4f6;
+        }
+        .social-card:nth-child(odd) {
+          border-right: 1px solid #f3f4f6;
+        }
+        .social-card:nth-child(3),
+        .social-card:nth-child(4) {
+          border-bottom: none;
+        }
+      }
+
+      /* Mobile — single column */
+      @media (max-width: 420px) {
+        .socials-grid {
+          grid-template-columns: 1fr;
+        }
+        .social-card {
+          border-right: none !important;
+          border-bottom: 1px solid #f3f4f6;
+        }
+        .social-card:last-child {
+          border-bottom: none;
+        }
+      }
+    `}</style>
+
+    <h2 className="socials-heading">Our Socials</h2>
+
+    <div className="socials-grid">
       {socials.map((s, i) => (
-        <div key={i} style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '12px',
-          padding: '16px 12px',
-          borderRight: i < 3 ? '1px solid #f3f4f6' : 'none',
-        }}>
+        <div key={i} className="social-card">
           {s.icon}
-          <h4 style={{ fontSize: '15px', fontWeight: '700', color: '#111827', margin: 0 }}>{s.handle}</h4>
+          <h4 style={{ fontSize: '15px', fontWeight: '700', color: '#111827', margin: 0 }}>
+            {s.handle}
+          </h4>
           <p style={{
             fontSize: '12.5px', color: '#6b7280', lineHeight: '1.65',
             margin: 0, whiteSpace: 'pre-line', textAlign: 'center',
