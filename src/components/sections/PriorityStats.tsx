@@ -37,27 +37,63 @@ const YouthIcon = () => (
 );
 
 const stats = [
-  { icon: <BuildingIcon />,    number: '16k+', line1: 'Square Meters',      line2: 'Medical Campus' },
-  { icon: <StethoscopeIcon />, number: '100+', line1: 'Healthcare',         line2: 'Professional Trained' },
-  { icon: <CommunityIcon />,   number: '5k+',  line1: 'Community Members',  line2: 'Served Annually' },
-  { icon: <YouthIcon />,       number: '50+',  line1: 'Youth Empowered',    line2: 'Through Skills Training' },
+  { icon: <BuildingIcon />,    number: '16k+', line1: 'Square Meters',     line2: 'Medical Campus' },
+  { icon: <StethoscopeIcon />, number: '100+', line1: 'Healthcare',        line2: 'Professional Trained' },
+  { icon: <CommunityIcon />,   number: '5k+',  line1: 'Community Members', line2: 'Served Annually' },
+  { icon: <YouthIcon />,       number: '50+',  line1: 'Youth Empowered',   line2: 'Through Skills Training' },
 ];
 
 const PriorityStats = () => {
   return (
     <section style={{
       backgroundColor: '#0d1f4e',
-      padding: '70px 48px 80px',
+      padding: 'clamp(40px, 6vw, 80px) clamp(20px, 5vw, 48px)',
       fontFamily: "'Inter', 'Segoe UI', sans-serif",
     }}>
+      <style>{`
+        .stats-heading {
+          text-align: center;
+          margin-bottom: 48px;
+        }
+        .stats-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+          max-width: 1080px;
+          margin: 0 auto;
+        }
+        @media (max-width: 900px) {
+          .stats-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .stats-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 12px !important;
+          }
+          .stats-heading h2 {
+            font-size: 17px !important;
+          }
+          .stats-heading p {
+            font-size: 13px !important;
+          }
+          .stat-number {
+            font-size: 32px !important;
+          }
+          .stat-card {
+            padding: 20px 18px 24px !important;
+          }
+        }
+      `}</style>
 
       {/* Heading */}
-      <div style={{ textAlign: 'center', marginBottom: '56px' }}>
+      <div className="stats-heading">
         <h2 style={{
           color: '#ffffff',
           fontSize: '20px',
           fontWeight: '700',
-          marginBottom: '22px',
+          marginBottom: '16px',
         }}>
           Our Priority is to Keep You Healthy
         </h2>
@@ -75,15 +111,9 @@ const PriorityStats = () => {
       </div>
 
       {/* Cards */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(4, 1fr)',
-        gap: '20px',
-        maxWidth: '1080px',
-        margin: '0 auto',
-      }}>
+      <div className="stats-grid">
         {stats.map((stat, i) => (
-          <div key={i} style={{
+          <div key={i} className="stat-card" style={{
             backgroundColor: '#1e3a8a',
             borderRadius: '14px',
             padding: '30px 26px 34px',
@@ -100,12 +130,13 @@ const PriorityStats = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              flexShrink: 0,
             }}>
               {stat.icon}
             </div>
 
             {/* Number */}
-            <div style={{
+            <div className="stat-number" style={{
               color: '#22c55e',
               fontSize: '44px',
               fontWeight: '800',
