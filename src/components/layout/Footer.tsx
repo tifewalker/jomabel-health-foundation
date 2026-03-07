@@ -7,7 +7,7 @@ const Footer = () => {
     <footer style={{ fontFamily: "'Inter', 'Segoe UI', sans-serif" }}>
       <style>{`
         .footer-main {
-          background-color: #14532d;
+          background-color: #0d1f4e;
           padding: clamp(36px, 5vw, 48px) clamp(20px, 5vw, 48px) clamp(32px, 4vw, 40px);
         }
         .footer-grid {
@@ -19,7 +19,7 @@ const Footer = () => {
           align-items: start;
         }
         .footer-link {
-          color: #bbf7d0;
+          color: #bfdbfe;
           font-size: 13px;
           text-decoration: none;
           transition: color 0.2s;
@@ -32,8 +32,8 @@ const Footer = () => {
           margin-bottom: 16px;
         }
         .footer-donate-btn {
-          background-color: #ffffff;
-          color: #14532d;
+          background-color: #22c55e;
+          color: #ffffff;
           font-weight: 700;
           font-size: 14px;
           padding: 10px 24px;
@@ -43,11 +43,11 @@ const Footer = () => {
           display: inline-block;
           transition: background-color 0.2s;
         }
-        .footer-donate-btn:hover { background-color: #f0fdf4; }
+        .footer-donate-btn:hover { background-color: #16a34a; }
         .footer-bottom {
-          background-color: #14532d;
+          background-color: #0a1838;
           padding: 18px clamp(20px, 5vw, 48px);
-          border-top: 1px solid rgba(255,255,255,0.1);
+          border-top: 1px solid rgba(255,255,255,0.08);
         }
         .footer-bottom-inner {
           max-width: 1080px;
@@ -62,7 +62,7 @@ const Footer = () => {
           width: 32px;
           height: 32px;
           border-radius: 50%;
-          background-color: #ffffff;
+          background-color: rgba(255,255,255,0.12);
           display: inline-flex;
           align-items: center;
           justify-content: center;
@@ -71,31 +71,25 @@ const Footer = () => {
           cursor: pointer;
           flex-shrink: 0;
         }
-        .footer-icon:hover { background-color: #22c55e; }
+        .footer-icon:hover { background-color: #1e3a8a; }
 
-        /* Tablet — 2 col layout */
         @media (max-width: 900px) {
           .footer-grid {
             grid-template-columns: 1fr 1fr;
             gap: 28px;
           }
-          /* Donate button spans full width on tablet */
           .footer-donate-col {
             grid-column: 1 / -1;
             display: flex;
             justify-content: flex-start !important;
           }
         }
-
-        /* Mobile — single column */
         @media (max-width: 540px) {
           .footer-grid {
             grid-template-columns: 1fr;
             gap: 24px;
           }
-          .footer-donate-col {
-            grid-column: 1;
-          }
+          .footer-donate-col { grid-column: 1; }
           .footer-bottom-inner {
             flex-direction: column;
             align-items: flex-start;
@@ -116,7 +110,7 @@ const Footer = () => {
             }}>
               <img src={logo} alt="JoMabel" style={{ height: '56px', width: 'auto', display: 'block' }} />
             </div>
-            <p style={{ color: '#d1fae5', fontSize: '12.5px', lineHeight: '1.7', margin: 0 }}>
+            <p style={{ color: '#bfdbfe', fontSize: '12.5px', lineHeight: '1.7', margin: 0 }}>
               JoMabel Healthcare Foundation USA Inc. is a faith-guided, U.S.-based nonprofit developing a world-class medical and healthcare training campus in Nigeria.
             </p>
           </div>
@@ -162,41 +156,38 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Divider */}
-      <div style={{ backgroundColor: '#166534', height: '1px' }} />
-
       {/* Bottom bar */}
       <div className="footer-bottom">
         <div className="footer-bottom-inner">
-          <p style={{ color: '#bbf7d0', fontSize: '12.5px', margin: 0 }}>
+          <p style={{ color: '#93c5fd', fontSize: '12.5px', margin: 0 }}>
             © JOMABEL. HEALTHCARE FOUNDATION 2026. All rights reserved.
           </p>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ color: '#bbf7d0', fontSize: '13px' }}>Follow us:</span>
+            <span style={{ color: '#93c5fd', fontSize: '13px' }}>Follow us:</span>
 
             {/* Threads */}
             <a href="#" className="footer-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#111827">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#ffffff">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
               </svg>
             </a>
 
             {/* X */}
             <a href="#" className="footer-icon">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="#111827">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="#ffffff">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L2.25 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
               </svg>
             </a>
 
             {/* LinkedIn */}
             <a href="#" className="footer-icon">
-              <Linkedin size={15} color="#111827" />
+              <Linkedin size={15} color="#ffffff" />
             </a>
 
             {/* Facebook */}
             <a href="#" className="footer-icon">
-              <Facebook size={15} color="#111827" />
+              <Facebook size={15} color="#ffffff" />
             </a>
           </div>
         </div>

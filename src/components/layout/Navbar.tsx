@@ -3,17 +3,16 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import logo from '../../assests/images/logo.jpeg';
 
-const Header = () => {
+const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
   const menuItems = [
-    { id: 'home',        label: 'Home',        path: '/' },
-    { id: 'programs',    label: 'Programs',    path: '/programs' },
-    { id: 'campaign',    label: 'Campaign',    path: '/campaign' },
-     { id: 'about',       label: 'About Us',    path: '/about' },
-    { id: 'Contact Us', label: 'Contact Us', path: '/ContactUs' },
-   
+    { id: 'home',      label: 'Home',       path: '/' },
+    { id: 'programs',  label: 'Programs',   path: '/programs' },
+    { id: 'campaign',  label: 'Campaign',   path: '/campaign' },
+    { id: 'about',     label: 'About Us',   path: '/about' },
+    { id: 'contact',   label: 'Contact Us', path: '/contact' },
   ];
 
   const isActive = (path: string) => {
@@ -43,8 +42,8 @@ const Header = () => {
                 to={item.path}
                 className="relative text-sm font-medium transition-colors pb-1"
                 style={{
-                  color: isActive(item.path) ? '#22c55e' : '#374151',
-                  borderBottom: isActive(item.path) ? '2px solid #22c55e' : '2px solid transparent',
+                  color: isActive(item.path) ? '#1e3a8a' : '#374151',
+                  borderBottom: isActive(item.path) ? '2px solid #1e3a8a' : '2px solid transparent',
                   textDecoration: 'none',
                 }}
               >
@@ -57,7 +56,7 @@ const Header = () => {
           <Link
             to="/donate"
             className="hidden md:inline-block px-6 py-2.5 text-sm font-semibold text-white rounded-md transition-all hover:opacity-90 hover:scale-105"
-            style={{ backgroundColor: '#22c55e', textDecoration: 'none' }}
+            style={{ backgroundColor: '#1e3a8a', textDecoration: 'none' }}
           >
             Donate Now
           </Link>
@@ -82,8 +81,8 @@ const Header = () => {
                   onClick={() => setMobileMenuOpen(false)}
                   className="px-4 py-3 text-sm font-medium rounded-lg"
                   style={{
-                    color: isActive(item.path) ? '#22c55e' : '#374151',
-                    backgroundColor: isActive(item.path) ? '#f0fdf4' : 'transparent',
+                    color: isActive(item.path) ? '#1e3a8a' : '#374151',
+                    backgroundColor: isActive(item.path) ? '#eff6ff' : 'transparent',
                     textDecoration: 'none',
                   }}
                 >
@@ -94,7 +93,7 @@ const Header = () => {
                 to="/donate"
                 onClick={() => setMobileMenuOpen(false)}
                 className="mx-4 mt-3 px-5 py-3 text-sm font-semibold text-center text-white rounded-md"
-                style={{ backgroundColor: '#22c55e', textDecoration: 'none' }}
+                style={{ backgroundColor: '#1e3a8a', textDecoration: 'none' }}
               >
                 Donate Now
               </Link>
@@ -106,4 +105,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Navbar;

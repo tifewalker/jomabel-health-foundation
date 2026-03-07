@@ -1,151 +1,122 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight } from "lucide-react";
-
-import heroImage1 from "../../assests/images/imag1.png";
-import heroImage2 from "../../assests/images/img2.png";
-import heroImage3 from "../../assests/images/img3.png";
-
 
 const Hero = () => {
   const navigate = useNavigate();
-  const [currentSlide, setCurrentSlide] = useState(0);
-
-  const slides = [
-    { type: "image", src: heroImage1, alt: "Medical Center Building" },
-    { type: "image", src: heroImage2, alt: "Community Healthcare" },
-    { type: "image", src: heroImage3, alt: "Medical Training" },
-  ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [slides.length]);
-
-  const goToSlide = (index: number): void => setCurrentSlide(index);
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % slides.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
 
   return (
-    <section className="relative h-screen overflow-hidden">
+    <section style={{
+      position: 'relative',
+      height: '100vh',
+      minHeight: '560px',
+      overflow: 'hidden',
+      fontFamily: "'Inter', 'Segoe UI', sans-serif",
+    }}>
 
-      {/* Background Image Slider */}
-      <div className="absolute inset-0">
-        {slides.map((slide, index) => (
-          <div
-            key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-              index === currentSlide ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            <img
-              src={slide.src}
-              alt={slide.alt}
-              className="w-full h-full object-cover object-center"
-            />
-          </div>
-        ))}
-        {/* Dark gradient overlay — heavier on left for text legibility */}
-        <div className="absolute inset-0" style={{
-          background: "linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.45) 60%, rgba(0,0,0,0.15) 100%)"
-        }} />
-      </div>
+      {/* ── BACKGROUND IMAGE ── */}
+      <img
+        src="https://st2.depositphotos.com/1017986/7520/i/450/depositphotos_75203623-stock-photo-womans-cupped-hands-showing-something.jpg"
+        alt="Hands cupped together"
+        style={{
+          position: 'absolute', inset: 0,
+          width: '100%', height: '100%',
+          objectFit: 'cover', objectPosition: 'center',
+          zIndex: 0,
+        }}
+      />
 
-      {/* Navigation Arrows */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover:bg-white/25 text-white p-2 rounded-full backdrop-blur-sm transition-all"
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="w-6 h-6" />
-      </button>
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover:bg-white/25 text-white p-2 rounded-full backdrop-blur-sm transition-all"
-        aria-label="Next slide"
-      >
-        <ChevronRight className="w-6 h-6" />
-      </button>
+      {/* ── DARK OVERLAY ── */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 1,
+        background: 'rgba(0,0,0,0.50)',
+      }} />
 
-      {/* Slide Indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
-        {slides.map((_, index) => (
+      {/* ── CENTERED CONTENT ── */}
+      <div style={{
+        position: 'relative', zIndex: 2,
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlign: 'center',
+        padding: '0 clamp(20px, 8vw, 120px)',
+        paddingBottom: '60px',
+      }}>
+
+        {/* Big editorial headline */}
+        <h1 style={{
+          color: '#ffffff',
+          fontSize: 'clamp(34px, 5.5vw, 68px)',
+          fontWeight: '300',
+          lineHeight: '1.18',
+          letterSpacing: '0.01em',
+          marginBottom: '18px',
+          maxWidth: '780px',
+          textShadow: '0 1px 12px rgba(0,0,0,0.3)',
+        }}>
+          Building a World-Class,<br />
+          Community Medical &<br />
+          Training Center
+        </h1>
+
+        {/* Description */}
+        <p style={{
+          color: 'rgba(255,255,255,0.82)',
+          fontSize: 'clamp(13px, 1.5vw, 15px)',
+          lineHeight: '1.7',
+          maxWidth: '480px',
+          marginBottom: '36px',
+          fontWeight: '400',
+        }}>
+          Empower communities, transform lives, and create a brighter future with your generosity.<br />
+          Together, we can change the world.
+        </p>
+
+        {/* Pill buttons */}
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', justifyContent: 'center' }}>
           <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              index === currentSlide ? "w-8 bg-white" : "w-2 bg-white/40 hover:bg-white/70"
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
-
-      {/* Content — top-left aligned, matching image */}
-      <div className="relative z-10 h-full flex items-start pt-16 md:pt-20">
-        <div className="w-full px-6 sm:px-10 lg:px-14 text-white">
-          <div className="max-w-2xl">
-
-            {/* Foundation name — bold, small caps, white */}
-            <p
-              className="font-bold text-white mb-5"
-              style={{ fontSize: '13px', letterSpacing: '0.15em' }}
-            >
-              JOMABEL HEALTHCARE FOUNDATION
-            </p>
-
-            {/* Main headline — large, bold, wide tracking like the image */}
-           <h1
-  className="font-bold text-white mb-5 leading-tight"
-  style={{
-    fontSize: 'clamp(28px, 4vw, 56px)',
-    letterSpacing: '0.04em',
-    whiteSpace: 'nowrap',
-  }}
->
-  Building a World-Class<br />
-  Community Medical &<br />
-  Training Center
-</h1>
-
-            {/* Tagline with pipe separators */}
-            <p className="text-gray-200 mb-5" style={{ fontSize: '15px' }}>
-              Transforming Healthcare in Nigeria
-              <span className="mx-2">|</span>
-              Powered by Compassion
-              <span className="mx-2">|</span>
-              Designed for Generational Impact
-            </p>
-
-            {/* Description */}
-            <p className="text-gray-300 mb-10 leading-relaxed" style={{ fontSize: '15px', maxWidth: '520px' }}>
-              A Texas-based non-profit organisation developing a 16,000+ Square
-              meter medical and training campus in Ufuma, Anambra State, Nigeria.
-            </p>
-
-            {/* CTA Buttons — green + blue as in the image */}
-          <div className="flex flex-wrap gap-4">
-  <button
-    onClick={() => navigate('/campaign')}
-    className="font-semibold px-7 py-3 rounded transition-all duration-200 hover:opacity-90 hover:scale-105"
-    style={{ backgroundColor: '#22c55e', color: '#ffffff', fontSize: '15px' }}
-  >
-    Join The Campaign
-  </button>
-  <button
-    onClick={() => navigate('/about')}
-    className="font-semibold px-7 py-3 rounded transition-all duration-200 hover:opacity-90 hover:scale-105"
-    style={{ backgroundColor: '#2563eb', color: '#ffffff', fontSize: '15px' }}
-  >
-    Learn Our Story
-  </button>
-</div>
-
-          </div>
+            onClick={() => navigate('/donate')}
+            style={{
+              backgroundColor: 'rgba(255,255,255,0.92)',
+              color: '#111827',
+              border: 'none',
+              borderRadius: '999px',
+              padding: '11px 28px',
+              fontSize: '14px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+              transition: 'background 0.2s',
+            }}
+            onMouseOver={e => (e.currentTarget.style.backgroundColor = '#ffffff')}
+            onMouseOut={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.92)')}
+          >
+            Donate Now
+          </button>
+          <button
+            onClick={() => navigate('/about')}
+            style={{
+              backgroundColor: 'rgba(255,255,255,0.15)',
+              color: '#ffffff',
+              border: '1px solid rgba(255,255,255,0.55)',
+              borderRadius: '999px',
+              padding: '11px 28px',
+              fontSize: '14px',
+              fontWeight: '500',
+              cursor: 'pointer',
+              fontFamily: 'inherit',
+              backdropFilter: 'blur(4px)',
+              transition: 'background 0.2s',
+            }}
+            onMouseOver={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.25)')}
+            onMouseOut={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.15)')}
+          >
+            Learn More
+          </button>
         </div>
       </div>
+
     </section>
   );
 };

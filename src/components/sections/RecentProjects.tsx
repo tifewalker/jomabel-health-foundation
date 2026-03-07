@@ -7,7 +7,7 @@ const projects = [
     id: 1,
     image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80',
     status: '40% Completed',
-    statusColor: '#22c55e',
+    statusColor: '#1e3a8a',
     title: 'Clinic Project in East',
     description: 'Constructing a modern primary care clinic to serve underserved communities in Eastern Nigeria with essential health services.',
   },
@@ -15,7 +15,7 @@ const projects = [
     id: 2,
     image: 'https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=600&q=80',
     status: 'Completed',
-    statusColor: '#2563eb',
+    statusColor: '#0d1f4e',
     title: 'School Computer Lab in Kano',
     description: 'Equipped a fully functional computer lab to support digital literacy and healthcare education for students in Kano State.',
   },
@@ -23,7 +23,7 @@ const projects = [
     id: 3,
     image: cleanWaterImg,
     status: 'Completed',
-    statusColor: '#2563eb',
+    statusColor: '#0d1f4e',
     title: 'Clean Water Provision',
     description: 'Delivered clean, safe water access to hospitals and rural communities, reducing waterborne diseases and improving patient care.',
   },
@@ -39,7 +39,7 @@ const projects = [
     id: 5,
     image: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?w=600&q=80',
     status: '70% Completed',
-    statusColor: '#22c55e',
+    statusColor: '#1e3a8a',
     title: 'Community Training Centre',
     description: 'Building a skills acquisition hub to train young Nigerians in healthcare, leadership, and community development.',
   },
@@ -62,14 +62,12 @@ const RecentProjects = () => {
       fontFamily: "'Inter', 'Segoe UI', sans-serif",
     }}>
 
-      {/* Heading */}
       <div style={{ textAlign: 'center', marginBottom: '40px', padding: '0 24px' }}>
         <h2 style={{ fontSize: '26px', fontWeight: '700', color: '#111827', margin: 0 }}>
           Recent Campaigns
         </h2>
       </div>
 
-      {/* Scroll wrapper + arrow buttons */}
       <div style={{ position: 'relative', padding: '0 48px' }}>
 
         {/* Left Arrow */}
@@ -89,7 +87,7 @@ const RecentProjects = () => {
           </svg>
         </button>
 
-        {/* Scrollable cards row */}
+        {/* Scrollable row */}
         <div
           ref={scrollRef}
           style={{
@@ -111,7 +109,6 @@ const RecentProjects = () => {
                 display: 'flex', flexDirection: 'column',
               }}
             >
-              {/* Image + badge */}
               <div style={{ position: 'relative' }}>
                 <img
                   src={project.image}
@@ -127,7 +124,6 @@ const RecentProjects = () => {
                 </span>
               </div>
 
-              {/* Card body */}
               <div style={{ padding: '20px 20px 24px', flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#111827', margin: 0 }}>
                   {project.title}
@@ -135,13 +131,11 @@ const RecentProjects = () => {
                 <p style={{ fontSize: '13px', color: '#6b7280', margin: 0, lineHeight: '1.6' }}>
                   {project.description}
                 </p>
-
-                {/* See More button */}
                 <div style={{ marginTop: '12px' }}>
                   <button
                     onClick={() => navigate('/campaign')}
                     style={{
-                      backgroundColor: '#22c55e', color: '#ffffff', border: 'none',
+                      backgroundColor: '#1e3a8a', color: '#ffffff', border: 'none',
                       borderRadius: '6px', padding: '8px 20px', fontSize: '13px',
                       fontWeight: '600', cursor: 'pointer',
                       display: 'inline-flex', alignItems: 'center', gap: '6px',

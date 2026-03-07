@@ -43,11 +43,11 @@ const Contact = () => {
           box-shadow: 0 4px 24px rgba(0,0,0,0.08);
         }
         .contact-left {
-          background: linear-gradient(160deg, #16a34a 0%, #15803d 60%, #166534 100%);
+          background: linear-gradient(160deg, #0d1f4e 0%, #1e3a8a 60%, #1e40af 100%);
           padding: clamp(24px, 4vw, 36px) clamp(20px, 3vw, 32px);
         }
         .contact-left-label {
-          color: #ffffff;
+          color: rgba(255,255,255,0.85);
           font-size: 14px;
           line-height: 1.6;
           margin-bottom: 24px;
@@ -78,6 +78,11 @@ const Contact = () => {
           outline: none;
           box-sizing: border-box;
           background-color: #ffffff;
+          font-family: inherit;
+        }
+        .contact-input:focus {
+          border-color: #1e3a8a;
+          box-shadow: 0 0 0 3px rgba(30,58,138,0.08);
         }
         .contact-label {
           display: block;
@@ -87,7 +92,7 @@ const Contact = () => {
           margin-bottom: 6px;
         }
         .contact-send-btn {
-          background-color: #1d4ed8;
+          background-color: #1e3a8a;
           color: #ffffff;
           border: none;
           border-radius: 8px;
@@ -97,9 +102,11 @@ const Contact = () => {
           cursor: pointer;
           width: 100%;
           letter-spacing: 0.02em;
+          font-family: inherit;
+          transition: background-color 0.2s;
         }
         .contact-send-btn:hover {
-          background-color: #1e40af;
+          background-color: #0d1f4e;
         }
         .contact-email-link {
           font-size: 13px;
@@ -107,10 +114,9 @@ const Contact = () => {
           text-decoration: none;
         }
         .contact-email-link:hover {
-          color: #16a34a;
+          color: #1e3a8a;
         }
 
-        /* Tablet — stack vertically */
         @media (max-width: 768px) {
           .contact-grid {
             grid-template-columns: 1fr;
@@ -118,15 +124,9 @@ const Contact = () => {
             border-radius: 14px;
           }
         }
-
-        /* Mobile */
         @media (max-width: 480px) {
-          .contact-heading-wrap p br {
-            display: none;
-          }
-          .contact-grid {
-            margin: 0 12px 32px;
-          }
+          .contact-heading-wrap p br { display: none; }
+          .contact-grid { margin: 0 12px 32px; }
         }
       `}</style>
 
@@ -140,29 +140,25 @@ const Contact = () => {
         </p>
       </div>
 
-      {/* Two column layout */}
       <div className="contact-grid">
 
-        {/* LEFT — Green form panel */}
+        {/* LEFT — Navy blue form panel */}
         <div className="contact-left">
           <p className="contact-left-label">
             Please fill out the form below and we'll get back to you as soon as possible.
           </p>
 
           <div className="contact-form-card">
-
             <div>
               <label className="contact-label">Name</label>
               <input name="name" type="text" placeholder="Your full name"
                 value={form.name} onChange={handleChange} className="contact-input" />
             </div>
-
             <div>
               <label className="contact-label">Email address</label>
               <input name="email" type="email" placeholder="your@email.com"
                 value={form.email} onChange={handleChange} className="contact-input" />
             </div>
-
             <div>
               <label className="contact-label">Subject</label>
               <div style={{ position: 'relative' }}>
@@ -181,7 +177,6 @@ const Contact = () => {
                 </svg>
               </div>
             </div>
-
             <div>
               <label className="contact-label">Message</label>
               <textarea name="message" placeholder="Write a message" value={form.message}
@@ -240,10 +235,10 @@ const Contact = () => {
                 <div key={email} style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
                   <div style={{
                     width: '28px', height: '28px', borderRadius: '6px',
-                    backgroundColor: '#f0fdf4', display: 'flex', alignItems: 'center',
+                    backgroundColor: '#eff6ff', display: 'flex', alignItems: 'center',
                     justifyContent: 'center', flexShrink: 0,
                   }}>
-                    <Mail size={14} color="#16a34a" />
+                    <Mail size={14} color="#1e3a8a" />
                   </div>
                   <div>
                     <p style={{ fontSize: '13px', fontWeight: '600', color: '#111827', margin: '0 0 2px' }}>{label}</p>
