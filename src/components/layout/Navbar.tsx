@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import logo from '../../assests/images/logo.jpeg';
+import TextToSpeech from './TextToSpeech';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -52,14 +53,17 @@ const Navbar = () => {
             ))}
           </nav>
 
-          {/* Donate Now Button */}
-          <Link
-            to="/donate"
-            className="hidden md:inline-block px-6 py-2.5 text-sm font-semibold text-white rounded-md transition-all hover:opacity-90 hover:scale-105"
-            style={{ backgroundColor: '#1e3a8a', textDecoration: 'none' }}
-          >
-            Donate Now
-          </Link>
+          {/* Right side — TTS + Donate */}
+          <div className="hidden md:flex items-center gap-3">
+            <TextToSpeech />
+            <Link
+              to="/donate"
+              className="px-6 py-2.5 text-sm font-semibold text-white rounded-md transition-all hover:opacity-90 hover:scale-105"
+              style={{ backgroundColor: '#1e3a8a', textDecoration: 'none' }}
+            >
+              Donate Now
+            </Link>
+          </div>
 
           {/* Mobile Menu Toggle */}
           <button
@@ -89,10 +93,16 @@ const Navbar = () => {
                   {item.label}
                 </Link>
               ))}
+
+              {/* TTS in mobile menu too */}
+              <div className="px-4 pt-2">
+                <TextToSpeech />
+              </div>
+
               <Link
                 to="/donate"
                 onClick={() => setMobileMenuOpen(false)}
-                className="mx-4 mt-3 px-5 py-3 text-sm font-semibold text-center text-white rounded-md"
+                className="mx-4 mt-2 px-5 py-3 text-sm font-semibold text-center text-white rounded-md"
                 style={{ backgroundColor: '#1e3a8a', textDecoration: 'none' }}
               >
                 Donate Now
