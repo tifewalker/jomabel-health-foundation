@@ -4,7 +4,6 @@ import Footer from '../components/layout/Footer';
 import CampaignBanner from '../components/sections/CampaignBanner';
 
 const donateStyles = `
-  /* ── HERO ── */
   .donate-hero {
     position: relative;
     min-height: 400px;
@@ -23,18 +22,22 @@ const donateStyles = `
     gap: 14px;
     flex-wrap: wrap;
   }
-  .dh-btn-green {
+  .dh-btn-primary {
     background-color: #22c55e; color: #fff; border: none;
     border-radius: 6px; padding: 11px 24px;
-    font-size: 13.5px; font-weight: 500; cursor: pointer;
+    font-size: 13.5px; font-weight: 600; cursor: pointer; font-family: inherit;
+    transition: opacity 0.2s;
   }
-  .dh-btn-blue {
-    background-color: #2563eb; color: #fff; border: none;
+  .dh-btn-primary:hover { opacity: 0.88; }
+  .dh-btn-outline {
+    background-color: transparent; color: #fff;
+    border: 1.5px solid rgba(255,255,255,0.45);
     border-radius: 6px; padding: 11px 24px;
-    font-size: 13.5px; font-weight: 500; cursor: pointer;
+    font-size: 13.5px; font-weight: 600; cursor: pointer; font-family: inherit;
+    transition: border-color 0.2s, background 0.2s;
   }
+  .dh-btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
 
-  /* ── DONATION FORM ── */
   .donation-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -42,7 +45,7 @@ const donateStyles = `
     font-family: 'Inter', sans-serif;
   }
   .donation-left {
-    background: linear-gradient(160deg, #16a34a 0%, #15803d 60%, #166534 100%);
+    background: linear-gradient(160deg, #0d1f4e 0%, #1e3a8a 60%, #1e40af 100%);
     padding: clamp(32px, 4vw, 48px) clamp(24px, 3.5vw, 44px);
     display: flex;
     flex-direction: column;
@@ -65,7 +68,6 @@ const donateStyles = `
     gap: 14px;
   }
 
-  /* ── OTHER WAYS ── */
   .other-ways-section {
     background-color: #ffffff;
     padding: clamp(40px, 5vw, 64px) clamp(16px, 4vw, 48px);
@@ -79,7 +81,6 @@ const donateStyles = `
     margin: 0 auto;
   }
 
-  /* ── FAQ ── */
   .faq-header-block {
     text-align: center;
     padding: clamp(36px, 5vw, 56px) clamp(16px, 4vw, 48px) clamp(28px, 4vw, 48px);
@@ -91,43 +92,21 @@ const donateStyles = `
     padding: 0 clamp(16px, 4vw, 48px) clamp(40px, 5vw, 64px);
   }
 
-  /* ── TABLET (≤860px) ── */
   @media (max-width: 860px) {
-    .donation-layout {
-      grid-template-columns: 1fr;
-    }
+    .donation-layout { grid-template-columns: 1fr; }
   }
-
-  /* ── SMALL TABLET (≤600px) ── */
   @media (max-width: 600px) {
-    .amount-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .other-ways-grid {
-      grid-template-columns: 1fr;
-      max-width: 400px;
-    }
+    .amount-grid { grid-template-columns: repeat(2, 1fr); }
+    .other-ways-grid { grid-template-columns: 1fr; max-width: 400px; }
   }
-
-  /* ── MOBILE (≤480px) ── */
   @media (max-width: 480px) {
-    .donate-hero-btns {
-      flex-direction: column;
-    }
-    .dh-btn-green, .dh-btn-blue {
-      width: 100%;
-      text-align: center;
-    }
-    .form-row-2 {
-      grid-template-columns: 1fr;
-    }
-    .amount-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .donate-hero-btns { flex-direction: column; }
+    .dh-btn-primary, .dh-btn-outline { width: 100%; text-align: center; }
+    .form-row-2 { grid-template-columns: 1fr; }
+    .amount-grid { grid-template-columns: repeat(2, 1fr); }
   }
 `;
 
-// ─── SHARED FIELD STYLES ─────────────────────────────────────────────────────
 const labelSt: React.CSSProperties = {
   display: 'block', fontSize: '12px', fontWeight: '600', color: '#374151', marginBottom: '6px',
 };
@@ -151,10 +130,10 @@ const DonationHero = () => (
     />
     <div style={{
       position: 'absolute', inset: 0,
-      background: 'linear-gradient(to right, rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.10) 100%)',
+      background: 'linear-gradient(to right, rgba(13,31,78,0.88) 0%, rgba(30,58,138,0.55) 60%, rgba(13,31,78,0.15) 100%)',
     }} />
     <div className="donate-hero-content">
-      <p style={{ color: '#ffffff', fontSize: '13px', fontWeight: '600', letterSpacing: '0.15em', marginBottom: '20px' }}>
+      <p style={{ color: '#93c5fd', fontSize: '13px', fontWeight: '600', letterSpacing: '0.15em', marginBottom: '20px' }}>
         JOMABEL HEALTHCARE FOUNDATION
       </p>
       <h1 style={{ color: '#ffffff', fontSize: 'clamp(18px, 3vw, 22px)', fontWeight: '400', lineHeight: 1.6, letterSpacing: '0.04em', marginBottom: '32px' }}>
@@ -162,8 +141,8 @@ const DonationHero = () => (
         <strong style={{ fontWeight: '700' }}>Next Generation<br />Healthcare Campus</strong>
       </h1>
       <div className="donate-hero-btns">
-        <button className="dh-btn-green">Join The Campaign</button>
-        <button className="dh-btn-blue">Donate</button>
+        <button className="dh-btn-primary">Join The Campaign</button>
+        <button className="dh-btn-outline">Donate</button>
       </div>
     </div>
   </section>
@@ -209,28 +188,28 @@ const DonationForm = () => {
     <section style={{ backgroundColor: '#ffffff', fontFamily: "'Inter', sans-serif" }}>
       <div className="donation-layout">
 
-        {/* LEFT — green panel */}
+        {/* LEFT — navy panel */}
         <div className="donation-left">
-          <p style={{ color: '#bbf7d0', fontSize: '13px', fontWeight: '700', letterSpacing: '0.1em', margin: 0 }}>
+          <p style={{ color: '#93c5fd', fontSize: '13px', fontWeight: '700', letterSpacing: '0.1em', margin: 0 }}>
             Make A Difference
           </p>
           <h2 style={{ color: '#ffffff', fontSize: 'clamp(20px, 3vw, 28px)', fontWeight: '400', lineHeight: 1.4, margin: 0 }}>
             Join Us in Building Nigeria's<br />
             <strong style={{ fontWeight: '800' }}>Next Generation<br />Healthcare Campus</strong>
           </h2>
-          <p style={{ color: '#d1fae5', fontSize: '13.5px', lineHeight: '1.7', margin: 0 }}>
+          <p style={{ color: '#bfdbfe', fontSize: '13.5px', lineHeight: '1.7', margin: 0 }}>
             Your gift directly funds facility construction, medical equipment and community health programs in Ufuma, Anambra State.
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {impacts[currency].map((item, i) => (
               <div key={i} style={{
-                backgroundColor: 'rgba(255,255,255,0.12)',
-                border: '1px solid rgba(255,255,255,0.2)',
+                backgroundColor: 'rgba(255,255,255,0.08)',
+                border: '1px solid rgba(255,255,255,0.15)',
                 borderRadius: '8px', padding: '12px 16px',
                 display: 'flex', alignItems: 'center', gap: '14px',
               }}>
-                <span style={{ color: '#86efac', fontSize: '13px', fontWeight: '700', minWidth: '60px' }}>{item.amount}</span>
-                <span style={{ color: '#d1fae5', fontSize: '12.5px', lineHeight: '1.5' }}>{item.desc}</span>
+                <span style={{ color: '#93c5fd', fontSize: '13px', fontWeight: '700', minWidth: '60px' }}>{item.amount}</span>
+                <span style={{ color: '#bfdbfe', fontSize: '12.5px', lineHeight: '1.5' }}>{item.desc}</span>
               </div>
             ))}
           </div>
@@ -251,13 +230,13 @@ const DonationForm = () => {
                   style={{
                     display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px',
                     padding: '8px 16px', borderRadius: '10px',
-                    border: currency === c ? '2px solid #22c55e' : '2px solid #e5e7eb',
-                    backgroundColor: currency === c ? '#f0fdf4' : '#ffffff',
+                    border: currency === c ? '2px solid #1e3a8a' : '2px solid #e5e7eb',
+                    backgroundColor: currency === c ? '#eff6ff' : '#ffffff',
                     cursor: 'pointer', transition: 'all 0.2s',
-                    boxShadow: currency === c ? '0 0 0 3px rgba(34,197,94,0.15)' : 'none',
+                    boxShadow: currency === c ? '0 0 0 3px rgba(30,58,138,0.12)' : 'none',
                   }}>
                   <span style={{ fontSize: '26px', lineHeight: 1 }}>{c === 'usd' ? '🇺🇸' : '🇳🇬'}</span>
-                  <span style={{ fontSize: '11px', fontWeight: '700', color: currency === c ? '#16a34a' : '#6b7280', letterSpacing: '0.05em' }}>
+                  <span style={{ fontSize: '11px', fontWeight: '700', color: currency === c ? '#1e3a8a' : '#6b7280', letterSpacing: '0.05em' }}>
                     {c === 'usd' ? 'USD $' : 'NGN ₦'}
                   </span>
                 </button>
@@ -271,9 +250,10 @@ const DonationForm = () => {
               <button key={amt} onClick={() => { setSelected(amt); setCustom(''); }}
                 style={{
                   padding: '14px', borderRadius: '8px', cursor: 'pointer',
-                  border: selected === amt ? '2px solid #22c55e' : '1.5px solid #e5e7eb',
-                  backgroundColor: selected === amt ? '#f0fdf4' : '#ffffff',
-                  color: '#22c55e', fontSize: 'clamp(12px, 2vw, 16px)', fontWeight: '700',
+                  border: selected === amt ? '2px solid #1e3a8a' : '1.5px solid #e5e7eb',
+                  backgroundColor: selected === amt ? '#eff6ff' : '#ffffff',
+                  color: selected === amt ? '#1e3a8a' : '#374151',
+                  fontSize: 'clamp(12px, 2vw, 16px)', fontWeight: '700',
                   transition: 'all 0.15s',
                 }}>
                 {formatAmount(amt)}
@@ -289,7 +269,7 @@ const DonationForm = () => {
             }}>{symbol}</span>
             <input type="number" placeholder="enter a custom amount" value={custom}
               onChange={e => { setCustom(e.target.value); setSelected(null); }}
-              style={{ width: '100%', padding: '13px 16px 13px 28px', border: '1.5px solid #e5e7eb', borderRadius: '8px', fontSize: '14px', color: '#111827', outline: 'none', boxSizing: 'border-box' }}
+              style={{ width: '100%', padding: '13px 16px 13px 28px', border: '1.5px solid #e5e7eb', borderRadius: '8px', fontSize: '14px', color: '#111827', outline: 'none', boxSizing: 'border-box' as const }}
             />
           </div>
 
@@ -348,10 +328,14 @@ const DonationForm = () => {
           </div>
 
           <button style={{
-            backgroundColor: '#22c55e', color: '#ffffff', border: 'none',
+            backgroundColor: '#1e3a8a', color: '#ffffff', border: 'none',
             borderRadius: '10px', padding: '16px', fontSize: '15px', fontWeight: '700',
             cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-          }}>
+            fontFamily: 'inherit', transition: 'background 0.2s',
+          }}
+            onMouseOver={e => (e.currentTarget.style.backgroundColor = '#0d1f4e')}
+            onMouseOut={e => (e.currentTarget.style.backgroundColor = '#1e3a8a')}
+          >
             Donate Securely Now 🔒
           </button>
         </div>
@@ -369,22 +353,22 @@ const OtherWays = () => (
     <div className="other-ways-grid">
       {[
         {
-          icon: <svg width="56" height="56" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="#a855f7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+          icon: <svg width="56" height="56" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="#1e3a8a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="#1e3a8a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
           title: 'Wire Transfer', desc: 'Donate directly from your bank',
         },
         {
-          icon: <svg width="56" height="56" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="#374151" strokeWidth="1.5"/><path d="M12 10v4M10 12h4" stroke="#22c55e" strokeWidth="2" strokeLinecap="round"/><path d="M17 15l2 2" stroke="#374151" strokeWidth="1.5" strokeLinecap="round"/></svg>,
+          icon: <svg width="56" height="56" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="#374151" strokeWidth="1.5"/><path d="M12 10v4M10 12h4" stroke="#1e3a8a" strokeWidth="2" strokeLinecap="round"/><path d="M17 15l2 2" stroke="#374151" strokeWidth="1.5" strokeLinecap="round"/></svg>,
           title: 'Cheque', desc: 'Mail a gift with a personal cheque',
         },
         {
-          icon: <svg width="56" height="56" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="2" stroke="#2563eb" strokeWidth="1.5"/><path d="M9 7h6M9 11h6M9 15h4" stroke="#2563eb" strokeWidth="1.5" strokeLinecap="round"/><circle cx="17" cy="19" r="3" fill="#22c55e"/><path d="M15.5 19l1 1 2-2" stroke="#fff" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+          icon: <svg width="56" height="56" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="2" stroke="#1e3a8a" strokeWidth="1.5"/><path d="M9 7h6M9 11h6M9 15h4" stroke="#1e3a8a" strokeWidth="1.5" strokeLinecap="round"/><circle cx="17" cy="19" r="3" fill="#22c55e"/><path d="M15.5 19l1 1 2-2" stroke="#fff" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>,
           title: 'Planned Giving', desc: 'Include JoMabel in your long term plans',
         },
       ].map((item, i) => (
         <div key={i} style={{
-          backgroundColor: '#f0fdf4', borderRadius: '14px', padding: '36px 28px',
+          backgroundColor: '#f0f4ff', borderRadius: '14px', padding: '36px 28px',
           display: 'flex', flexDirection: 'column', alignItems: 'center',
-          textAlign: 'center', gap: '14px', border: '1px solid #e5e7eb',
+          textAlign: 'center', gap: '14px', border: '1px solid #dbeafe',
         }}>
           {item.icon}
           <h3 style={{ fontSize: '15px', fontWeight: '700', color: '#111827', margin: 0 }}>{item.title}</h3>
@@ -407,7 +391,7 @@ const faqs = [
 const FAQ = () => {
   const [open, setOpen] = useState(0);
   return (
-    <section style={{ backgroundColor: '#1e3a8a', fontFamily: "'Inter', sans-serif" }}>
+    <section style={{ backgroundColor: '#0d1f4e', fontFamily: "'Inter', sans-serif" }}>
       <div className="faq-header-block">
         <h2 style={{ color: '#ffffff', fontSize: 'clamp(20px, 3vw, 26px)', fontWeight: '700', marginBottom: '14px' }}>
           Frequently Asked Questions
@@ -418,7 +402,7 @@ const FAQ = () => {
       </div>
       <div className="faq-body">
         {faqs.map((faq, i) => (
-          <div key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
+          <div key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.12)' }}>
             <button onClick={() => setOpen(open === i ? -1 : i)}
               style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '22px 0', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', gap: '16px' }}>
               <span style={{ color: '#ffffff', fontSize: 'clamp(13px, 2vw, 15px)', fontWeight: '600' }}>{faq.q}</span>
@@ -428,8 +412,8 @@ const FAQ = () => {
               </svg>
             </button>
             {open === i && (
-              <div style={{ backgroundColor: 'rgba(255,255,255,0.07)', borderRadius: '8px', padding: '20px 24px', marginBottom: '12px' }}>
-                <p style={{ color: '#e0e7ff', fontSize: '14px', lineHeight: '1.75', margin: 0 }}>{faq.a}</p>
+              <div style={{ backgroundColor: 'rgba(255,255,255,0.06)', borderRadius: '8px', padding: '20px 24px', marginBottom: '12px' }}>
+                <p style={{ color: '#bfdbfe', fontSize: '14px', lineHeight: '1.75', margin: 0 }}>{faq.a}</p>
               </div>
             )}
           </div>
