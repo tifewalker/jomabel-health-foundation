@@ -11,8 +11,9 @@ const Header = () => {
     { id: 'home',        label: 'Home',        path: '/' },
     { id: 'programs',    label: 'Programs',    path: '/programs' },
     { id: 'campaign',    label: 'Campaign',    path: '/campaign' },
+     { id: 'about',       label: 'About Us',    path: '/about' },
     { id: 'Contact Us', label: 'Contact Us', path: '/ContactUs' },
-    { id: 'about',       label: 'About Us',    path: '/about' },
+   
   ];
 
   const isActive = (path: string) => {

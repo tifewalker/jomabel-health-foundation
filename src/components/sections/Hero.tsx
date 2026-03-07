@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import heroImage1 from "../../assests/images/imag1.png";
 import heroImage2 from "../../assests/images/img2.png";
 import heroImage3 from "../../assests/images/img3.png";
 
+
 const Hero = () => {
+  const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const slides = [
@@ -123,28 +126,22 @@ const Hero = () => {
             </p>
 
             {/* CTA Buttons — green + blue as in the image */}
-            <div className="flex flex-wrap gap-4">
-              <button
-                className="font-semibold px-7 py-3 rounded transition-all duration-200 hover:opacity-90 hover:scale-105"
-                style={{
-                  backgroundColor: '#22c55e',
-                  color: '#ffffff',
-                  fontSize: '15px',
-                }}
-              >
-                Join The Campaign
-              </button>
-              <button
-                className="font-semibold px-7 py-3 rounded transition-all duration-200 hover:opacity-90 hover:scale-105"
-                style={{
-                  backgroundColor: '#2563eb',
-                  color: '#ffffff',
-                  fontSize: '15px',
-                }}
-              >
-                Learn Our Story
-              </button>
-            </div>
+          <div className="flex flex-wrap gap-4">
+  <button
+    onClick={() => navigate('/campaign')}
+    className="font-semibold px-7 py-3 rounded transition-all duration-200 hover:opacity-90 hover:scale-105"
+    style={{ backgroundColor: '#22c55e', color: '#ffffff', fontSize: '15px' }}
+  >
+    Join The Campaign
+  </button>
+  <button
+    onClick={() => navigate('/about')}
+    className="font-semibold px-7 py-3 rounded transition-all duration-200 hover:opacity-90 hover:scale-105"
+    style={{ backgroundColor: '#2563eb', color: '#ffffff', fontSize: '15px' }}
+  >
+    Learn Our Story
+  </button>
+</div>
 
           </div>
         </div>

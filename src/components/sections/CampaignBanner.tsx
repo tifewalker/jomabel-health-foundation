@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CampaignBanner = () => {
+  const navigate = useNavigate();
   const raised = 7500000;
   const goal = 10000000;
   const percentage = Math.round((raised / goal) * 100);
@@ -131,6 +133,7 @@ const formatNaira = (amount: number): string =>
           }}
           onMouseOver={e => { e.currentTarget.style.opacity = '0.9'; e.currentTarget.style.transform = 'scale(1.03)'; }}
           onMouseOut={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.transform = 'scale(1)'; }}
+            onClick={() => navigate('/donate')}
         >
           Donate Now
         </button>

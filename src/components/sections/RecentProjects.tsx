@@ -1,4 +1,6 @@
 import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import cleanWaterImg from '../../assests/images/cleanwater.jpeg';
 
 const projects = [
   {
@@ -7,23 +9,23 @@ const projects = [
     status: '40% Completed',
     statusColor: '#22c55e',
     title: 'Clinic Project in East',
-    description: 'nisi ut aent, sunt in culpa qui officia deserunt',
+    description: 'Constructing a modern primary care clinic to serve underserved communities in Eastern Nigeria with essential health services.',
   },
   {
     id: 2,
     image: 'https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=600&q=80',
     status: 'Completed',
     statusColor: '#2563eb',
-    title: 'School Computer Lab. in Kano',
-    description: 'nisi ut aent, sunt in culpa qui officia deserunt',
+    title: 'School Computer Lab in Kano',
+    description: 'Equipped a fully functional computer lab to support digital literacy and healthcare education for students in Kano State.',
   },
   {
     id: 3,
-   image: 'https://images.unsplash.com/photo-1594398901394-4e34939a4fd0?w=600&q=80',
+    image: cleanWaterImg,
     status: 'Completed',
     statusColor: '#2563eb',
     title: 'Clean Water Provision',
-    description: 'nisi ut aent, sunt in culpa qui officia deserunt',
+    description: 'Delivered clean, safe water access to hospitals and rural communities, reducing waterborne diseases and improving patient care.',
   },
   {
     id: 4,
@@ -31,7 +33,7 @@ const projects = [
     status: 'In Progress',
     statusColor: '#f59e0b',
     title: 'Mobile Health Outreach',
-    description: 'nisi ut aent, sunt in culpa qui officia deserunt',
+    description: 'Deploying mobile medical teams to remote villages for free consultations, screenings, and essential medications.',
   },
   {
     id: 5,
@@ -39,27 +41,19 @@ const projects = [
     status: '70% Completed',
     statusColor: '#22c55e',
     title: 'Community Training Centre',
-    description: 'nisi ut aent, sunt in culpa qui officia deserunt',
+    description: 'Building a skills acquisition hub to train young Nigerians in healthcare, leadership, and community development.',
   },
 ];
 
 const RecentProjects = () => {
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
-interface Project {
-    id: number;
-    image: string;
-    status: string;
-    statusColor: string;
-    title: string;
-    description: string;
-}
-
-const scroll = (dir: number): void => {
+  const scroll = (dir: number): void => {
     if (scrollRef.current) {
-        (scrollRef.current as HTMLDivElement).scrollBy({ left: dir * 320, behavior: 'smooth' });
+      scrollRef.current.scrollBy({ left: dir * 320, behavior: 'smooth' });
     }
-};
+  };
 
   return (
     <section style={{
@@ -70,13 +64,8 @@ const scroll = (dir: number): void => {
 
       {/* Heading */}
       <div style={{ textAlign: 'center', marginBottom: '40px', padding: '0 24px' }}>
-        <h2 style={{
-          fontSize: '26px',
-          fontWeight: '700',
-          color: '#111827',
-          margin: 0,
-        }}>
-          Recent Projects
+        <h2 style={{ fontSize: '26px', fontWeight: '700', color: '#111827', margin: 0 }}>
+          Recent Campaigns
         </h2>
       </div>
 
@@ -87,21 +76,11 @@ const scroll = (dir: number): void => {
         <button
           onClick={() => scroll(-1)}
           style={{
-            position: 'absolute',
-            left: '8px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            zIndex: 10,
-            backgroundColor: '#ffffff',
-            border: '1px solid #e5e7eb',
-            borderRadius: '50%',
-            width: '38px',
-            height: '38px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+            position: 'absolute', left: '8px', top: '50%', transform: 'translateY(-50%)',
+            zIndex: 10, backgroundColor: '#ffffff', border: '1px solid #e5e7eb',
+            borderRadius: '50%', width: '38px', height: '38px',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
           }}
           aria-label="Scroll left"
         >
@@ -114,14 +93,10 @@ const scroll = (dir: number): void => {
         <div
           ref={scrollRef}
           style={{
-            display: 'flex',
-            gap: '24px',
-            overflowX: 'auto',
-            scrollSnapType: 'x mandatory',
-            paddingBottom: '12px',
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-          }}
+            display: 'flex', gap: '24px', overflowX: 'auto',
+            scrollSnapType: 'x mandatory', paddingBottom: '12px',
+            scrollbarWidth: 'none', msOverflowStyle: 'none',
+          } as React.CSSProperties}
         >
           <style>{`div::-webkit-scrollbar { display: none; }`}</style>
 
@@ -129,16 +104,11 @@ const scroll = (dir: number): void => {
             <div
               key={project.id}
               style={{
-                minWidth: '280px',
-                maxWidth: '280px',
-                backgroundColor: '#ffffff',
-                borderRadius: '16px',
-                overflow: 'hidden',
+                minWidth: '280px', maxWidth: '280px', backgroundColor: '#ffffff',
+                borderRadius: '16px', overflow: 'hidden',
                 boxShadow: '0 2px 12px rgba(0,0,0,0.07)',
-                scrollSnapAlign: 'start',
-                flexShrink: 0,
-                display: 'flex',
-                flexDirection: 'column',
+                scrollSnapAlign: 'start', flexShrink: 0,
+                display: 'flex', flexDirection: 'column',
               }}
             >
               {/* Image + badge */}
@@ -146,23 +116,12 @@ const scroll = (dir: number): void => {
                 <img
                   src={project.image}
                   alt={project.title}
-                  style={{
-                    width: '100%',
-                    height: '200px',
-                    objectFit: 'cover',
-                    display: 'block',
-                  }}
+                  style={{ width: '100%', height: '200px', objectFit: 'cover', display: 'block' }}
                 />
                 <span style={{
-                  position: 'absolute',
-                  bottom: '10px',
-                  left: '12px',
-                  backgroundColor: project.statusColor,
-                  color: '#ffffff',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  padding: '3px 10px',
-                  borderRadius: '4px',
+                  position: 'absolute', bottom: '10px', left: '12px',
+                  backgroundColor: project.statusColor, color: '#ffffff',
+                  fontSize: '11px', fontWeight: '600', padding: '3px 10px', borderRadius: '4px',
                 }}>
                   {project.status}
                 </span>
@@ -170,38 +129,22 @@ const scroll = (dir: number): void => {
 
               {/* Card body */}
               <div style={{ padding: '20px 20px 24px', flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <h3 style={{
-                  fontSize: '16px',
-                  fontWeight: '700',
-                  color: '#111827',
-                  margin: 0,
-                }}>
+                <h3 style={{ fontSize: '16px', fontWeight: '700', color: '#111827', margin: 0 }}>
                   {project.title}
                 </h3>
-                <p style={{
-                  fontSize: '13px',
-                  color: '#6b7280',
-                  margin: 0,
-                  lineHeight: '1.6',
-                }}>
+                <p style={{ fontSize: '13px', color: '#6b7280', margin: 0, lineHeight: '1.6' }}>
                   {project.description}
                 </p>
 
                 {/* See More button */}
                 <div style={{ marginTop: '12px' }}>
                   <button
+                    onClick={() => navigate('/campaign')}
                     style={{
-                      backgroundColor: '#22c55e',
-                      color: '#ffffff',
-                      border: 'none',
-                      borderRadius: '6px',
-                      padding: '8px 20px',
-                      fontSize: '13px',
-                      fontWeight: '600',
-                      cursor: 'pointer',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '6px',
+                      backgroundColor: '#22c55e', color: '#ffffff', border: 'none',
+                      borderRadius: '6px', padding: '8px 20px', fontSize: '13px',
+                      fontWeight: '600', cursor: 'pointer',
+                      display: 'inline-flex', alignItems: 'center', gap: '6px',
                     }}
                     onMouseOver={e => e.currentTarget.style.opacity = '0.85'}
                     onMouseOut={e => e.currentTarget.style.opacity = '1'}
@@ -221,21 +164,11 @@ const scroll = (dir: number): void => {
         <button
           onClick={() => scroll(1)}
           style={{
-            position: 'absolute',
-            right: '8px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            zIndex: 10,
-            backgroundColor: '#ffffff',
-            border: '1px solid #e5e7eb',
-            borderRadius: '50%',
-            width: '38px',
-            height: '38px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            cursor: 'pointer',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+            position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)',
+            zIndex: 10, backgroundColor: '#ffffff', border: '1px solid #e5e7eb',
+            borderRadius: '50%', width: '38px', height: '38px',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
           }}
           aria-label="Scroll right"
         >

@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+import cleanWaterImg from '../assests/images/cleanwater.jpeg';
 
 const campaignStyles = `
   /* ── HERO ── */
@@ -122,7 +124,6 @@ const campaignStyles = `
       grid-template-columns: 1fr;
       gap: 24px;
     }
-    /* On mobile, image always on top for ActivityRight */
     .activity-grid-img-right .activity-text-col { order: 2; }
     .activity-grid-img-right .activity-img      { order: 1; }
     .activity-img img { height: 240px; }
@@ -149,32 +150,45 @@ const campaignStyles = `
 `;
 
 // ─── CAMPAIGN HERO ───────────────────────────────────────────────────────────
-const CampaignHero = () => (
-  <section className="campaign-hero">
-    <img
-      src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1600&q=80"
-      alt="Healthcare students"
-      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
-    />
-    <div style={{
-      position: 'absolute', inset: 0,
-      background: 'linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.10) 100%)',
-    }} />
-    <div className="campaign-hero-content">
-      <p style={{ color: '#ffffff', fontSize: '13px', fontWeight: '600', letterSpacing: '0.15em', marginBottom: '20px' }}>
-        JOMABEL HEALTHCARE FOUNDATION
-      </p>
-      <h1 style={{ color: '#ffffff', fontSize: 'clamp(18px, 3vw, 22px)', fontWeight: '400', lineHeight: 1.6, letterSpacing: '0.04em', marginBottom: '32px' }}>
-        Join Us in Building Nigeria's<br />
-        <strong style={{ fontWeight: '700' }}>Next Generation<br />Healthcare Campus</strong>
-      </h1>
-      <div className="campaign-hero-buttons">
-        <button className="c-btn-green">Join The Campaign</button>
-        <button className="c-btn-blue">Donate</button>
+const CampaignHero = () => {
+  const navigate = useNavigate();
+
+  const scrollToContent = () => {
+    const el = document.getElementById('campaign-content');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  return (
+    <section className="campaign-hero">
+      <img
+        src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1600&q=80"
+        alt="Healthcare students"
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
+      />
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.10) 100%)',
+      }} />
+      <div className="campaign-hero-content">
+        <p style={{ color: '#ffffff', fontSize: '13px', fontWeight: '600', letterSpacing: '0.15em', marginBottom: '20px' }}>
+          JOMABEL HEALTHCARE FOUNDATION
+        </p>
+        <h1 style={{ color: '#ffffff', fontSize: 'clamp(18px, 3vw, 22px)', fontWeight: '400', lineHeight: 1.6, letterSpacing: '0.04em', marginBottom: '32px' }}>
+          Join Us in Building Nigeria's<br />
+          <strong style={{ fontWeight: '700' }}>Next Generation<br />Healthcare Campus</strong>
+        </h1>
+        <div className="campaign-hero-buttons">
+          <button className="c-btn-green" onClick={scrollToContent}>
+            Join The Campaign
+          </button>
+          <button className="c-btn-blue" onClick={() => navigate('/donate')}>
+            Donate
+          </button>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 // ─── MOSAIC ──────────────────────────────────────────────────────────────────
 const PhotoCard = ({ src, alt, label, small = false }: { src: string; alt: string; label: React.ReactNode; small?: boolean }) => (
@@ -191,9 +205,9 @@ const PhotoCard = ({ src, alt, label, small = false }: { src: string; alt: strin
 );
 
 const RecentActivitiesMosaic = () => (
-  <section className="mosaic-section">
+  <section className="mosaic-section" id="campaign-content">
     <h2 style={{ textAlign: 'center', fontSize: 'clamp(20px, 3vw, 26px)', fontWeight: '700', color: '#111827', marginBottom: '40px' }}>
-      Recent Activities
+      Ongoing Campaigns
     </h2>
     <div className="mosaic-grid">
       <div className="mosaic-large">
@@ -211,7 +225,7 @@ const RecentActivitiesMosaic = () => (
 // ─── ACTIVITY SECTIONS ───────────────────────────────────────────────────────
 const ActivityLeft = ({ title, body, img }: { title: string; body: string; img: string }) => (
   <section className="activity-section-white">
-    <h2 className="activity-heading">Recent Activities</h2>
+    <h2 className="activity-heading">Ongoing Campaigns</h2>
     <div className="activity-grid-img-left">
       <div className="activity-img"><img src={img} alt={title} /></div>
       <div className="activity-text-col">
@@ -225,7 +239,7 @@ const ActivityLeft = ({ title, body, img }: { title: string; body: string; img: 
 
 const ActivityRight = ({ title, body, img }: { title: string; body: string; img: string }) => (
   <section className="activity-section-grey">
-    <h2 className="activity-heading">Recent Activities</h2>
+    <h2 className="activity-heading">Ongoing Campaigns</h2>
     <div className="activity-grid-img-right">
       <div className="activity-text-col">
         <h3 className="activity-title">{title}</h3>
@@ -247,12 +261,12 @@ const Campaign = () => (
     <ActivityLeft
       title="Delivering Lifesaving Medical Kits to Hospitals That Need Them Most."
       body="Access to basic medical supplies can mean the difference between life and death. Through this initiative, we provide essential medical kits to hospitals and healthcare centers serving vulnerable communities. These kits help healthcare workers respond quickly to emergencies, improve patient care, and save more lives every day."
-      img="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=700&q=80"
+      img="https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=700&q=80"
     />
     <ActivityRight
-      title="Clean water provision"
+      title="Clean Water Provision"
       body="Through our water initiatives, we support hospitals and local communities with reliable sources of clean water, helping to improve sanitation, prevent waterborne diseases, and create healthier environments for patients and families."
-      img="https://images.unsplash.com/photo-1541544537156-7627a7a4aa1c?w=700&q=80"
+      img={cleanWaterImg}
     />
     <ActivityLeft
       title="Training the Next Generation of Healthcare Professionals"
