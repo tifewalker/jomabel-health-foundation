@@ -1,188 +1,127 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
-import cleanWaterImg from '../assests/images/cleanwater.jpeg';
 
-const campaignStyles = `
-  /* ── HERO ── */
-  .campaign-hero {
-    position: relative;
-    min-height: 380px;
-    display: flex;
-    align-items: flex-end;
-    overflow: hidden;
-  }
-  .campaign-hero-content {
-    position: relative;
-    z-index: 2;
-    padding: clamp(32px, 5vw, 56px) clamp(20px, 5vw, 64px);
-    max-width: 680px;
-  }
-  .campaign-hero-buttons {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-  }
-  .c-btn-green {
-    background-color: #22c55e; color: #fff; border: none;
-    border-radius: 6px; padding: 11px 24px; font-size: 13.5px;
-    font-weight: 500; cursor: pointer;
-  }
-  .c-btn-blue {
-    background-color: #2563eb; color: #fff; border: none;
-    border-radius: 6px; padding: 11px 24px; font-size: 13.5px;
-    font-weight: 500; cursor: pointer;
-  }
+// ── Architectural Renders ──
+import render1 from '../assests/images/an1.jpg';
+import render2 from '../assests/images/an2.jpg';
+import render3 from '../assests/images/an3.jpg';
+import render4 from '../assests/images/an4.jpg';
+import render5 from '../assests/images/an5.jpg';
+import render6 from '../assests/images/an6.jpg';
 
-  /* ── MOSAIC ── */
-  .mosaic-section {
-    background-color: #ffffff;
-    padding: clamp(40px, 5vw, 64px) clamp(16px, 4vw, 48px);
-    font-family: 'Inter', sans-serif;
-  }
-  .mosaic-grid {
-    max-width: 1000px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 280px 280px;
-    gap: 12px;
-  }
-  .mosaic-large {
-    grid-row: 1 / 3;
-    position: relative;
-    border-radius: 14px;
-    overflow: hidden;
-  }
-  .mosaic-small-pair {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
+// ── Construction Videos ──
+import construction1 from '../assests/images/construction1.mp4';
+import construction2 from '../assests/images/construction2.mp4';
+import construction3 from '../assests/images/construction3.mp4';
+import construction4 from '../assests/images/construction4.mp4';
 
-  /* ── ACTIVITY SECTIONS ── */
-  .activity-section-white {
-    background-color: #ffffff;
-    padding: clamp(36px, 5vw, 56px) clamp(16px, 4vw, 48px);
-    font-family: 'Inter', sans-serif;
-  }
-  .activity-section-grey {
-    background-color: #f9fafb;
-    padding: clamp(36px, 5vw, 56px) clamp(16px, 4vw, 48px);
-    font-family: 'Inter', sans-serif;
-  }
-  .activity-grid-img-left,
-  .activity-grid-img-right {
-    max-width: 1000px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 56px;
-    align-items: center;
-  }
-  .activity-img {
-    border-radius: 14px;
-    overflow: hidden;
-  }
-  .activity-img img {
-    width: 100%;
-    height: 320px;
-    object-fit: cover;
-    display: block;
-  }
-  .activity-heading {
-    text-align: center;
-    font-size: clamp(18px, 3vw, 22px);
-    font-weight: 700;
-    color: #111827;
-    margin-bottom: 36px;
-  }
-  .activity-title {
-    font-size: clamp(18px, 3vw, 22px);
-    font-weight: 800;
-    color: #111827;
-    line-height: 1.3;
-    margin-bottom: 16px;
-  }
-
-  /* ── TABLET (≤760px) ── */
-  @media (max-width: 760px) {
-    .mosaic-grid {
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 200px 200px 160px;
-    }
-    .mosaic-large {
-      grid-row: 1 / 2;
-      grid-column: 1 / 3;
-    }
-    .mosaic-small-pair {
-      grid-column: 1 / 3;
-    }
-    .activity-grid-img-left,
-    .activity-grid-img-right {
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-    .activity-grid-img-right .activity-text-col { order: 2; }
-    .activity-grid-img-right .activity-img      { order: 1; }
-    .activity-img img { height: 240px; }
-  }
-
-  /* ── MOBILE (≤480px) ── */
-  @media (max-width: 480px) {
-    .campaign-hero-buttons { flex-direction: column; }
-    .c-btn-green, .c-btn-blue { width: 100%; text-align: center; }
-    .mosaic-grid {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto;
-    }
-    .mosaic-large {
-      grid-column: 1;
-      height: 220px;
-    }
-    .mosaic-small-pair {
-      grid-column: 1;
-      grid-template-columns: 1fr 1fr;
-    }
-    .activity-img img { height: 200px; }
-  }
-`;
+// ── Real Outreach Photos ──
+import outreach1 from '../assests/images/outreach1.jpeg';
+import outreach2 from '../assests/images/outreach2.jpeg';
+import outreach3 from '../assests/images/outreach3.jpeg';
+import outreach4 from '../assests/images/outreach4.jpeg';
+import outreach5 from '../assests/images/outreach5.jpeg';
 
 // ─── CAMPAIGN HERO ───────────────────────────────────────────────────────────
 const CampaignHero = () => {
   const navigate = useNavigate();
-
-  const scrollToContent = () => {
-    const el = document.getElementById('campaign-content');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
-    <section className="campaign-hero">
+    <section style={{
+      position: 'relative',
+      minHeight: '520px',
+      display: 'flex',
+      alignItems: 'flex-end',
+      overflow: 'hidden',
+      fontFamily: 'var(--font-body)',
+    }}>
       <img
-        src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1600&q=80"
-        alt="Healthcare students"
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }}
+        src={render1}
+        alt="JoMabel Medical Campus architectural render"
+        style={{
+          position: 'absolute', inset: 0,
+          width: '100%', height: '100%',
+          objectFit: 'cover', objectPosition: 'center',
+        }}
       />
       <div style={{
         position: 'absolute', inset: 0,
-        background: 'linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.10) 100%)',
+        background: 'linear-gradient(to right, rgba(27,42,74,0.95) 0%, rgba(27,42,74,0.70) 60%, rgba(27,42,74,0.20) 100%)',
       }} />
-      <div className="campaign-hero-content">
-        <p style={{ color: '#ffffff', fontSize: '13px', fontWeight: '600', letterSpacing: '0.15em', marginBottom: '20px' }}>
-          JOMABEL HEALTHCARE FOUNDATION
-        </p>
-        <h1 style={{ color: '#ffffff', fontSize: 'clamp(18px, 3vw, 22px)', fontWeight: '400', lineHeight: 1.6, letterSpacing: '0.04em', marginBottom: '32px' }}>
-          Join Us in Building Nigeria's<br />
-          <strong style={{ fontWeight: '700' }}>Next Generation<br />Healthcare Campus</strong>
+      <div style={{
+        position: 'relative', zIndex: 2,
+        padding: 'clamp(40px, 6vw, 72px) clamp(20px, 5vw, 64px)',
+        maxWidth: '720px',
+      }}>
+        <span style={{
+          display: 'inline-block',
+          background: 'rgba(41,197,246,0.18)',
+          border: '1px solid rgba(41,197,246,0.35)',
+          color: 'var(--color-primary)',
+          fontSize: '11px', fontWeight: '700',
+          letterSpacing: '0.12em', textTransform: 'uppercase',
+          padding: '5px 16px', borderRadius: '999px',
+          marginBottom: '20px',
+        }}>
+          Capital Campaign
+        </span>
+        <h1 style={{
+          fontFamily: 'var(--font-heading)',
+          color: '#ffffff',
+          fontSize: 'clamp(28px, 4.5vw, 52px)',
+          fontWeight: '700', lineHeight: '1.15',
+          marginBottom: '16px',
+        }}>
+          Join Us in Building<br />
+          Nigeria's Next Generation<br />
+          Healthcare Campus
         </h1>
-        <div className="campaign-hero-buttons">
-          <button className="c-btn-green" onClick={scrollToContent}>
-            Join The Campaign
+        <p style={{
+          color: 'rgba(255,255,255,0.78)',
+          fontSize: 'clamp(13px, 1.8vw, 15px)',
+          lineHeight: '1.8', marginBottom: '32px',
+          maxWidth: '500px',
+        }}>
+          A 16,000+ sq. meter world-class medical and training campus rising
+          in Ufuma, Anambra State, Nigeria — powered by compassion, designed
+          for generational impact.
+        </p>
+        <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
+          <button
+            onClick={() => navigate('/donate')}
+            style={{
+              backgroundColor: 'var(--color-green)',
+              color: '#ffffff', border: 'none',
+              borderRadius: 'var(--btn-radius)',
+              padding: '13px 28px', fontSize: '14px',
+              fontWeight: '700', cursor: 'pointer',
+              fontFamily: 'inherit', transition: 'var(--transition)',
+            }}
+            onMouseOver={e => (e.currentTarget.style.backgroundColor = 'var(--color-green-dark)')}
+            onMouseOut={e => (e.currentTarget.style.backgroundColor = 'var(--color-green)')}
+          >
+            Donate to the Campaign
           </button>
-          <button className="c-btn-blue" onClick={() => navigate('/donate')}>
-            Donate
+          <button
+            onClick={() => {
+              const el = document.getElementById('vision-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            style={{
+              backgroundColor: 'rgba(255,255,255,0.12)',
+              color: '#ffffff',
+              border: '1.5px solid rgba(255,255,255,0.45)',
+              borderRadius: 'var(--btn-radius)',
+              padding: '13px 28px', fontSize: '14px',
+              fontWeight: '700', cursor: 'pointer',
+              fontFamily: 'inherit', backdropFilter: 'blur(4px)',
+              transition: 'var(--transition)',
+            }}
+            onMouseOver={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.22)')}
+            onMouseOut={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)')}
+          >
+            See the Vision
           </button>
         </div>
       </div>
@@ -190,89 +129,476 @@ const CampaignHero = () => {
   );
 };
 
-// ─── MOSAIC ──────────────────────────────────────────────────────────────────
-const PhotoCard = ({ src, alt, label, small = false }: { src: string; alt: string; label: React.ReactNode; small?: boolean }) => (
-  <div style={{ position: 'relative', borderRadius: '14px', overflow: 'hidden', height: '100%' }}>
-    <img src={src} alt={alt} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%)' }} />
-    <span style={{
-      position: 'absolute', bottom: small ? '10px' : '16px', left: small ? '10px' : '16px',
-      color: '#ffffff', fontSize: small ? '11px' : '14px', fontWeight: '700', lineHeight: 1.3,
+// ─── THE VISION — STATS ──────────────────────────────────────────────────────
+const VisionStats = () => (
+  <section id="vision-section" style={{
+    backgroundColor: 'var(--color-navy)',
+    padding: 'clamp(40px, 5vw, 64px) clamp(20px, 5vw, 48px)',
+    fontFamily: 'var(--font-body)',
+  }}>
+    <div style={{ maxWidth: '1080px', margin: '0 auto', textAlign: 'center', marginBottom: '40px' }}>
+      <span style={{
+        fontSize: '11px', fontWeight: '700', color: 'var(--color-primary)',
+        letterSpacing: '0.14em', textTransform: 'uppercase',
+      }}>
+        The Vision
+      </span>
+      <h2 style={{
+        fontFamily: 'var(--font-heading)',
+        color: '#ffffff',
+        fontSize: 'clamp(22px, 3vw, 32px)',
+        fontWeight: '700', margin: '12px 0 0',
+      }}>
+        A Campus Built for Generations
+      </h2>
+    </div>
+
+    {/* Stats row */}
+    <div style={{
+      maxWidth: '1080px', margin: '0 auto 48px',
+      display: 'grid',
+      gridTemplateColumns: 'repeat(4, 1fr)',
+      gap: '16px',
     }}>
-      {label}
-    </span>
-  </div>
+      {[
+        { number: '16,000+', label: 'Square Meters', sub: 'Total Campus Size' },
+        { number: '2', label: 'Major Facilities', sub: 'Medical Center + Skills Center' },
+        { number: '6+', label: 'Program Areas', sub: 'Healthcare & Training' },
+        { number: '∞', label: 'Generational Impact', sub: 'Ufuma, Anambra State' },
+      ].map((s, i) => (
+        <div key={i} style={{
+          background: 'rgba(255,255,255,0.06)',
+          border: '1px solid rgba(41,197,246,0.20)',
+          borderRadius: 'var(--card-radius)',
+          padding: '24px 20px',
+          textAlign: 'center',
+        }}>
+          <p style={{
+            fontFamily: 'var(--font-heading)',
+            color: 'var(--color-primary)',
+            fontSize: 'clamp(28px, 3.5vw, 40px)',
+            fontWeight: '800', margin: '0 0 6px',
+          }}>{s.number}</p>
+          <p style={{ color: '#ffffff', fontSize: '13px', fontWeight: '700', margin: '0 0 4px' }}>{s.label}</p>
+          <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '12px', margin: 0 }}>{s.sub}</p>
+        </div>
+      ))}
+    </div>
+
+    {/* Description */}
+    <div style={{
+      maxWidth: '720px', margin: '0 auto',
+      textAlign: 'center',
+    }}>
+      <p style={{
+        color: 'rgba(255,255,255,0.72)',
+        fontSize: '15px', lineHeight: '1.85',
+      }}>
+        The JoMabel Medical and Training Campus in Ufuma, Anambra State will serve as
+        a transformative hub for healthcare delivery, professional training, and community
+        empowerment — bringing world-class facilities to southeastern Nigeria and creating
+        a lasting legacy of health, dignity, and opportunity.
+      </p>
+    </div>
+  </section>
 );
 
-const RecentActivitiesMosaic = () => (
-  <section className="mosaic-section" id="campaign-content">
-    <h2 style={{ textAlign: 'center', fontSize: 'clamp(20px, 3vw, 26px)', fontWeight: '700', color: '#111827', marginBottom: '40px' }}>
-      Ongoing Campaigns
-    </h2>
-    <div className="mosaic-grid">
-      <div className="mosaic-large">
-        <PhotoCard src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=700&q=80" alt="Skills and Youth Training" label="Skills and Youth Training" />
+// ─── ARCHITECTURAL RENDERS GALLERY ───────────────────────────────────────────
+const RendersGallery = () => {
+  const [active, setActive] = useState(0);
+  const renders = [
+    { src: render1, label: 'Main Entrance — Front View' },
+    { src: render6, label: 'J&M Nursing Training Centre, Ufuma' },
+    { src: render4, label: 'Full Front Facade' },
+    { src: render2, label: 'Side & Parking View' },
+    { src: render5, label: 'Aerial Top-Down View' },
+    { src: render3, label: 'Site Floor Plan' },
+  ];
+
+  return (
+    <section style={{
+      backgroundColor: 'var(--color-surface)',
+      padding: 'var(--section-padding-y) var(--section-padding-x)',
+      fontFamily: 'var(--font-body)',
+    }}>
+      <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+          <span style={{
+            fontSize: '11px', fontWeight: '700',
+            color: 'var(--color-primary-dark)',
+            letterSpacing: '0.14em', textTransform: 'uppercase',
+          }}>
+            Architectural Plans
+          </span>
+          <h2 style={{
+            fontFamily: 'var(--font-heading)',
+            fontSize: 'clamp(22px, 3vw, 30px)',
+            fontWeight: '700', color: 'var(--color-navy)',
+            margin: '12px 0 0',
+          }}>
+            The Campus Design
+          </h2>
+        </div>
+
+        {/* Main large image */}
+        <div style={{
+          borderRadius: '16px', overflow: 'hidden',
+          marginBottom: '16px', boxShadow: 'var(--shadow-lg)',
+          position: 'relative',
+        }}>
+          <img
+            src={renders[active].src}
+            alt={renders[active].label}
+            style={{ width: '100%', height: 'clamp(280px, 45vw, 480px)', objectFit: 'cover', display: 'block' }}
+          />
+          <div style={{
+            position: 'absolute', bottom: 0, left: 0, right: 0,
+            background: 'linear-gradient(to top, rgba(27,42,74,0.85) 0%, transparent 100%)',
+            padding: '24px 24px 20px',
+          }}>
+            <p style={{
+              color: '#ffffff', fontSize: '14px',
+              fontWeight: '600', margin: 0,
+            }}>
+              {renders[active].label}
+            </p>
+          </div>
+        </div>
+
+        {/* Thumbnails */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(6, 1fr)',
+          gap: '10px',
+        }}>
+          {renders.map((r, i) => (
+            <div
+              key={i}
+              onClick={() => setActive(i)}
+              style={{
+                borderRadius: '8px', overflow: 'hidden',
+                cursor: 'pointer',
+                border: i === active
+                  ? '2px solid var(--color-primary)'
+                  : '2px solid transparent',
+                opacity: i === active ? 1 : 0.65,
+                transition: 'var(--transition)',
+              }}
+            >
+              <img
+                src={r.src}
+                alt={r.label}
+                style={{ width: '100%', height: '72px', objectFit: 'cover', display: 'block' }}
+              />
+            </div>
+          ))}
+        </div>
       </div>
-      <PhotoCard src="https://images.unsplash.com/photo-1531983412531-1f49a365ffed?w=600&q=80" alt="Maternal and Child Health Initiative" label="Maternal and Child Health Initiative" />
-      <div className="mosaic-small-pair">
-        <PhotoCard src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&q=80" alt="Healthcare Infrastructure Projects" label={<>Healthcare<br />Infrastructure Projects</>} small />
-        <PhotoCard src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&q=80" alt="Youth Empowerment" label="Youth Empowerment" small />
+    </section>
+  );
+};
+
+// ─── CONSTRUCTION VIDEOS ─────────────────────────────────────────────────────
+const ConstructionVideos = () => (
+  <section style={{
+    backgroundColor: 'var(--color-white)',
+    padding: 'var(--section-padding-y) var(--section-padding-x)',
+    fontFamily: 'var(--font-body)',
+  }}>
+    <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
+      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <span style={{
+          fontSize: '11px', fontWeight: '700',
+          color: 'var(--color-primary-dark)',
+          letterSpacing: '0.14em', textTransform: 'uppercase',
+        }}>
+          Watch It Rise
+        </span>
+        <h2 style={{
+          fontFamily: 'var(--font-heading)',
+          fontSize: 'clamp(22px, 3vw, 30px)',
+          fontWeight: '700', color: 'var(--color-navy)',
+          margin: '12px 0 8px',
+        }}>
+          From Blueprint to Reality
+        </h2>
+        <p style={{
+          fontSize: '14px', color: 'var(--color-text-muted)',
+          maxWidth: '520px', margin: '0 auto', lineHeight: '1.75',
+        }}>
+          Watch our 16,000+ sq. meter medical campus rising in Ufuma, Anambra State.
+          Every brick is a step toward dignified healthcare for generations.
+        </p>
+      </div>
+
+      {/* 2x2 video grid */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 1fr)',
+        gap: '20px',
+      }}>
+        {[
+          { src: construction4, label: 'Construction Progress — Phase 1' },
+          { src: construction2, label: 'Construction Progress — Phase 2' },
+          { src: construction3, label: 'Construction Progress — Phase 3' },
+          { src: construction1, label: 'Construction Progress — Phase 4' },
+        ].map((v, i) => (
+          <div key={i} style={{
+            borderRadius: 'var(--card-radius)',
+            overflow: 'hidden',
+            boxShadow: 'var(--shadow-md)',
+            background: 'var(--color-navy)',
+          }}>
+            <video
+              src={v.src}
+              controls
+              muted
+              playsInline
+              style={{ width: '100%', display: 'block', maxHeight: '260px', objectFit: 'cover' }}
+            />
+            <div style={{ padding: '12px 16px' }}>
+              <p style={{
+                fontSize: '13px', fontWeight: '600',
+                color: '#ffffff', margin: 0,
+              }}>
+                {v.label}
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   </section>
 );
 
-// ─── ACTIVITY SECTIONS ───────────────────────────────────────────────────────
-const ActivityLeft = ({ title, body, img }: { title: string; body: string; img: string }) => (
-  <section className="activity-section-white">
-    <h2 className="activity-heading">Ongoing Campaigns</h2>
-    <div className="activity-grid-img-left">
-      <div className="activity-img"><img src={img} alt={title} /></div>
-      <div className="activity-text-col">
-        <h3 className="activity-title">{title}</h3>
-        <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: '1.8', marginBottom: '16px' }}>{body}</p>
-        <a href="#" style={{ color: '#111827', fontSize: '13.5px', fontWeight: '700', textDecoration: 'underline' }}>Learn More</a>
-      </div>
-    </div>
-  </section>
-);
+// ─── ONGOING OUTREACH CAMPAIGNS ──────────────────────────────────────────────
+const OutreachCampaigns = () => {
+  const navigate = useNavigate();
+  const campaigns = [
+    {
+      img: outreach5,
+      title: 'Medical Outreach Mission — Ufuma',
+      desc: 'Free consultations, screenings, medications and referrals delivered directly to community members in Ufuma, Anambra State — reaching hundreds of families in a single day.',
+      tag: 'Outreach Mission',
+    },
+    {
+      img: outreach1,
+      title: 'Community Health Screenings',
+      desc: 'Working alongside the Nigerian Red Cross, our teams deliver free health screenings and consultations to underserved communities, identifying critical health needs early.',
+      tag: 'Health Screening',
+    },
+    {
+      img: outreach4,
+      title: 'Medical Outreach Team in Action',
+      desc: 'Our dedicated Medical Outreach Team — "Compassionate Care, Community Impact" — delivers essential services directly to the people who need them most.',
+      tag: 'Community Impact',
+    },
+    {
+      img: outreach3,
+      title: 'Volunteer & Staff Network',
+      desc: 'A growing team of committed volunteers, healthcare workers, and community leaders working together to expand JoMabel\'s reach and impact across southeastern Nigeria.',
+      tag: 'Volunteers',
+    },
+    {
+      img: outreach2,
+      title: 'Registration & Preventive Care',
+      desc: 'Outreach stations provide registration, triage, and preventive care services — ensuring every community member receives the attention and follow-up they deserve.',
+      tag: 'Preventive Care',
+    },
+  ];
 
-const ActivityRight = ({ title, body, img }: { title: string; body: string; img: string }) => (
-  <section className="activity-section-grey">
-    <h2 className="activity-heading">Ongoing Campaigns</h2>
-    <div className="activity-grid-img-right">
-      <div className="activity-text-col">
-        <h3 className="activity-title">{title}</h3>
-        <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: '1.8', marginBottom: '16px' }}>{body}</p>
-        <a href="#" style={{ color: '#111827', fontSize: '13.5px', fontWeight: '700', textDecoration: 'underline' }}>Learn More</a>
+  return (
+    <section style={{
+      backgroundColor: 'var(--color-surface)',
+      padding: 'var(--section-padding-y) var(--section-padding-x)',
+      fontFamily: 'var(--font-body)',
+    }}>
+      <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
+        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <span style={{
+            fontSize: '11px', fontWeight: '700',
+            color: 'var(--color-primary-dark)',
+            letterSpacing: '0.14em', textTransform: 'uppercase',
+          }}>
+            On The Ground
+          </span>
+          <h2 style={{
+            fontFamily: 'var(--font-heading)',
+            fontSize: 'clamp(22px, 3vw, 30px)',
+            fontWeight: '700', color: 'var(--color-navy)',
+            margin: '12px 0 0',
+          }}>
+            Ongoing Outreach Campaigns
+          </h2>
+        </div>
+
+        {/* Mosaic layout */}
+        <div className="campaign-mosaic">
+
+          {/* Large feature card */}
+          <div className="campaign-mosaic-large" style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden' }}>
+            <img
+              src={campaigns[0].img}
+              alt={campaigns[0].title}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+            <div style={{
+              position: 'absolute', inset: 0,
+              background: 'linear-gradient(to top, rgba(27,42,74,0.90) 0%, transparent 50%)',
+            }} />
+            <div style={{ position: 'absolute', bottom: '20px', left: '20px', right: '20px' }}>
+              <span style={{
+                display: 'inline-block',
+                background: 'var(--color-primary)',
+                color: '#ffffff', fontSize: '10px',
+                fontWeight: '700', letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                padding: '3px 10px', borderRadius: '999px',
+                marginBottom: '8px',
+              }}>
+                {campaigns[0].tag}
+              </span>
+              <h3 style={{
+                fontFamily: 'var(--font-heading)',
+                color: '#ffffff', fontSize: '18px',
+                fontWeight: '700', margin: '0 0 8px', lineHeight: '1.3',
+              }}>
+                {campaigns[0].title}
+              </h3>
+              <p style={{ color: 'rgba(255,255,255,0.80)', fontSize: '13px', lineHeight: '1.65', margin: 0 }}>
+                {campaigns[0].desc}
+              </p>
+            </div>
+          </div>
+
+          {/* 4 smaller cards */}
+          <div className="campaign-mosaic-grid">
+            {campaigns.slice(1).map((c, i) => (
+              <div key={i} style={{
+                position: 'relative', borderRadius: '12px',
+                overflow: 'hidden', background: 'var(--color-white)',
+                boxShadow: 'var(--shadow-sm)',
+                border: '1px solid var(--color-border)',
+                transition: 'var(--transition)',
+              }}
+                onMouseOver={e => {
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = 'var(--shadow-md)';
+                  (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-3px)';
+                }}
+                onMouseOut={e => {
+                  (e.currentTarget as HTMLDivElement).style.boxShadow = 'var(--shadow-sm)';
+                  (e.currentTarget as HTMLDivElement).style.transform = 'translateY(0)';
+                }}
+              >
+                <img
+                  src={c.img}
+                  alt={c.title}
+                  style={{ width: '100%', height: '140px', objectFit: 'cover', display: 'block' }}
+                />
+                <div style={{ padding: '14px 16px 16px' }}>
+                  <span style={{
+                    display: 'inline-block',
+                    background: 'var(--color-primary-light)',
+                    color: 'var(--color-primary-dark)',
+                    fontSize: '10px', fontWeight: '700',
+                    letterSpacing: '0.08em', textTransform: 'uppercase',
+                    padding: '2px 8px', borderRadius: '999px',
+                    marginBottom: '8px',
+                  }}>
+                    {c.tag}
+                  </span>
+                  <h3 style={{
+                    fontFamily: 'var(--font-heading)',
+                    fontSize: '14px', fontWeight: '700',
+                    color: 'var(--color-navy)', margin: '0 0 6px', lineHeight: '1.3',
+                  }}>
+                    {c.title}
+                  </h3>
+                  <p style={{ fontSize: '12.5px', color: 'var(--color-text-muted)', lineHeight: '1.65', margin: 0 }}>
+                    {c.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* CTA */}
+        <div style={{ textAlign: 'center', marginTop: '40px' }}>
+          <button
+            onClick={() => navigate('/donate')}
+            style={{
+              backgroundColor: 'var(--color-green)',
+              color: '#ffffff', border: 'none',
+              borderRadius: 'var(--btn-radius)',
+              padding: '14px 36px', fontSize: '15px',
+              fontWeight: '700', cursor: 'pointer',
+              fontFamily: 'inherit', transition: 'var(--transition)',
+              boxShadow: 'var(--shadow-sm)',
+            }}
+            onMouseOver={e => {
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'var(--color-green-dark)';
+              (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-2px)';
+            }}
+            onMouseOut={e => {
+              (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'var(--color-green)';
+              (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
+            }}
+          >
+            Support Our Campaigns
+          </button>
+        </div>
       </div>
-      <div className="activity-img"><img src={img} alt={title} /></div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 // ─── CAMPAIGN PAGE ───────────────────────────────────────────────────────────
 const Campaign = () => (
-  <div style={{ fontFamily: "'Inter', sans-serif" }}>
-    <style>{campaignStyles}</style>
+  <div style={{ fontFamily: 'var(--font-body)' }}>
+    <style>{`
+      .campaign-mosaic {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        align-items: start;
+      }
+      .campaign-mosaic-large {
+        height: 520px;
+      }
+      .campaign-mosaic-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      @media (max-width: 860px) {
+        .campaign-mosaic { grid-template-columns: 1fr; }
+        .campaign-mosaic-large { height: 320px; }
+        .campaign-mosaic-grid { grid-template-columns: 1fr 1fr; }
+      }
+      @media (max-width: 480px) {
+        .campaign-mosaic-grid { grid-template-columns: 1fr; }
+      }
+    `}</style>
+
     <Navbar />
+
+    {/* 1. Hero */}
     <CampaignHero />
-    <RecentActivitiesMosaic />
-    <ActivityLeft
-      title="Delivering Lifesaving Medical Kits to Hospitals That Need Them Most."
-      body="Access to basic medical supplies can mean the difference between life and death. Through this initiative, we provide essential medical kits to hospitals and healthcare centers serving vulnerable communities. These kits help healthcare workers respond quickly to emergencies, improve patient care, and save more lives every day."
-      img="https://images.unsplash.com/photo-1603398938378-e54eab446dde?w=700&q=80"
-    />
-    <ActivityRight
-      title="Clean Water Provision"
-      body="Through our water initiatives, we support hospitals and local communities with reliable sources of clean water, helping to improve sanitation, prevent waterborne diseases, and create healthier environments for patients and families."
-      img={cleanWaterImg}
-    />
-    <ActivityLeft
-      title="Training the Next Generation of Healthcare Professionals"
-      body="Our skills acquisition programs equip young Nigerians with practical healthcare training, leadership skills, and community service experience — building a sustainable pipeline of future medical professionals committed to serving underserved communities."
-      img="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=700&q=80"
-    />
+
+    {/* 2. Vision Stats */}
+    <VisionStats />
+
+    {/* 3. Architectural Renders Gallery */}
+    <RendersGallery />
+
+    {/* 4. Construction Videos */}
+    <ConstructionVideos />
+
+    {/* 5. Ongoing Outreach Campaigns */}
+    <OutreachCampaigns />
+
     <Footer />
   </div>
 );
