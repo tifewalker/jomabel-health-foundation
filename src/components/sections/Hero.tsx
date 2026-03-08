@@ -20,7 +20,7 @@ const Hero = () => {
         style={{
           position: 'absolute', inset: 0,
           width: '100%', height: '100%',
-          objectFit: 'cover', objectPosition: 'center',
+          objectFit: 'cover', objectPosition: 'center center',
           zIndex: 0,
         }}
       />
@@ -28,7 +28,7 @@ const Hero = () => {
       {/* ── DARK OVERLAY ── */}
       <div style={{
         position: 'absolute', inset: 0, zIndex: 1,
-        background: 'rgba(0,0,0,0.50)',
+        background: 'rgba(0,0,0,0.68)',
       }} />
 
       {/* ── CENTERED CONTENT ── */}
@@ -44,33 +44,56 @@ const Hero = () => {
         paddingBottom: '60px',
       }}>
 
-        {/* Big editorial headline */}
+        {/* Foundation label */}
+        <p style={{
+          color: 'rgba(255,255,255,0.70)',
+          fontSize: '12px',
+          fontWeight: '700',
+          letterSpacing: '0.2em',
+          textTransform: 'uppercase',
+          marginBottom: '20px',
+        }}>
+          JoMabel Healthcare Foundation
+        </p>
+
+        {/* Main headline — exact client copy */}
         <h1 style={{
           color: '#ffffff',
-          fontSize: 'clamp(34px, 5.5vw, 68px)',
+          fontSize: 'clamp(30px, 5vw, 62px)',
           fontWeight: '300',
           lineHeight: '1.18',
           letterSpacing: '0.01em',
-          marginBottom: '18px',
-          maxWidth: '780px',
+          marginBottom: '20px',
+          maxWidth: '820px',
           textShadow: '0 1px 12px rgba(0,0,0,0.3)',
         }}>
-          Building a World-Class,<br />
+          Building a World-Class<br />
           Community Medical &<br />
           Training Center
         </h1>
 
-        {/* Description */}
+        {/* Tagline — pipe separated */}
         <p style={{
-          color: 'rgba(255,255,255,0.82)',
+          color: 'rgba(255,255,255,0.75)',
+          fontSize: 'clamp(12px, 1.4vw, 14px)',
+          fontWeight: '500',
+          letterSpacing: '0.06em',
+          marginBottom: '16px',
+        }}>
+          Powered by Compassion &nbsp;|&nbsp; Designed for Generational Impact
+        </p>
+
+        {/* Description — exact client copy */}
+        <p style={{
+          color: 'rgba(255,255,255,0.70)',
           fontSize: 'clamp(13px, 1.5vw, 15px)',
-          lineHeight: '1.7',
-          maxWidth: '480px',
-          marginBottom: '36px',
+          lineHeight: '1.75',
+          maxWidth: '520px',
+          marginBottom: '40px',
           fontWeight: '400',
         }}>
-          Empower communities, transform lives, and create a brighter future with your generosity.<br />
-          Together, we can change the world.
+          A Texas-based non-profit organization developing a 16,000+ square meter
+          medical and training campus in Ufuma, Anambra State, Nigeria.
         </p>
 
         {/* Pill buttons */}
@@ -84,7 +107,7 @@ const Hero = () => {
               borderRadius: '999px',
               padding: '11px 28px',
               fontSize: '14px',
-              fontWeight: '500',
+              fontWeight: '600',
               cursor: 'pointer',
               fontFamily: 'inherit',
               transition: 'background 0.2s',
@@ -103,7 +126,7 @@ const Hero = () => {
               borderRadius: '999px',
               padding: '11px 28px',
               fontSize: '14px',
-              fontWeight: '500',
+              fontWeight: '600',
               cursor: 'pointer',
               fontFamily: 'inherit',
               backdropFilter: 'blur(4px)',
@@ -112,7 +135,7 @@ const Hero = () => {
             onMouseOver={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.25)')}
             onMouseOut={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.15)')}
           >
-            Learn More
+            Learn Our Story
           </button>
         </div>
       </div>

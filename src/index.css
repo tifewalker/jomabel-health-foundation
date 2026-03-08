@@ -2,43 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+/* ── GOOGLE FONTS ── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-body {
-  font-family: 'Inter', sans-serif;
+/* ── JOMABEL GLOBAL COLOR & DESIGN TOKENS ── */
+:root {
+  /* Brand Colors */
+  --color-primary:        #29C5F6;   /* Sky Blue */
+  --color-primary-dark:   #1AAAD8;   /* Darker Sky Blue — hover */
+  --color-primary-light:  #E8F9FE;   /* Very Light Blue — backgrounds */
+
+  --color-navy:           #1B2A4A;   /* Dark Navy — text, footer */
+  --color-navy-mid:       #2B5EA7;   /* Medium Navy — headings */
+  --color-navy-light:     #D6E4F7;   /* Light Navy — subtle bg */
+
+  --color-green:          #3AA535;   /* Logo Green — CTA buttons */
+  --color-green-dark:     #2D8229;   /* Dark Green — button hover */
+  --color-green-light:    #E8F7E8;   /* Light Green — tag backgrounds */
+
+  --color-orange:         #F7941D;   /* Warm Orange — highlights */
+  --color-orange-dark:    #D97B0E;   /* Dark Orange — hover */
+  --color-orange-light:   #FEF3E2;   /* Light Orange — subtle bg */
+
+  /* Neutrals */
+  --color-bg:             #FAFAF8;   /* Warm White — page background */
+  --color-surface:        #F4F6F8;   /* Light Gray — cards */
+  --color-border:         #E5E7EB;   /* Border Gray */
+  --color-white:          #FFFFFF;
+
+  /* Text */
+  --color-text:           #1A1A2E;   /* Deep Charcoal */
+  --color-text-muted:     #6B7280;   /* Gray — secondary text */
+  --color-text-light:     #9CA3AF;   /* Light — placeholders */
+
+  /* Typography */
+  --font-heading:         'Playfair Display', Georgia, serif;
+  --font-body:            'Inter', 'Segoe UI', sans-serif;
+
+  /* Spacing */
+  --section-padding-y:    clamp(48px, 7vw, 96px);
+  --section-padding-x:    clamp(20px, 5vw, 60px);
+  --card-radius:          14px;
+  --btn-radius:           8px;
+
+  /* Shadows */
+  --shadow-sm:            0 1px 6px rgba(0,0,0,0.06);
+  --shadow-md:            0 4px 20px rgba(0,0,0,0.08);
+  --shadow-lg:            0 8px 40px rgba(27,42,74,0.12);
+
+  /* Transitions */
+  --transition:           all 0.2s ease;
 }
 
-/* Custom healthcare gradients */
-.healthcare-gradient {
-  background: linear-gradient(135deg, #0d9488 0%, #0369a1 100%);
-}
-
-.hero-gradient {
-  background: linear-gradient(135deg, #f0f9ff 0%, #ecfdf5 100%);
-}
-
-.donation-card {
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-/* Smooth scrolling for anchor links */
+/* ── GLOBAL BASE ── */
 html {
   scroll-behavior: smooth;
 }
+
 *, *::before, *::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 body {
-  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-family: var(--font-body);
   font-size: 16px;
-  color: #111827;
+  color: var(--color-text);
+  background-color: var(--color-bg);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'DM Sans', 'Inter', sans-serif;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  color: var(--color-navy);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ── LEGACY UTILITY CLASSES (keep for backward compat) ── */
+.healthcare-gradient {
+  background: linear-gradient(135deg, #0d9488 0%, #0369a1 100%);
+}
+.hero-gradient {
+  background: linear-gradient(135deg, #f0f9ff 0%, #ecfdf5 100%);
+}
+.donation-card {
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
 }

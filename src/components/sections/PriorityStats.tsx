@@ -37,25 +37,26 @@ const YouthIcon = () => (
 );
 
 const stats = [
-  { icon: <BuildingIcon />,    number: '16k+', line1: 'Square Meters',     line2: 'Medical Campus' },
-  { icon: <StethoscopeIcon />, number: '100+', line1: 'Healthcare',        line2: 'Professional Trained' },
-  { icon: <CommunityIcon />,   number: '5k+',  line1: 'Community Members', line2: 'Served Annually' },
-  { icon: <YouthIcon />,       number: '50+',  line1: 'Youth Empowered',   line2: 'Through Skills Training' },
+  { icon: <BuildingIcon />,    number: '16k+', line1: 'Square Meters',      line2: 'Medical Campus' },
+  { icon: <StethoscopeIcon />, number: '100+', line1: 'Healthcare',         line2: 'Professionals Trained' },
+  { icon: <CommunityIcon />,   number: '5k+',  line1: 'Community Members',  line2: 'Served Annually' },
+  { icon: <YouthIcon />,       number: '50+',  line1: 'Youth Empowered',    line2: 'Through Skills Training' },
 ];
 
 const PriorityStats = () => {
   return (
     <section style={{
-      background: 'linear-gradient(135deg, #0d1f4e 0%, #1e3a8a 50%, #0d1f4e 100%)',
-      padding: 'clamp(40px, 6vw, 80px) clamp(20px, 5vw, 48px)',
-      fontFamily: "'Inter', 'Segoe UI', sans-serif",
+      background: 'linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-mid) 50%, var(--color-navy) 100%)',
+      padding: 'var(--section-padding-y) var(--section-padding-x)',
+      fontFamily: 'var(--font-body)',
       position: 'relative',
       overflow: 'hidden',
     }}>
-      {/* Subtle radial glow */}
+
+      {/* Subtle radial glow using primary blue */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
-        background: 'radial-gradient(ellipse at 60% 40%, rgba(30,58,138,0.6) 0%, transparent 70%)',
+        background: 'radial-gradient(ellipse at 60% 40%, rgba(41,197,246,0.12) 0%, transparent 70%)',
       }} />
 
       <style>{`
@@ -72,47 +73,76 @@ const PriorityStats = () => {
           margin: 0 auto;
           position: relative;
         }
+        .stat-card {
+          background-color: rgba(255,255,255,0.07);
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(255,255,255,0.12);
+          border-radius: var(--card-radius);
+          padding: 30px 26px 34px;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          transition: var(--transition);
+        }
+        .stat-card:hover {
+          background-color: rgba(255,255,255,0.11);
+          border-color: rgba(41,197,246,0.35);
+          transform: translateY(-3px);
+          box-shadow: 0 8px 24px rgba(41,197,246,0.15);
+        }
+        .stat-number {
+          color: var(--color-primary);
+          font-size: 44px;
+          font-weight: 800;
+          line-height: 1;
+          letter-spacing: -0.02em;
+        }
         @media (max-width: 900px) {
           .stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
         @media (max-width: 480px) {
           .stats-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
           .stats-heading h2 { font-size: 17px !important; }
-          .stats-heading p { font-size: 13px !important; }
-          .stat-number { font-size: 32px !important; }
-          .stat-card { padding: 20px 18px 24px !important; }
+          .stats-heading p  { font-size: 13px !important; }
+          .stat-number      { font-size: 32px !important; }
+          .stat-card        { padding: 20px 18px 24px !important; }
         }
       `}</style>
 
       {/* Heading */}
       <div className="stats-heading">
-        <h2 style={{ color: '#ffffff', fontSize: '20px', fontWeight: '700', marginBottom: '16px' }}>
-          Our Priority is to Keep You Healthy
+        <h2 style={{
+          fontFamily: 'var(--font-heading)',
+          color: '#ffffff',
+          fontSize: 'clamp(20px, 2.5vw, 28px)',
+          fontWeight: '700',
+          marginBottom: '14px',
+        }}>
+          Building Healthier Communities
         </h2>
-        <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '15px', lineHeight: '1.8', maxWidth: '600px', margin: '0 auto' }}>
-          Stay updated with the latest news from JoMabel, along with impactful medical
-          developments and global healthcare trends. Designed to deliver premier and
-          compassionate care.
+        <p style={{
+          color: 'rgba(255,255,255,0.70)',
+          fontSize: '15px',
+          lineHeight: '1.8',
+          maxWidth: '560px',
+          margin: '0 auto',
+        }}>
+          Through our medical center, outreach missions, and partnerships, we serve
+          thousands of individuals each year — bringing hope, healing, and dignity
+          to communities in need.
         </p>
       </div>
 
-      {/* Cards */}
+      {/* Stat Cards */}
       <div className="stats-grid">
         {stats.map((stat, i) => (
-          <div key={i} className="stat-card" style={{
-            backgroundColor: 'rgba(255,255,255,0.07)',
-            backdropFilter: 'blur(8px)',
-            border: '1px solid rgba(255,255,255,0.12)',
-            borderRadius: '14px',
-            padding: '30px 26px 34px',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '16px',
-          }}>
+          <div key={i} className="stat-card">
+
             {/* Icon bubble */}
             <div style={{
               width: '44px', height: '44px', borderRadius: '50%',
-              backgroundColor: 'rgba(255,255,255,0.1)',
+              backgroundColor: 'rgba(41,197,246,0.15)',
+              border: '1px solid rgba(41,197,246,0.25)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               flexShrink: 0,
             }}>
@@ -120,24 +150,22 @@ const PriorityStats = () => {
             </div>
 
             {/* Number */}
-            <div className="stat-number" style={{
-              color: '#22c55e',
-              fontSize: '44px',
-              fontWeight: '800',
-              lineHeight: '1',
-              letterSpacing: '-0.02em',
-            }}>
-              {stat.number}
-            </div>
+            <div className="stat-number">{stat.number}</div>
 
             {/* Label */}
             <div>
-              <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '13px', margin: '0 0 2px' }}>{stat.line1}</p>
-              <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '13px', margin: 0 }}>{stat.line2}</p>
+              <p style={{ color: 'rgba(255,255,255,0.90)', fontSize: '13px', fontWeight: '600', margin: '0 0 2px' }}>
+                {stat.line1}
+              </p>
+              <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '13px', margin: 0 }}>
+                {stat.line2}
+              </p>
             </div>
+
           </div>
         ))}
       </div>
+
     </section>
   );
 };

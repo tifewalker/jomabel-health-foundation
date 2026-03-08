@@ -1,53 +1,84 @@
 import React from 'react';
-import { Facebook, Linkedin } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Facebook, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 import logo from '../../assests/images/logo.jpeg';
 
 const Footer = () => {
   return (
-    <footer style={{ fontFamily: "'Inter', 'Segoe UI', sans-serif" }}>
+    <footer style={{ fontFamily: 'var(--font-body)' }}>
       <style>{`
         .footer-main {
-          background-color: #0d1f4e;
-          padding: clamp(36px, 5vw, 48px) clamp(20px, 5vw, 48px) clamp(32px, 4vw, 40px);
+          background-color: var(--color-navy);
+          padding: clamp(36px, 5vw, 56px) clamp(20px, 5vw, 48px) clamp(32px, 4vw, 44px);
         }
         .footer-grid {
           max-width: 1080px;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: 1.4fr 1fr 1.2fr 1fr 0.8fr;
-          gap: 32px;
+          grid-template-columns: 1.6fr 1fr 1.2fr 1.2fr;
+          gap: 40px;
           align-items: start;
         }
-        .footer-link {
-          color: #bfdbfe;
-          font-size: 13px;
-          text-decoration: none;
-          transition: color 0.2s;
-        }
-        .footer-link:hover { color: #ffffff; }
         .footer-col-heading {
-          color: #ffffff;
+          color: var(--color-white);
+          font-family: var(--font-heading);
           font-size: 15px;
           font-weight: 700;
-          margin-bottom: 16px;
+          margin-bottom: 18px;
+          padding-bottom: 10px;
+          border-bottom: 1px solid rgba(41,197,246,0.25);
         }
-        .footer-donate-btn {
-          background-color: #22c55e;
-          color: #ffffff;
-          font-weight: 700;
-          font-size: 14px;
-          padding: 10px 24px;
-          border-radius: 6px;
+        .footer-link {
+          color: rgba(255,255,255,0.65);
+          font-size: 13px;
           text-decoration: none;
-          white-space: nowrap;
-          display: inline-block;
-          transition: background-color 0.2s;
+          transition: var(--transition);
+          display: block;
         }
-        .footer-donate-btn:hover { background-color: #16a34a; }
-        .footer-bottom {
-          background-color: #0a1838;
-          padding: 18px clamp(20px, 5vw, 48px);
+        .footer-link:hover { color: var(--color-primary); }
+        .footer-donate-btn {
+          background-color: var(--color-green);
+          color: var(--color-white);
+          font-weight: 700;
+          font-size: 13px;
+          padding: 10px 22px;
+          border-radius: var(--btn-radius);
+          text-decoration: none;
+          display: inline-block;
+          transition: var(--transition);
+          margin-top: 20px;
+        }
+        .footer-donate-btn:hover {
+          background-color: var(--color-green-dark);
+          transform: translateY(-1px);
+        }
+        .footer-contact-item {
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
+        }
+        .footer-contact-icon {
+          width: 28px;
+          height: 28px;
+          border-radius: 6px;
+          background-color: rgba(41,197,246,0.12);
+          border: 1px solid rgba(41,197,246,0.20);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          margin-top: 1px;
+        }
+        .footer-divider {
+          max-width: 1080px;
+          margin: 32px auto 0;
+          border: none;
           border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .footer-bottom {
+          background-color: #0d1726;
+          border-top: 1px solid rgba(41,197,246,0.15);
+          padding: 18px clamp(20px, 5vw, 48px);
         }
         .footer-bottom-inner {
           max-width: 1080px;
@@ -58,140 +89,188 @@ const Footer = () => {
           flex-wrap: wrap;
           gap: 12px;
         }
-        .footer-icon {
-          width: 32px;
-          height: 32px;
+        .footer-social-icon {
+          width: 34px;
+          height: 34px;
           border-radius: 50%;
-          background-color: rgba(255,255,255,0.12);
+          background-color: rgba(255,255,255,0.10);
+          border: 1px solid rgba(255,255,255,0.12);
           display: inline-flex;
           align-items: center;
           justify-content: center;
           text-decoration: none;
-          transition: background-color 0.2s;
+          transition: var(--transition);
           cursor: pointer;
           flex-shrink: 0;
         }
-        .footer-icon:hover { background-color: #1e3a8a; }
+        .footer-social-icon:hover {
+          background-color: var(--color-primary-dark);
+          border-color: var(--color-primary);
+          transform: translateY(-2px);
+        }
 
         @media (max-width: 900px) {
-          .footer-grid {
-            grid-template-columns: 1fr 1fr;
-            gap: 28px;
-          }
-          .footer-donate-col {
-            grid-column: 1 / -1;
-            display: flex;
-            justify-content: flex-start !important;
-          }
+          .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
         }
         @media (max-width: 540px) {
-          .footer-grid {
-            grid-template-columns: 1fr;
-            gap: 24px;
-          }
-          .footer-donate-col { grid-column: 1; }
-          .footer-bottom-inner {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 16px;
-          }
+          .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+          .footer-bottom-inner { flex-direction: column; align-items: flex-start; gap: 16px; }
         }
       `}</style>
 
-      {/* Main Footer */}
+      {/* ── MAIN FOOTER ── */}
       <div className="footer-main">
         <div className="footer-grid">
 
-          {/* Col 1: Logo + About */}
+          {/* Col 1 — Logo + About + Donate */}
           <div>
             <div style={{
               backgroundColor: '#ffffff', borderRadius: '8px',
-              padding: '6px', display: 'inline-block', marginBottom: '16px',
+              padding: '6px 8px', display: 'inline-block', marginBottom: '16px',
             }}>
-              <img src={logo} alt="JoMabel" style={{ height: '56px', width: 'auto', display: 'block' }} />
+              <img src={logo} alt="JoMabel Healthcare Foundation" style={{ height: '52px', width: 'auto', display: 'block' }} />
             </div>
-            <p style={{ color: '#bfdbfe', fontSize: '12.5px', lineHeight: '1.7', margin: 0 }}>
-              JoMabel Healthcare Foundation USA Inc. is a faith-guided, U.S.-based nonprofit developing a world-class medical and healthcare training campus in Nigeria.
+            <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '12.5px', lineHeight: '1.8', margin: '0 0 6px' }}>
+              JoMabel Healthcare Foundation is a faith-guided, U.S.-based nonprofit
+              developing a world-class 16,000+ sq. meter medical and training campus
+              in Ufuma, Anambra State, Nigeria.
             </p>
+            <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '11.5px', lineHeight: '1.6', margin: '0 0 4px' }}>
+              Website: jomabelfoundation.org
+            </p>
+            <a href="/donate" className="footer-donate-btn">Donate Now</a>
           </div>
 
-          {/* Col 2: Quick Links */}
+          {/* Col 2 — Quick Links */}
           <div>
             <h4 className="footer-col-heading">Quick Links</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {['About Us', 'Programs', 'Capital Campaign', 'Gallery', 'FAQ'].map((item) => (
-                <li key={item}>
-                  <a href="#" className="footer-link">{item}</a>
+              {[
+                { label: 'Home',        path: '/' },
+                { label: 'About Us',    path: '/about' },
+                { label: 'Programs',    path: '/programs' },
+                { label: 'Campaign',    path: '/campaign' },
+                { label: 'Legacy Giving', path: '/legacy' },
+                { label: 'Contact Us',  path: '/contact' },
+                { label: 'Donate',      path: '/donate' },
+              ].map((item) => (
+                <li key={item.path}>
+                  <Link to={item.path} className="footer-link">{item.label}</Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Col 3: Programs */}
+          {/* Col 3 — Programs */}
           <div>
-            <h4 className="footer-col-heading">Programs</h4>
+            <h4 className="footer-col-heading">Our Programs</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {['Medical Center', 'Skills Center', 'Outreach Mission', 'Maternal Health', 'Health Education', 'Infrastructure'].map((item) => (
+              {[
+                'JoMabel Medical Center',
+                'Medical Outreach Missions',
+                'Youth Training & Empowerment',
+                'Maternal & Child Health',
+                'Community Health Education',
+                'Infrastructure Development',
+              ].map((item) => (
                 <li key={item}>
-                  <a href="#" className="footer-link">{item}</a>
+                  <Link to="/programs" className="footer-link">{item}</Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Col 4: Contacts */}
+          {/* Col 4 — Contact */}
           <div>
-            <h4 className="footer-col-heading">Contacts</h4>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {['info@jomabel.org', 'support@jomabel.org', 'donation@jomabel.org'].map((email) => (
-                <a key={email} href={`mailto:${email}`} className="footer-link">{email}</a>
-              ))}
+            <h4 className="footer-col-heading">Contact Us</h4>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+
+              <div className="footer-contact-item">
+                <div className="footer-contact-icon">
+                  <Mail size={13} color="var(--color-primary)" />
+                </div>
+                <div>
+                  <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '10px', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 2px' }}>Email</p>
+                  <a href="mailto:claraogbaa2022@gmail.com" className="footer-link" style={{ fontSize: '12.5px' }}>
+                    claraogbaa2022@gmail.com
+                  </a>
+                </div>
+              </div>
+
+              <div className="footer-contact-item">
+                <div className="footer-contact-icon">
+                  <Phone size={13} color="var(--color-primary)" />
+                </div>
+                <div>
+                  <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '10px', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 2px' }}>Phone</p>
+                  <a href="tel:+15125080277" className="footer-link" style={{ fontSize: '12.5px' }}>
+                    +1 (512) 508-0277
+                  </a>
+                </div>
+              </div>
+
+              <div className="footer-contact-item">
+                <div className="footer-contact-icon">
+                  <MapPin size={13} color="var(--color-primary)" />
+                </div>
+                <div>
+                  <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '10px', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 2px' }}>Location</p>
+                  <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: '12.5px', margin: 0, lineHeight: '1.6' }}>
+                    Ufuma, Anambra State, Nigeria<br />
+                    Texas, United States
+                  </p>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          {/* Col 5: Donate button */}
-          <div className="footer-donate-col" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-start', paddingTop: '4px' }}>
-            <a href="/donate" className="footer-donate-btn">Donate Now</a>
-          </div>
         </div>
+
+        <hr className="footer-divider" />
       </div>
 
-      {/* Bottom bar */}
+      {/* ── BOTTOM BAR ── */}
       <div className="footer-bottom">
         <div className="footer-bottom-inner">
-          <p style={{ color: '#93c5fd', fontSize: '12.5px', margin: 0 }}>
-            © JOMABEL. HEALTHCARE FOUNDATION 2026. All rights reserved.
+          <p style={{ color: 'rgba(255,255,255,0.70)', fontSize: '12px', margin: 0 }}>
+            © 2026 JoMabel Healthcare Foundation. All rights reserved.
+            &nbsp;·&nbsp; jomabelfoundation.org
           </p>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ color: '#93c5fd', fontSize: '13px' }}>Follow us:</span>
+            <span style={{ color: 'rgba(255,255,255,0.70)', fontSize: '12px' }}>Follow us:</span>
 
-            {/* Threads */}
-            <a href="#" className="footer-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#ffffff">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-              </svg>
-            </a>
-
-            {/* X */}
-            <a href="#" className="footer-icon">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="#ffffff">
+            {/* X / Twitter */}
+            <a href="#" className="footer-social-icon" aria-label="X / Twitter">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="#ffffff">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L2.25 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
               </svg>
             </a>
 
-            {/* LinkedIn */}
-            <a href="#" className="footer-icon">
-              <Linkedin size={15} color="#ffffff" />
+            {/* Facebook */}
+            <a href="#" className="footer-social-icon" aria-label="Facebook">
+              <Facebook size={14} color="#ffffff" />
             </a>
 
-            {/* Facebook */}
-            <a href="#" className="footer-icon">
-              <Facebook size={15} color="#ffffff" />
+            {/* LinkedIn */}
+            <a href="#" className="footer-social-icon" aria-label="LinkedIn">
+              <Linkedin size={14} color="#ffffff" />
             </a>
+
+            {/* Instagram */}
+            <a href="#" className="footer-social-icon" aria-label="Instagram">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="0.5" fill="#ffffff"/>
+              </svg>
+            </a>
+
           </div>
         </div>
       </div>
+
     </footer>
   );
 };

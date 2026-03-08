@@ -1,12 +1,11 @@
 import React from 'react';
 
-//import Header from '../components/layout/Header';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Hero from '../components/sections/Hero';
+import FounderQuote from '../components/sections/FounderQuote';
 import MissionVision from '../components/sections/MissionVision';
 import PriorityStats from '../components/sections/PriorityStats';
-import RecentProjects from '../components/sections/RecentProjects';
 import OurPrograms from '../components/sections/Ourprograms';
 import CampaignBanner from '../components/sections/CampaignBanner';
 import Testimonies from '../components/sections/Testimonies';
@@ -17,9 +16,9 @@ const Home = () => {
     <div>
       <Navbar />
       <Hero />
-      <MissionVision />
+        <MissionVision />
+      <FounderQuote />
       <PriorityStats />
-      <RecentProjects />
       <OurPrograms />
       <CampaignBanner />
       <Testimonies />
