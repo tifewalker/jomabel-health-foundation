@@ -2,15 +2,19 @@ import React from 'react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Testimonies from '../components/sections/Testimonies';
+import FounderQuote from '../components/sections/FounderQuote';
 import logo from '../assests/images/logo.jpeg';
-import OurSocials from '../components/sections/OurSocials';
+
+// ── Real outreach photos ──
+import outreach1 from '../assests/images/outreach1.jpeg';
+import outreach3 from '../assests/images/outreach3.jpeg';
 
 const aboutStyles = `
   /* ── ABOUT HERO ── */
   .about-hero {
     position: relative;
-    padding: clamp(40px, 6vw, 72px) clamp(20px, 5vw, 64px);
-    font-family: 'Georgia', serif;
+    padding: clamp(48px, 7vw, 80px) clamp(20px, 5vw, 64px);
+    font-family: var(--font-body);
     overflow: hidden;
   }
   .about-hero-grid {
@@ -24,10 +28,20 @@ const aboutStyles = `
     min-height: 260px;
   }
   .about-hero-left { padding-right: 64px; }
+  .about-hero-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    display: block;
+  }
   .about-hero-h1 {
+    font-family: var(--font-heading);
     font-size: clamp(40px, 7vw, 64px);
     font-weight: 900;
-    color: #111827;
+    color: var(--color-navy);
     line-height: 1;
     margin-bottom: 20px;
     letter-spacing: -0.02em;
@@ -38,66 +52,90 @@ const aboutStyles = `
     justify-content: center;
   }
   .about-hero-divider {
-    background-color: #d1d5db;
+    background-color: var(--color-border);
     width: 1px;
     align-self: stretch;
   }
 
-  /* ── FOUNDER BIO ── */
-  .founder-grid {
+  /* ── HISTORY SECTION ── */
+  .history-section {
+    background-color: var(--color-surface);
+    padding: var(--section-padding-y) var(--section-padding-x);
+    font-family: var(--font-body);
+  }
+  .history-grid {
+    max-width: 1080px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: 480px;
-    font-family: 'Georgia', serif;
+    gap: 64px;
+    align-items: center;
   }
-  .founder-photo-panel {
-    background-color: #16a34a;
-    position: relative;
-    display: flex;
-    align-items: flex-end;
-    overflow: hidden;
-    min-height: 380px;
+  .history-image {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
   }
-  .founder-bio-right {
-    background-color: #ffffff;
-    padding: clamp(32px, 5vw, 56px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+
+  /* ── CORE VALUES ── */
+  .values-section {
+    background: linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-mid) 100%);
+    padding: var(--section-padding-y) var(--section-padding-x);
+    font-family: var(--font-body);
+  }
+  .values-grid {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
+    margin-top: 40px;
+  }
+  .value-card {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(41,197,246,0.20);
+    border-radius: var(--card-radius);
+    padding: 24px 20px;
+    transition: var(--transition);
+  }
+  .value-card:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(41,197,246,0.40);
+    transform: translateY(-3px);
   }
 
   /* ── MISSION VISION ── */
-  .mv-section {
-    background-color: #ffffff;
-    padding: clamp(40px, 6vw, 72px) clamp(20px, 5vw, 64px);
-    font-family: 'Inter', sans-serif;
+  .mv-about-section {
+    background-color: var(--color-white);
+    padding: var(--section-padding-y) var(--section-padding-x);
+    font-family: var(--font-body);
   }
-  .mv-grid {
+  .mv-about-grid {
     max-width: 1080px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1px 1fr;
     align-items: start;
+    gap: 0;
   }
-  .mv-logo-col { padding-right: 48px; display: flex; justify-content: center; }
-  .mv-cards-col { padding-left: 48px; display: flex; flex-direction: column; gap: 20px; }
-  .mv-divider { background-color: #d1d5db; width: 1px; align-self: stretch; }
+  .mv-about-divider { background-color: var(--color-border); width: 1px; align-self: stretch; }
   .credentials-wrap {
     max-width: 1080px;
     margin: 56px auto 0;
-    border: 1.5px solid #e5e7eb;
+    border: 1px solid var(--color-border);
     border-radius: 16px;
     padding: clamp(28px, 4vw, 48px);
-    background-color: #fafafa;
+    background-color: var(--color-surface);
     text-align: center;
   }
 
   /* ── OUR TEAM ── */
   .team-section {
-    background-color: #ffffff;
-    padding: clamp(40px, 5vw, 64px);
-    font-family: 'Inter', sans-serif;
+    background-color: var(--color-surface);
+    padding: var(--section-padding-y) var(--section-padding-x);
+    font-family: var(--font-body);
     text-align: center;
   }
   .team-grid {
@@ -107,52 +145,53 @@ const aboutStyles = `
     max-width: 1080px;
     margin: 0 auto;
   }
+  .team-card {
+    background: var(--color-white);
+    border-radius: var(--card-radius);
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+  }
+  .team-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-3px);
+    border-color: var(--color-primary);
+  }
+  .team-photo {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+    background: linear-gradient(160deg, var(--color-primary-light), var(--color-navy-light));
+  }
+  .team-photo-placeholder {
+    width: 100%;
+    height: 220px;
+    background: linear-gradient(160deg, var(--color-primary-light) 0%, var(--color-navy-light) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-  /* ── TABLET (≤860px) ── */
-  @media (max-width: 860px) {
-    .about-hero-grid {
-      grid-template-columns: 1fr;
-      min-height: unset;
-      gap: 32px;
-    }
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .about-hero-grid { grid-template-columns: 1fr; min-height: unset; gap: 32px; }
     .about-hero-divider { display: none; }
     .about-hero-left { padding-right: 0; }
     .about-hero-right { padding-left: 0; justify-content: flex-start; }
-
-    .founder-grid {
-      grid-template-columns: 1fr;
-    }
-    .founder-photo-panel { min-height: 320px; }
-
-    .mv-grid {
-      grid-template-columns: 1fr;
-      gap: 32px;
-    }
-    .mv-divider { display: none; }
-    .mv-logo-col { padding-right: 0; justify-content: flex-start; }
-    .mv-cards-col { padding-left: 0; }
-
-    .team-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
+    .history-grid { grid-template-columns: 1fr; gap: 32px; }
+    .history-image { height: 300px; }
+    .values-grid { grid-template-columns: repeat(2, 1fr); }
+    .mv-about-grid { grid-template-columns: 1fr; gap: 24px; }
+    .mv-about-divider { display: none; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
   }
-
-  /* ── MOBILE (≤480px) ── */
   @media (max-width: 480px) {
     .about-hero-h1 { font-size: 36px; }
-    .about-hero-right { justify-content: center; }
-
-    .team-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-    }
-
-    .credentials-wrap .cred-logos {
-      gap: 12px !important;
-    }
-    .credentials-wrap .cred-logo {
-      width: 80px !important;
-    }
+    .values-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   }
 `;
 
@@ -160,29 +199,36 @@ const aboutStyles = `
 const AboutHero = () => (
   <section className="about-hero">
     <img
-      src="https://images.unsplash.com/photo-1586773860418-d37222d8fce3?w=1600&q=80"
-      alt=""
-      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+      src={outreach1}
+      alt="JoMabel outreach mission"
+      style={{
+        position: 'absolute', inset: 0, width: '100%', height: '100%',
+        objectFit: 'cover', objectPosition: 'center',
+      }}
     />
     <div style={{
       position: 'absolute', inset: 0,
-      background: 'linear-gradient(to right, rgba(255,255,255,0.96) 45%, rgba(255,255,255,0.80) 100%)',
+      background: 'linear-gradient(to right, rgba(255,255,255,0.97) 45%, rgba(255,255,255,0.82) 100%)',
     }} />
     <div className="about-hero-grid">
       <div className="about-hero-left">
+        <span className="about-hero-label">Our Story</span>
         <h1 className="about-hero-h1">About Us</h1>
-        <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: '1.75', maxWidth: '340px' }}>
-          JoMabel Healthcare Foundation USA Inc. is a faith-guided, U.S.–based
-          nonprofit developing a world-class medical and healthcare training campus in Nigeria.
+        <p style={{ fontSize: '14px', color: 'var(--color-text-muted)', lineHeight: '1.8', maxWidth: '360px' }}>
+          JoMabel Healthcare Foundation is a faith-guided, U.S.-based nonprofit
+          developing a world-class 16,000+ sq. meter medical and training campus
+          in Ufuma, Anambra State, Nigeria.
         </p>
       </div>
       <div className="about-hero-divider" />
       <div className="about-hero-right">
         <div style={{
-          border: '1px solid #e5e7eb', borderRadius: '16px', padding: '40px 48px',
+          border: '1px solid var(--color-border)', borderRadius: '16px',
+          padding: '40px 48px',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          backgroundColor: 'rgba(255,255,255,0.85)', backdropFilter: 'blur(8px)',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.08)',
+          backgroundColor: 'rgba(255,255,255,0.90)',
+          backdropFilter: 'blur(8px)',
+          boxShadow: 'var(--shadow-md)',
         }}>
           <img src={logo} alt="JoMabel Healthcare Foundation" style={{ height: '120px', width: 'auto' }} />
         </div>
@@ -191,89 +237,240 @@ const AboutHero = () => (
   </section>
 );
 
-// ─── FOUNDER BIO ─────────────────────────────────────────────────────────────
-const FounderBio = () => (
-  <section className="founder-grid">
-    <div className="founder-photo-panel">
-      <img
-        src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=600&q=80"
-        alt="Dr Clara Ada Ogbaa"
-        style={{
-          width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top',
-          position: 'absolute', inset: 0, mixBlendMode: 'luminosity', opacity: 0.85,
-        }}
-      />
-      <div style={{
-        position: 'relative', zIndex: 2, backgroundColor: 'rgba(0,0,0,0.45)',
-        width: '100%', padding: '20px 28px',
-      }}>
-        <p style={{ color: '#22c55e', fontSize: '12px', fontWeight: '700', marginBottom: '4px', letterSpacing: '0.08em' }}>Founder / CEO</p>
-        <h3 style={{ color: '#ffffff', fontSize: '18px', fontWeight: '700', margin: '0 0 4px' }}>Dr Clara Ada Ogbaa</h3>
-        <p style={{ color: '#86efac', fontSize: '12px', margin: 0 }}>Ed.D. | Educator | Humanitarian | Survivor</p>
+// ─── HISTORY & FOUNDING ──────────────────────────────────────────────────────
+const HistorySection = () => (
+  <section className="history-section">
+    <div className="history-grid">
+
+      {/* Image */}
+      <div>
+        <img
+          src={outreach3}
+          alt="JoMabel team group photo"
+          className="history-image"
+        />
+      </div>
+
+      {/* Text */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        <span style={{
+          fontSize: '11px', fontWeight: '700', color: 'var(--color-primary-dark)',
+          letterSpacing: '0.14em', textTransform: 'uppercase',
+        }}>
+          Our History
+        </span>
+        <h2 style={{
+          fontFamily: 'var(--font-heading)',
+          fontSize: 'clamp(24px, 3.5vw, 36px)',
+          fontWeight: '700', color: 'var(--color-navy)',
+          lineHeight: '1.2', margin: 0,
+        }}>
+          How JoMabel Healthcare Foundation Began
+        </h2>
+        <p style={{ fontSize: '14px', color: 'var(--color-text-muted)', lineHeight: '1.85', margin: 0 }}>
+          JoMabel Healthcare Foundation was established in response to the persistent
+          and urgent healthcare challenges facing communities in southeastern Nigeria,
+          where access to quality medical services has long been limited by inadequate
+          infrastructure, economic hardship, and geographic barriers.
+        </p>
+        <p style={{ fontSize: '14px', color: 'var(--color-text-muted)', lineHeight: '1.85', margin: 0 }}>
+          The inspiration for the foundation is deeply rooted in the legacy of
+          Dr. Clara Ada Ogbaa's parents, whose lives were defined by local healing
+          missions, compassion, and unwavering service to their community. Their
+          example instilled in her a profound understanding of what true healing
+          requires: not only medical treatment, but also empathy, presence, and a
+          commitment to uplifting the whole person.
+        </p>
+        <p style={{ fontSize: '14px', color: 'var(--color-text-muted)', lineHeight: '1.85', margin: 0 }}>
+          Today, JoMabel Healthcare Foundation stands as a testament to vision,
+          legacy, and sustained commitment — a bridge between past and future,
+          tradition and innovation, compassion and strategic action.
+        </p>
+
+        {/* Timeline dots */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '8px' }}>
+          {[
+            'Founded with small-scale medical missions and grassroots outreach',
+            'Expanded into fully operational medical center in Ufuma',
+            'Launched youth training, maternal health & community education programs',
+            'Now developing 16,000+ sq. meter medical & training campus',
+          ].map((item, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+              <div style={{
+                width: '22px', height: '22px', borderRadius: '50%',
+                background: 'var(--color-primary)', flexShrink: 0,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                marginTop: '1px',
+              }}>
+                <span style={{ color: '#fff', fontSize: '11px', fontWeight: '700' }}>{i + 1}</span>
+              </div>
+              <p style={{ fontSize: '13.5px', color: 'var(--color-text-muted)', lineHeight: '1.7', margin: 0 }}>{item}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
+  </section>
+);
 
-    <div className="founder-bio-right">
-      <h2 style={{ fontSize: 'clamp(20px, 3vw, 26px)', fontWeight: '800', color: '#111827', lineHeight: 1.3, margin: 0 }}>
-        Born From Faith. Sustained by Grace.<br />Built For Purpose.
-      </h2>
-      <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: '1.8', margin: 0 }}>
-        Dr. Clara Ada Ogbaa is a Nigerian-American educator, humanitarian, two-time cancer survivor, and kidney transplant recipient. Her life was sustained by advanced medicine, compassionate care, and faith — experiences that shaped her life's mission.
-      </p>
-      <div style={{
-        backgroundColor: '#f8fafc', border: '1px solid #e2e8f0',
-        borderRadius: '10px', padding: '20px 24px', position: 'relative',
+// ─── CORE VALUES ─────────────────────────────────────────────────────────────
+const coreValues = [
+  { icon: '🤲', title: 'Dignity',                desc: 'Every human being deserves respectful, compassionate care.' },
+  { icon: '⚖️', title: 'Equity',                 desc: 'We prioritize communities historically excluded from quality healthcare.' },
+  { icon: '🌿', title: 'Service',                desc: 'We serve with humility, excellence, and a commitment to healing.' },
+  { icon: '♻️', title: 'Sustainability',          desc: 'We build systems that last beyond individual projects.' },
+  { icon: '🔍', title: 'Integrity',              desc: 'We steward resources with transparency and accountability.' },
+  { icon: '🌍', title: 'Community Empowerment',  desc: 'We invest in local leadership, youth, and families.' },
+  { icon: '💡', title: 'Innovation',             desc: 'We embrace modern solutions to long-standing healthcare challenges.' },
+];
+
+const CoreValues = () => (
+  <section className="values-section">
+    <div style={{ maxWidth: '1080px', margin: '0 auto', textAlign: 'center' }}>
+      <span style={{
+        fontSize: '11px', fontWeight: '700', color: 'var(--color-primary)',
+        letterSpacing: '0.14em', textTransform: 'uppercase',
       }}>
-        <span style={{ fontSize: '28px', color: '#22c55e', lineHeight: 1, position: 'absolute', top: '10px', left: '16px' }}>"</span>
-        <p style={{ fontSize: '13.5px', color: '#374151', fontStyle: 'italic', lineHeight: '1.7', margin: '10px 0 0', paddingLeft: '8px' }}>
-          Dignified, life-saving healthcare should be accessible to every person —
-          not only to those fortunate enough to live near it.
-        </p>
-        <span style={{ fontSize: '28px', color: '#22c55e', lineHeight: 1, position: 'absolute', bottom: '6px', right: '16px' }}>"</span>
-      </div>
-      <p style={{ fontSize: '14px', color: '#4b5563', lineHeight: '1.8', margin: 0 }}>
-        Born in Ufuma, Anambra State, Nigeria, Dr. Ogbaa envisioned a future where her hometown would be defined by possibility — not limited infrastructure. JoMabel Healthcare Foundation is her answer to that vision.
-      </p>
+        What Guides Us
+      </span>
+      <h2 style={{
+        fontFamily: 'var(--font-heading)',
+        fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: '700',
+        color: '#ffffff', margin: '12px 0 0', lineHeight: '1.2',
+      }}>
+        Our Core Values
+      </h2>
+    </div>
+    <div className="values-grid">
+      {coreValues.map((v, i) => (
+        <div key={i} className="value-card">
+          <div style={{ fontSize: '28px', marginBottom: '12px' }}>{v.icon}</div>
+          <h3 style={{
+            fontFamily: 'var(--font-heading)',
+            fontSize: '15px', fontWeight: '700',
+            color: '#ffffff', margin: '0 0 8px',
+          }}>
+            {v.title}
+          </h3>
+          <p style={{
+            fontSize: '13px', color: 'rgba(255,255,255,0.65)',
+            lineHeight: '1.7', margin: 0,
+          }}>
+            {v.desc}
+          </p>
+        </div>
+      ))}
     </div>
   </section>
 );
 
 // ─── MISSION & VISION ────────────────────────────────────────────────────────
 const MissionVisionSection = () => (
-  <section className="mv-section">
-    <h2 style={{ textAlign: 'center', fontSize: '24px', fontWeight: '700', color: '#111827', marginBottom: '48px' }}>
-      Mission and Vision
-    </h2>
-    <div className="mv-grid">
-      <div className="mv-logo-col">
-        <div style={{ border: '1px solid #e5e7eb', borderRadius: '16px', padding: '40px 48px', backgroundColor: '#fafafa' }}>
-          <img src={logo} alt="JoMabel" style={{ height: '100px', width: 'auto' }} />
-        </div>
-      </div>
-      <div className="mv-divider" />
-      <div className="mv-cards-col">
-        <div style={{ border: '1px solid #e5e7eb', borderRadius: '12px', padding: '24px 28px', borderLeft: '4px solid #22c55e', backgroundColor: '#ffffff', boxShadow: '0 1px 6px rgba(0,0,0,0.05)' }}>
-          <h3 style={{ fontSize: '15px', fontWeight: '700', color: '#111827', marginBottom: '10px' }}>Our mission</h3>
-          <p style={{ fontSize: '13.5px', color: '#4b5563', lineHeight: '1.75', margin: 0 }}>
-            JoMabel Healthcare Foundation exists to provide access to compassionate, high-quality healthcare, strengthen community health systems, and promote dignity, wellness, and sustainable development for underserved populations
+  <section className="mv-about-section">
+    <div style={{ maxWidth: '1080px', margin: '0 auto', textAlign: 'center', marginBottom: '48px' }}>
+      <span style={{
+        fontSize: '11px', fontWeight: '700', color: 'var(--color-primary-dark)',
+        letterSpacing: '0.14em', textTransform: 'uppercase',
+      }}>
+        Our Purpose
+      </span>
+      <h2 style={{
+        fontFamily: 'var(--font-heading)',
+        fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: '700',
+        color: 'var(--color-navy)', margin: '12px 0 0',
+      }}>
+        Mission &amp; Vision
+      </h2>
+    </div>
+
+    <div className="mv-about-grid">
+      {/* Mission */}
+      <div style={{ paddingRight: '48px' }}>
+        <div style={{
+          border: '1px solid var(--color-border)', borderRadius: '12px',
+          padding: '28px', borderLeft: '4px solid var(--color-primary)',
+          backgroundColor: 'var(--color-white)', boxShadow: 'var(--shadow-sm)',
+        }}>
+          <div style={{
+            width: '40px', height: '40px', borderRadius: '10px',
+            background: 'var(--color-primary-light)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            marginBottom: '14px',
+          }}>
+            <span style={{ fontSize: '20px' }}>🎯</span>
+          </div>
+          <h3 style={{
+            fontFamily: 'var(--font-heading)',
+            fontSize: '18px', fontWeight: '700',
+            color: 'var(--color-navy)', marginBottom: '12px',
+          }}>
+            Our Mission
+          </h3>
+          <p style={{ fontSize: '14px', color: 'var(--color-text-muted)', lineHeight: '1.8', margin: 0 }}>
+            To deliver accessible healthcare, strengthen community health systems,
+            and promote sustainable development through medical services, education,
+            and empowerment.
           </p>
         </div>
-        <div style={{ border: '1px solid #e5e7eb', borderRadius: '12px', padding: '24px 28px', borderRight: '4px solid #2563eb', backgroundColor: '#ffffff', boxShadow: '0 1px 6px rgba(0,0,0,0.05)' }}>
-          <h3 style={{ fontSize: '15px', fontWeight: '700', color: '#111827', marginBottom: '10px' }}>Our vision</h3>
-          <p style={{ fontSize: '13.5px', color: '#4b5563', lineHeight: '1.75', margin: 0 }}>
-            A world where every person — regardless of geography, income, or social status — has access to dignified, life-saving healthcare.
+      </div>
+
+      <div className="mv-about-divider" />
+
+      {/* Vision */}
+      <div style={{ paddingLeft: '48px' }}>
+        <div style={{
+          border: '1px solid var(--color-border)', borderRadius: '12px',
+          padding: '28px', borderRight: '4px solid var(--color-primary)',
+          backgroundColor: 'var(--color-white)', boxShadow: 'var(--shadow-sm)',
+        }}>
+          <div style={{
+            width: '40px', height: '40px', borderRadius: '10px',
+            background: 'var(--color-primary-light)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            marginBottom: '14px',
+          }}>
+            <span style={{ fontSize: '20px' }}>🌍</span>
+          </div>
+          <h3 style={{
+            fontFamily: 'var(--font-heading)',
+            fontSize: '18px', fontWeight: '700',
+            color: 'var(--color-navy)', marginBottom: '12px',
+          }}>
+            Our Vision
+          </h3>
+          <p style={{ fontSize: '14px', color: 'var(--color-text-muted)', lineHeight: '1.8', margin: 0 }}>
+            A world where every person — regardless of geography, income, or social
+            status — has access to dignified, life-saving healthcare, supported by
+            empowered communities, trained local professionals, and sustainable
+            health infrastructure.
           </p>
         </div>
       </div>
     </div>
+
+    {/* Registration & Credentials */}
     <div className="credentials-wrap">
-      <h3 style={{ fontSize: '20px', fontWeight: '700', color: '#111827', marginBottom: '16px' }}>Registration and Credentials</h3>
-      <p style={{ fontSize: '14px', color: '#6b7280', lineHeight: '1.75', maxWidth: '500px', margin: '0 auto 36px' }}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      <h3 style={{
+        fontFamily: 'var(--font-heading)',
+        fontSize: '20px', fontWeight: '700',
+        color: 'var(--color-navy)', marginBottom: '12px',
+      }}>
+        Registration &amp; Credentials
+      </h3>
+      <p style={{
+        fontSize: '14px', color: 'var(--color-text-muted)',
+        lineHeight: '1.75', maxWidth: '500px', margin: '0 auto 36px',
+      }}>
+        JoMabel Healthcare Foundation is a registered nonprofit organization.
+        Credential logos and registration details to be added.
       </p>
-      <div className="cred-logos" style={{ display: 'flex', justifyContent: 'center', gap: '24px', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
         {[1,2,3,4,5].map(i => (
-          <div key={i} className="cred-logo" style={{ width: '100px', height: '44px', backgroundColor: '#374151', borderRadius: '6px' }} />
+          <div key={i} style={{
+            width: '100px', height: '44px',
+            backgroundColor: 'var(--color-border)',
+            borderRadius: '6px',
+          }} />
         ))}
       </div>
     </div>
@@ -282,39 +479,74 @@ const MissionVisionSection = () => (
 
 // ─── OUR TEAM ────────────────────────────────────────────────────────────────
 const teamMembers = [
-  { name: 'Team Member Name', position: 'Position', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80' },
-  { name: 'Team Member Name', position: 'Position', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80' },
-  { name: 'Team Member Name', position: 'Position', img: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&q=80' },
-  { name: 'Team Member Name', position: 'Position', img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80' },
+  { name: 'Team Member', position: 'Position', img: null },
+  { name: 'Team Member', position: 'Position', img: null },
+  { name: 'Team Member', position: 'Position', img: null },
+  { name: 'Team Member', position: 'Position', img: null },
 ];
 
 const OurTeam = () => (
   <section className="team-section">
-    <h2 style={{ fontSize: '24px', fontWeight: '700', color: '#111827', marginBottom: '40px' }}>Our Team</h2>
+    <span style={{
+      fontSize: '11px', fontWeight: '700', color: 'var(--color-primary-dark)',
+      letterSpacing: '0.14em', textTransform: 'uppercase',
+    }}>
+      The People Behind The Mission
+    </span>
+    <h2 style={{
+      fontFamily: 'var(--font-heading)',
+      fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: '700',
+      color: 'var(--color-navy)', margin: '12px 0 40px',
+    }}>
+      Our Team
+    </h2>
     <div className="team-grid">
       {teamMembers.map((m, i) => (
-        <div key={i}>
-          <div style={{ borderRadius: '12px', overflow: 'hidden', backgroundColor: '#16a34a', height: '240px', marginBottom: '14px', position: 'relative' }}>
-            <img src={m.img} alt={m.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', mixBlendMode: 'luminosity' }} />
+        <div key={i} className="team-card">
+          {m.img ? (
+            <img src={m.img} alt={m.name} className="team-photo" />
+          ) : (
+            <div className="team-photo-placeholder">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" opacity="0.4">
+                <circle cx="12" cy="8" r="4" stroke="var(--color-navy-mid)" strokeWidth="1.5"/>
+                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="var(--color-navy-mid)" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+            </div>
+          )}
+          <div style={{ padding: '16px 16px 18px' }}>
+            <p style={{
+              fontFamily: 'var(--font-heading)',
+              fontSize: '14px', fontWeight: '700',
+              color: 'var(--color-navy)', margin: '0 0 4px',
+            }}>
+              {m.name}
+            </p>
+            <p style={{ fontSize: '12px', color: 'var(--color-text-muted)', margin: 0 }}>
+              {m.position}
+            </p>
           </div>
-          <p style={{ fontSize: '14px', fontWeight: '600', color: '#111827', margin: '0 0 4px' }}>{m.name}</p>
-          <p style={{ fontSize: '13px', color: '#6b7280', margin: 0 }}>{m.position}</p>
         </div>
       ))}
     </div>
+    <p style={{
+      fontSize: '12px', color: 'var(--color-text-light)',
+      marginTop: '28px', fontStyle: 'italic',
+    }}>
+    </p>
   </section>
 );
 
 // ─── ABOUT PAGE ──────────────────────────────────────────────────────────────
 const About = () => (
-  <div style={{ fontFamily: "'Inter', sans-serif" }}>
+  <div style={{ fontFamily: 'var(--font-body)' }}>
     <style>{aboutStyles}</style>
     <Navbar />
     <AboutHero />
-    <FounderBio />
+    <FounderQuote />
+    <HistorySection />
+    <CoreValues />
     <MissionVisionSection />
     <OurTeam />
-    <OurSocials />
     <Testimonies />
     <Footer />
   </div>
