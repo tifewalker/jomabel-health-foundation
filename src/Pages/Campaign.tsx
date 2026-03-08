@@ -30,7 +30,7 @@ const CampaignHero = () => {
   return (
     <section style={{
       position: 'relative',
-      minHeight: '520px',
+      minHeight: 'clamp(380px, 60vw, 520px)',
       display: 'flex',
       alignItems: 'flex-end',
       overflow: 'hidden',
@@ -47,12 +47,13 @@ const CampaignHero = () => {
       />
       <div style={{
         position: 'absolute', inset: 0,
-        background: 'linear-gradient(to right, rgba(27,42,74,0.95) 0%, rgba(27,42,74,0.70) 60%, rgba(27,42,74,0.20) 100%)',
+        background: 'linear-gradient(to right, rgba(27,42,74,0.95) 0%, rgba(27,42,74,0.80) 60%, rgba(27,42,74,0.40) 100%)',
       }} />
       <div style={{
         position: 'relative', zIndex: 2,
-        padding: 'clamp(40px, 6vw, 72px) clamp(20px, 5vw, 64px)',
+        padding: 'clamp(32px, 6vw, 72px) clamp(16px, 5vw, 64px)',
         maxWidth: '720px',
+        width: '100%',
       }}>
         <span style={{
           display: 'inline-block',
@@ -69,7 +70,7 @@ const CampaignHero = () => {
         <h1 style={{
           fontFamily: 'var(--font-heading)',
           color: '#ffffff',
-          fontSize: 'clamp(28px, 4.5vw, 52px)',
+          fontSize: 'clamp(24px, 5vw, 52px)',
           fontWeight: '700', lineHeight: '1.15',
           marginBottom: '16px',
         }}>
@@ -87,16 +88,17 @@ const CampaignHero = () => {
           in Ufuma, Anambra State, Nigeria — powered by compassion, designed
           for generational impact.
         </p>
-        <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
           <button
             onClick={() => navigate('/donate')}
             style={{
               backgroundColor: 'var(--color-green)',
               color: '#ffffff', border: 'none',
               borderRadius: 'var(--btn-radius)',
-              padding: '13px 28px', fontSize: '14px',
+              padding: '13px 24px', fontSize: '14px',
               fontWeight: '700', cursor: 'pointer',
               fontFamily: 'inherit', transition: 'var(--transition)',
+              flex: '1 1 auto', maxWidth: '220px', minWidth: '160px',
             }}
             onMouseOver={e => (e.currentTarget.style.backgroundColor = 'var(--color-green-dark)')}
             onMouseOut={e => (e.currentTarget.style.backgroundColor = 'var(--color-green)')}
@@ -113,10 +115,11 @@ const CampaignHero = () => {
               color: '#ffffff',
               border: '1.5px solid rgba(255,255,255,0.45)',
               borderRadius: 'var(--btn-radius)',
-              padding: '13px 28px', fontSize: '14px',
+              padding: '13px 24px', fontSize: '14px',
               fontWeight: '700', cursor: 'pointer',
               fontFamily: 'inherit', backdropFilter: 'blur(4px)',
               transition: 'var(--transition)',
+              flex: '1 1 auto', maxWidth: '180px', minWidth: '140px',
             }}
             onMouseOver={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.22)')}
             onMouseOut={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.12)')}
@@ -133,10 +136,10 @@ const CampaignHero = () => {
 const VisionStats = () => (
   <section id="vision-section" style={{
     backgroundColor: 'var(--color-navy)',
-    padding: 'clamp(40px, 5vw, 64px) clamp(20px, 5vw, 48px)',
+    padding: 'clamp(40px, 5vw, 64px) clamp(16px, 5vw, 48px)',
     fontFamily: 'var(--font-body)',
   }}>
-    <div style={{ maxWidth: '1080px', margin: '0 auto', textAlign: 'center', marginBottom: '40px' }}>
+    <div style={{ maxWidth: '1080px', margin: '0 auto', textAlign: 'center', marginBottom: '36px' }}>
       <span style={{
         fontSize: '11px', fontWeight: '700', color: 'var(--color-primary)',
         letterSpacing: '0.14em', textTransform: 'uppercase',
@@ -146,37 +149,32 @@ const VisionStats = () => (
       <h2 style={{
         fontFamily: 'var(--font-heading)',
         color: '#ffffff',
-        fontSize: 'clamp(22px, 3vw, 32px)',
+        fontSize: 'clamp(20px, 3vw, 32px)',
         fontWeight: '700', margin: '12px 0 0',
       }}>
         A Campus Built for Generations
       </h2>
     </div>
 
-    {/* Stats row */}
-    <div style={{
-      maxWidth: '1080px', margin: '0 auto 48px',
-      display: 'grid',
-      gridTemplateColumns: 'repeat(4, 1fr)',
-      gap: '16px',
-    }}>
+    {/* Stats row — 2 cols on mobile, 4 on desktop */}
+    <div className="vision-stats-grid">
       {[
-        { number: '16,000+', label: 'Square Meters', sub: 'Total Campus Size' },
-        { number: '2', label: 'Major Facilities', sub: 'Medical Center + Skills Center' },
-        { number: '6+', label: 'Program Areas', sub: 'Healthcare & Training' },
-        { number: '∞', label: 'Generational Impact', sub: 'Ufuma, Anambra State' },
+        { number: '16,000+', label: 'Square Meters',       sub: 'Total Campus Size' },
+        { number: '2',       label: 'Major Facilities',    sub: 'Medical Center + Skills Center' },
+        { number: '6+',      label: 'Program Areas',       sub: 'Healthcare & Training' },
+        { number: '∞',       label: 'Generational Impact', sub: 'Ufuma, Anambra State' },
       ].map((s, i) => (
         <div key={i} style={{
           background: 'rgba(255,255,255,0.06)',
           border: '1px solid rgba(41,197,246,0.20)',
           borderRadius: 'var(--card-radius)',
-          padding: '24px 20px',
+          padding: 'clamp(16px, 3vw, 24px) 16px',
           textAlign: 'center',
         }}>
           <p style={{
             fontFamily: 'var(--font-heading)',
             color: 'var(--color-primary)',
-            fontSize: 'clamp(28px, 3.5vw, 40px)',
+            fontSize: 'clamp(26px, 4vw, 40px)',
             fontWeight: '800', margin: '0 0 6px',
           }}>{s.number}</p>
           <p style={{ color: '#ffffff', fontSize: '13px', fontWeight: '700', margin: '0 0 4px' }}>{s.label}</p>
@@ -186,13 +184,10 @@ const VisionStats = () => (
     </div>
 
     {/* Description */}
-    <div style={{
-      maxWidth: '720px', margin: '0 auto',
-      textAlign: 'center',
-    }}>
+    <div style={{ maxWidth: '720px', margin: '0 auto', textAlign: 'center', marginTop: '32px' }}>
       <p style={{
         color: 'rgba(255,255,255,0.72)',
-        fontSize: '15px', lineHeight: '1.85',
+        fontSize: 'clamp(13px, 1.8vw, 15px)', lineHeight: '1.85',
       }}>
         The JoMabel Medical and Training Campus in Ufuma, Anambra State will serve as
         a transformative hub for healthcare delivery, professional training, and community
@@ -218,11 +213,11 @@ const RendersGallery = () => {
   return (
     <section style={{
       backgroundColor: 'var(--color-surface)',
-      padding: 'var(--section-padding-y) var(--section-padding-x)',
+      padding: 'var(--section-padding-y) clamp(16px, 5vw, var(--section-padding-x))',
       fontFamily: 'var(--font-body)',
     }}>
       <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <span style={{
             fontSize: '11px', fontWeight: '700',
             color: 'var(--color-primary-dark)',
@@ -232,7 +227,7 @@ const RendersGallery = () => {
           </span>
           <h2 style={{
             fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(22px, 3vw, 30px)',
+            fontSize: 'clamp(20px, 3vw, 30px)',
             fontWeight: '700', color: 'var(--color-navy)',
             margin: '12px 0 0',
           }}>
@@ -243,34 +238,27 @@ const RendersGallery = () => {
         {/* Main large image */}
         <div style={{
           borderRadius: '16px', overflow: 'hidden',
-          marginBottom: '16px', boxShadow: 'var(--shadow-lg)',
+          marginBottom: '12px', boxShadow: 'var(--shadow-lg)',
           position: 'relative',
         }}>
           <img
             src={renders[active].src}
             alt={renders[active].label}
-            style={{ width: '100%', height: 'clamp(280px, 45vw, 480px)', objectFit: 'cover', display: 'block' }}
+            style={{ width: '100%', height: 'clamp(200px, 45vw, 480px)', objectFit: 'cover', display: 'block' }}
           />
           <div style={{
             position: 'absolute', bottom: 0, left: 0, right: 0,
             background: 'linear-gradient(to top, rgba(27,42,74,0.85) 0%, transparent 100%)',
-            padding: '24px 24px 20px',
+            padding: '20px 20px 16px',
           }}>
-            <p style={{
-              color: '#ffffff', fontSize: '14px',
-              fontWeight: '600', margin: 0,
-            }}>
+            <p style={{ color: '#ffffff', fontSize: 'clamp(12px, 1.5vw, 14px)', fontWeight: '600', margin: 0 }}>
               {renders[active].label}
             </p>
           </div>
         </div>
 
-        {/* Thumbnails */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(6, 1fr)',
-          gap: '10px',
-        }}>
+        {/* Thumbnails — 3 per row on mobile, 6 on desktop */}
+        <div className="renders-thumb-grid">
           {renders.map((r, i) => (
             <div
               key={i}
@@ -278,9 +266,7 @@ const RendersGallery = () => {
               style={{
                 borderRadius: '8px', overflow: 'hidden',
                 cursor: 'pointer',
-                border: i === active
-                  ? '2px solid var(--color-primary)'
-                  : '2px solid transparent',
+                border: i === active ? '2px solid var(--color-primary)' : '2px solid transparent',
                 opacity: i === active ? 1 : 0.65,
                 transition: 'var(--transition)',
               }}
@@ -288,7 +274,7 @@ const RendersGallery = () => {
               <img
                 src={r.src}
                 alt={r.label}
-                style={{ width: '100%', height: '72px', objectFit: 'cover', display: 'block' }}
+                style={{ width: '100%', height: 'clamp(52px, 8vw, 72px)', objectFit: 'cover', display: 'block' }}
               />
             </div>
           ))}
@@ -302,11 +288,11 @@ const RendersGallery = () => {
 const ConstructionVideos = () => (
   <section style={{
     backgroundColor: 'var(--color-white)',
-    padding: 'var(--section-padding-y) var(--section-padding-x)',
+    padding: 'var(--section-padding-y) clamp(16px, 5vw, var(--section-padding-x))',
     fontFamily: 'var(--font-body)',
   }}>
     <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
-      <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '36px' }}>
         <span style={{
           fontSize: '11px', fontWeight: '700',
           color: 'var(--color-primary-dark)',
@@ -316,14 +302,14 @@ const ConstructionVideos = () => (
         </span>
         <h2 style={{
           fontFamily: 'var(--font-heading)',
-          fontSize: 'clamp(22px, 3vw, 30px)',
+          fontSize: 'clamp(20px, 3vw, 30px)',
           fontWeight: '700', color: 'var(--color-navy)',
           margin: '12px 0 8px',
         }}>
           From Blueprint to Reality
         </h2>
         <p style={{
-          fontSize: '14px', color: 'var(--color-text-muted)',
+          fontSize: 'clamp(13px, 1.5vw, 14px)', color: 'var(--color-text-muted)',
           maxWidth: '520px', margin: '0 auto', lineHeight: '1.75',
         }}>
           Watch our 16,000+ sq. meter medical campus rising in Ufuma, Anambra State.
@@ -331,12 +317,8 @@ const ConstructionVideos = () => (
         </p>
       </div>
 
-      {/* 2x2 video grid */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
-        gap: '20px',
-      }}>
+      {/* 1 col on mobile, 2 cols on tablet+ */}
+      <div className="videos-grid">
         {[
           { src: construction4, label: 'Construction Progress — Phase 1' },
           { src: construction2, label: 'Construction Progress — Phase 2' },
@@ -354,13 +336,10 @@ const ConstructionVideos = () => (
               controls
               muted
               playsInline
-              style={{ width: '100%', display: 'block', maxHeight: '260px', objectFit: 'cover' }}
+              style={{ width: '100%', display: 'block', maxHeight: '280px', objectFit: 'cover' }}
             />
             <div style={{ padding: '12px 16px' }}>
-              <p style={{
-                fontSize: '13px', fontWeight: '600',
-                color: '#ffffff', margin: 0,
-              }}>
+              <p style={{ fontSize: '13px', fontWeight: '600', color: '#ffffff', margin: 0 }}>
                 {v.label}
               </p>
             </div>
@@ -410,11 +389,11 @@ const OutreachCampaigns = () => {
   return (
     <section style={{
       backgroundColor: 'var(--color-surface)',
-      padding: 'var(--section-padding-y) var(--section-padding-x)',
+      padding: 'var(--section-padding-y) clamp(16px, 5vw, var(--section-padding-x))',
       fontFamily: 'var(--font-body)',
     }}>
       <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '36px' }}>
           <span style={{
             fontSize: '11px', fontWeight: '700',
             color: 'var(--color-primary-dark)',
@@ -424,7 +403,7 @@ const OutreachCampaigns = () => {
           </span>
           <h2 style={{
             fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(22px, 3vw, 30px)',
+            fontSize: 'clamp(20px, 3vw, 30px)',
             fontWeight: '700', color: 'var(--color-navy)',
             margin: '12px 0 0',
           }}>
@@ -444,23 +423,21 @@ const OutreachCampaigns = () => {
             />
             <div style={{
               position: 'absolute', inset: 0,
-              background: 'linear-gradient(to top, rgba(27,42,74,0.90) 0%, transparent 50%)',
+              background: 'linear-gradient(to top, rgba(27,42,74,0.92) 0%, transparent 55%)',
             }} />
             <div style={{ position: 'absolute', bottom: '20px', left: '20px', right: '20px' }}>
               <span style={{
                 display: 'inline-block',
                 background: 'var(--color-primary)',
                 color: '#ffffff', fontSize: '10px',
-                fontWeight: '700', letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                padding: '3px 10px', borderRadius: '999px',
-                marginBottom: '8px',
+                fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase',
+                padding: '3px 10px', borderRadius: '999px', marginBottom: '8px',
               }}>
                 {campaigns[0].tag}
               </span>
               <h3 style={{
                 fontFamily: 'var(--font-heading)',
-                color: '#ffffff', fontSize: '18px',
+                color: '#ffffff', fontSize: 'clamp(15px, 2vw, 18px)',
                 fontWeight: '700', margin: '0 0 8px', lineHeight: '1.3',
               }}>
                 {campaigns[0].title}
@@ -493,28 +470,27 @@ const OutreachCampaigns = () => {
                 <img
                   src={c.img}
                   alt={c.title}
-                  style={{ width: '100%', height: '140px', objectFit: 'cover', display: 'block' }}
+                  style={{ width: '100%', height: 'clamp(120px, 18vw, 160px)', objectFit: 'cover', display: 'block' }}
                 />
-                <div style={{ padding: '14px 16px 16px' }}>
+                <div style={{ padding: '12px 14px 14px' }}>
                   <span style={{
                     display: 'inline-block',
                     background: 'var(--color-primary-light)',
                     color: 'var(--color-primary-dark)',
                     fontSize: '10px', fontWeight: '700',
                     letterSpacing: '0.08em', textTransform: 'uppercase',
-                    padding: '2px 8px', borderRadius: '999px',
-                    marginBottom: '8px',
+                    padding: '2px 8px', borderRadius: '999px', marginBottom: '7px',
                   }}>
                     {c.tag}
                   </span>
                   <h3 style={{
                     fontFamily: 'var(--font-heading)',
-                    fontSize: '14px', fontWeight: '700',
-                    color: 'var(--color-navy)', margin: '0 0 6px', lineHeight: '1.3',
+                    fontSize: 'clamp(12px, 1.5vw, 14px)', fontWeight: '700',
+                    color: 'var(--color-navy)', margin: '0 0 5px', lineHeight: '1.3',
                   }}>
                     {c.title}
                   </h3>
-                  <p style={{ fontSize: '12.5px', color: 'var(--color-text-muted)', lineHeight: '1.65', margin: 0 }}>
+                  <p style={{ fontSize: '12px', color: 'var(--color-text-muted)', lineHeight: '1.6', margin: 0 }}>
                     {c.desc}
                   </p>
                 </div>
@@ -557,6 +533,30 @@ const OutreachCampaigns = () => {
 const Campaign = () => (
   <div style={{ fontFamily: 'var(--font-body)' }}>
     <style>{`
+      /* ── Vision Stats Grid ───────────────────────── */
+      .vision-stats-grid {
+        max-width: 1080px;
+        margin: 0 auto 48px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+
+      /* ── Renders Thumbnails ──────────────────────── */
+      .renders-thumb-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px;
+      }
+
+      /* ── Videos Grid ─────────────────────────────── */
+      .videos-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      /* ── Outreach Mosaic ─────────────────────────── */
       .campaign-mosaic {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -569,36 +569,71 @@ const Campaign = () => (
       .campaign-mosaic-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 16px;
+        gap: 14px;
       }
 
+      /* ── Tablet (≤860px) ─────────────────────────── */
       @media (max-width: 860px) {
-        .campaign-mosaic { grid-template-columns: 1fr; }
-        .campaign-mosaic-large { height: 320px; }
-        .campaign-mosaic-grid { grid-template-columns: 1fr 1fr; }
+        .vision-stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 12px;
+        }
+        .renders-thumb-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 8px;
+        }
+        .videos-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 14px;
+        }
+        .campaign-mosaic {
+          grid-template-columns: 1fr;
+        }
+        .campaign-mosaic-large {
+          height: 340px;
+        }
+        .campaign-mosaic-grid {
+          grid-template-columns: 1fr 1fr;
+        }
       }
-      @media (max-width: 480px) {
-        .campaign-mosaic-grid { grid-template-columns: 1fr; }
+
+      /* ── Mobile (≤560px) ─────────────────────────── */
+      @media (max-width: 560px) {
+        .vision-stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px;
+        }
+        .renders-thumb-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 6px;
+        }
+        .videos-grid {
+          grid-template-columns: 1fr;
+          gap: 14px;
+        }
+        .campaign-mosaic-large {
+          height: 280px;
+        }
+        .campaign-mosaic-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ── Small mobile (≤380px) ───────────────────── */
+      @media (max-width: 380px) {
+        .vision-stats-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+        }
       }
     `}</style>
 
     <Navbar />
-
-    {/* 1. Hero */}
     <CampaignHero />
-
-    {/* 2. Vision Stats */}
     <VisionStats />
-
-    {/* 3. Architectural Renders Gallery */}
     <RendersGallery />
-
-    {/* 4. Construction Videos */}
     <ConstructionVideos />
-
-    {/* 5. Ongoing Outreach Campaigns */}
     <OutreachCampaigns />
-
     <Footer />
   </div>
 );

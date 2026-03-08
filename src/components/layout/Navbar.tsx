@@ -13,6 +13,7 @@ const Navbar = () => {
     { id: 'programs',  label: 'Programs',   path: '/programs' },
     { id: 'campaign',  label: 'Campaign',   path: '/campaign' },
     { id: 'about',     label: 'About Us',   path: '/about' },
+    { id: 'legacy',    label: 'Legacy Giving', path: '/legacy' },
     { id: 'contact',   label: 'Contact Us', path: '/contact' },
   ];
 
@@ -25,14 +26,19 @@ const Navbar = () => {
     <>
       <header className="w-full bg-white shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20 md:h-24">
+          <div className="flex justify-between items-center" style={{ minHeight: '88px' }}>
 
-            {/* Logo */}
-            <Link to="/" className="flex-shrink-0">
+            {/* Logo — prominently sized */}
+            <Link to="/" className="flex-shrink-0" style={{ padding: '8px 0' }}>
               <img
                 src={logo}
                 alt="JoMabel Healthcare Foundation"
-                className="h-16 md:h-20 w-auto object-contain"
+                style={{
+                  height: 'clamp(72px, 10vw, 100px)',
+                  width: 'auto',
+                  objectFit: 'contain',
+                  display: 'block',
+                }}
               />
             </Link>
 

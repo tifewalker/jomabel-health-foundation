@@ -7,6 +7,7 @@ import Programs from './Pages/Programs';
 import Donate from './Pages/Donate';
 import ContactPage from './Pages/ContactPage';
 import Campaign from './Pages/Campaign';
+import LegacyGiving from './Pages/LegacyGiving';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/donate" element={<Donate />} />
         <Route path="/Contact" element={<ContactPage />} />
         <Route path="/campaign" element={<Campaign />} />
+        <Route path="/legacy" element={<LegacyGiving />} />
       </Routes>
      
     </Router>
