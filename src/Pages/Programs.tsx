@@ -164,12 +164,19 @@ const ProgramsOverview = () => {
             background: 'linear-gradient(160deg, var(--color-navy) 0%, var(--color-navy-mid) 100%)',
             borderRadius: '16px', overflow: 'hidden', padding: '28px 28px 0',
           }}>
+            {/* Logo box — taller for better visibility */}
             <div style={{
-              backgroundColor: '#ffffff', borderRadius: '10px', padding: '20px 24px',
-              marginBottom: '20px', display: 'flex', alignItems: 'center',
+              backgroundColor: '#ffffff', borderRadius: '10px',
+              padding: '24px 28px', marginBottom: '20px',
+              display: 'flex', alignItems: 'center',
               justifyContent: 'center', width: '100%', boxSizing: 'border-box',
+              minHeight: '100px',
             }}>
-              <img src={logo2} alt="JoMabel Medical Center" style={{ height: '48px', width: 'auto' }} />
+              <img
+                src={logo2}
+                alt="JoMabel Medical Center"
+                style={{ height: 'auto', width: '300px', objectFit: 'contain' }}
+              />
             </div>
             <h3 style={{
               fontFamily: 'var(--font-heading)',
@@ -205,12 +212,19 @@ const ProgramsOverview = () => {
             background: 'linear-gradient(160deg, var(--color-navy-mid) 0%, var(--color-primary-dark) 100%)',
             borderRadius: '16px', overflow: 'hidden', padding: '28px 28px 0',
           }}>
+            {/* Logo box — taller for better visibility */}
             <div style={{
-              backgroundColor: '#ffffff', borderRadius: '10px', padding: '20px 24px',
-              marginBottom: '20px', display: 'flex', alignItems: 'center',
+              backgroundColor: '#ffffff', borderRadius: '10px',
+              padding: '24px 28px', marginBottom: '20px',
+              display: 'flex', alignItems: 'center',
               justifyContent: 'center', width: '100%', boxSizing: 'border-box',
+              minHeight: '100px',
             }}>
-              <img src={logo3} alt="JoMabel Skills Center" style={{ height: '48px', width: 'auto' }} />
+              <img
+                src={logo3}
+                alt="JoMabel Skills Center"
+                style={{ height: 'auto', width: '300px', objectFit: 'contain' }}
+              />
             </div>
             <h3 style={{
               fontFamily: 'var(--font-heading)',
@@ -263,14 +277,10 @@ const ProgramsOverview = () => {
                 (e.currentTarget as HTMLDivElement).style.borderColor = 'var(--color-border)';
               }}
             >
-              {/* Card image */}
               <div style={{ position: 'relative', height: '140px', overflow: 'hidden' }}>
                 <img src={p.img} alt={p.title}
                   style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                <div style={{
-                  position: 'absolute', inset: 0,
-                  background: 'rgba(27,42,74,0.35)',
-                }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'rgba(27,42,74,0.35)' }} />
                 <div style={{
                   position: 'absolute', bottom: '10px', left: '12px',
                   background: 'rgba(255,255,255,0.92)',
@@ -279,8 +289,6 @@ const ProgramsOverview = () => {
                   {p.icon}
                 </div>
               </div>
-
-              {/* Card content */}
               <div style={{ padding: '20px 20px 22px' }}>
                 <span style={{
                   fontSize: '10.5px', fontWeight: '700',
