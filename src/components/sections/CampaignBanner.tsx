@@ -70,7 +70,7 @@ const CampaignBanner = () => {
           margin: '0 auto 28px',
         }}>
           Help us complete the 16,000+ sq. meter JoMabel Medical &amp; Training Campus
-          in Ufuma, Anambra State — bringing dignified healthcare to thousands of families.
+          in Ufuma, Anambra State bringing dignified healthcare to thousands of families.
         </p>
 
         {/* Progress card */}

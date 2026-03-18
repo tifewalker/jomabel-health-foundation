@@ -140,25 +140,35 @@ const FounderQuote = () => {
           line-height: 1.8;
           margin: 0;
         }
+        .fq-survivor-tags {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+        }
+        .fq-survivor-tag {
+          background: var(--color-primary-light);
+          color: var(--color-primary-dark);
+          border: 1px solid rgba(41,197,246,0.30);
+          border-radius: 999px;
+          padding: 4px 14px;
+          font-size: 12px;
+          font-weight: 600;
+        }
 
         /* ── RESPONSIVE ── */
         @media (max-width: 768px) {
-          .fq-wrapper {
-            grid-template-columns: 1fr;
-          }
-          .fq-photo-side {
-            min-height: 340px;
-          }
+          .fq-wrapper { grid-template-columns: 1fr; }
+          .fq-photo-side { min-height: 340px; }
         }
       `}</style>
 
       <div className="fq-wrapper">
 
-        {/* ── LEFT — Photo side ── */}
+        {/* ── LEFT — Photo side (unchanged) ── */}
         <div className="fq-photo-side">
           {/*
             When founder photo is available, replace the placeholder div below with:
-            <img className="fq-photo-img" src={founderPhoto} alt="Dr. Clara Ada Ogbaa" />
+            <img className="fq-photo-img" src={founderPhoto} alt="Clara Ada Ogbaa" />
             <div className="fq-photo-overlay" />
           */}
           <div className="fq-photo-placeholder-bg">
@@ -170,42 +180,52 @@ const FounderQuote = () => {
 
           {/* Name overlay at bottom */}
           <div className="fq-photo-bottom">
-            <p className="fq-founder-label">Founder / CEO</p>
-            <h3 className="fq-founder-name">Dr Clara Ada Ogbaa</h3>
+            <p className="fq-founder-label">Founder & Executive Director</p>
+            <h3 className="fq-founder-name">Clara Ada Ogbaa</h3>
             <p className="fq-founder-tags">Ed.D. &nbsp;|&nbsp; Educator &nbsp;|&nbsp; Humanitarian &nbsp;|&nbsp; Survivor</p>
           </div>
         </div>
 
-        {/* ── RIGHT — Content side ── */}
+        {/* ── RIGHT — Updated content ── */}
         <div className="fq-content-side">
+
           <h2 className="fq-heading">
             Born From Faith. Sustained by Grace.<br />
             Built For Purpose.
           </h2>
 
+          {/* Survivor tags — board's strategic assets */}
+          <div className="fq-survivor-tags">
+            <span className="fq-survivor-tag">Breast Cancer Survivor</span>
+            <span className="fq-survivor-tag">Endometrial Cancer Survivor</span>
+            <span className="fq-survivor-tag">Kidney Transplant Recipient</span>
+          </div>
+
           <p className="fq-intro">
-            Dr. Clara Ada Ogbaa is a Nigerian-American educator, humanitarian,
-            two-time cancer survivor, and kidney transplant recipient. Her life was
-            sustained by advanced medicine, compassionate care, and faith — experiences
-            that shaped her life's mission.
+            Clara Ada Ogbaa is a Nigerian-American educator, humanitarian, two-time
+            cancer survivor, and kidney transplant recipient. Having experienced
+            firsthand the life-saving power of quality healthcare, she made a
+            profound decision to use her modest retirement savings to bring that
+            same standard of care to her hometown of Ufuma, Anambra State, Nigeria.
           </p>
 
           <div className="fq-pullquote">
             <span className="fq-pullquote-mark-top">"</span>
             <p>
-              Dignified, life-saving healthcare should be accessible to every person —
-              not only to those fortunate enough to live near it.
+              Healthcare should never be a privilege reserved for a few.
+              It is a human right and it is the legacy we are called to leave.
             </p>
             <span className="fq-pullquote-mark-bottom">"</span>
           </div>
 
           <p className="fq-body">
-            Born in Ufuma, Anambra State, Nigeria, Dr. Ogbaa envisioned a future where
-            her hometown would be defined by possibility — not limited infrastructure.
-            JoMabel Healthcare Foundation is her answer to that vision.
+            What began as one woman's act of personal sacrifice has grown into
+            JoMabel Healthcare Foundation a nationally recognized nonprofit now
+            building a 16,000+ sq. meter medical and training campus that will
+            serve thousands of families for generations to come.
           </p>
-        </div>
 
+        </div>
       </div>
     </section>
   );

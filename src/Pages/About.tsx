@@ -283,7 +283,7 @@ const HistorySection = () => (
         </p>
         <p style={{ fontSize: '14px', color: 'var(--color-text-muted)', lineHeight: '1.85', margin: 0 }}>
           Today, JoMabel Healthcare Foundation stands as a testament to vision,
-          legacy, and sustained commitment — a bridge between past and future,
+          legacy, and sustained commitment a bridge between past and future,
           tradition and innovation, compassion and strategic action.
         </p>
 
@@ -439,8 +439,8 @@ const MissionVisionSection = () => (
             Our Vision
           </h3>
           <p style={{ fontSize: '14px', color: 'var(--color-text-muted)', lineHeight: '1.8', margin: 0 }}>
-            A world where every person — regardless of geography, income, or social
-            status — has access to dignified, life-saving healthcare, supported by
+            A world where every person regardless of geography, income, or social
+            status has access to dignified, life-saving healthcare, supported by
             empowered communities, trained local professionals, and sustainable
             health infrastructure.
           </p>

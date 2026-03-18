@@ -42,6 +42,76 @@ const donateStyles = `
   }
   .dh-btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
 
+  /* ─── DONOR LEVELS ──────────────────────────────── */
+  .donor-levels-section {
+    background-color: var(--color-surface);
+    padding: clamp(48px, 6vw, 80px) clamp(20px, 5vw, 64px);
+    font-family: var(--font-body);
+  }
+  .donor-tabs {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .donor-tab {
+    padding: 9px 22px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .community-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .leadership-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .major-gift-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  .donor-card {
+    border-radius: 16px;
+    padding: 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: var(--transition);
+    cursor: default;
+  }
+  .donor-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .major-gift-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: var(--transition);
+  }
+  .major-gift-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
   /* ─── DONATION LAYOUT ───────────────────────────── */
   .donation-layout {
     display: grid;
@@ -181,15 +251,23 @@ const donateStyles = `
   @media (max-width: 860px) {
     .donation-layout { grid-template-columns: 1fr; }
     .payment-grid { grid-template-columns: 1fr; max-width: 520px; }
+    .community-grid { grid-template-columns: repeat(2, 1fr); }
+    .leadership-grid { grid-template-columns: repeat(2, 1fr); }
+    .major-gift-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 600px) {
     .amount-grid { grid-template-columns: repeat(2, 1fr); }
     .other-ways-grid { grid-template-columns: 1fr; max-width: 400px; }
+    .community-grid { grid-template-columns: repeat(2, 1fr); }
+    .leadership-grid { grid-template-columns: repeat(2, 1fr); }
+    .major-gift-grid { grid-template-columns: 1fr; max-width: 400px; }
   }
   @media (max-width: 480px) {
     .donate-hero-btns { flex-direction: column; }
     .dh-btn-primary, .dh-btn-outline { width: 100%; text-align: center; }
     .amount-grid { grid-template-columns: repeat(2, 1fr); }
+    .community-grid { grid-template-columns: 1fr 1fr; }
+    .leadership-grid { grid-template-columns: 1fr 1fr; }
   }
 `;
 
@@ -248,19 +326,180 @@ const DonationHero = () => (
       </h1>
       <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: '14px', lineHeight: '1.8', marginBottom: '28px', maxWidth: '480px' }}>
         Every dollar goes directly toward building Nigeria's next world-class
-        medical and training campus — in Ufuma, Anambra State.
+        medical and training campus in Ufuma, Anambra State.
       </p>
       <div className="donate-hero-btns">
-        <button className="dh-btn-primary" onClick={() => { const el = document.getElementById('payment-section'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}>
-          Donate Now
+        <button className="dh-btn-primary" onClick={() => { const el = document.getElementById('donor-levels'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}>
+          See Giving Levels
         </button>
-        <button className="dh-btn-outline" onClick={() => { const el = document.getElementById('faq-section'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}>
-          Learn More
+        <button className="dh-btn-outline" onClick={() => { const el = document.getElementById('payment-section'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}>
+          Donate Now
         </button>
       </div>
     </div>
   </section>
 );
+
+// ─── DONOR LEVELS ─────────────────────────────────────────────────────────────
+type Tab = 'community' | 'leadership' | 'major';
+
+const communityLevels = [
+  { amount: '$100',   title: 'Community Supporter',  color: '#0ea5e9', bg: '#e0f2fe', desc: 'Help fund community health education and outreach missions across southeastern Nigeria.' },
+  { amount: '$250',   title: 'Screening Sponsor',    color: '#6366f1', bg: '#eef2ff', desc: 'Sponsor free health screenings for families who cannot afford basic medical checkups.' },
+  { amount: '$500',   title: 'Patient Care Supporter', color: '#ec4899', bg: '#fdf2f8', desc: 'Provide direct patient care support medications, supplies, and clinical services.' },
+  { amount: '$1,000', title: 'Training Sponsor',     color: '#f59e0b', bg: '#fffbeb', desc: 'Fund training for a community health worker, investing in the future of local healthcare.' },
+];
+
+const leadershipLevels = [
+  { amount: '$5,000',    title: 'Founders Circle',          color: '#7c3aed', bg: '#f5f3ff', badge: 'Leadership', desc: 'Join our founding circle of visionary donors committed to transforming rural healthcare in Nigeria.' },
+  { amount: '$10,000',   title: 'Health Access Partner',    color: '#0369a1', bg: '#e0f2fe', badge: 'Leadership', desc: 'Partner directly with JHF to expand health access recognized as a strategic foundation partner.' },
+  { amount: '$25,000',   title: 'Community Impact Sponsor', color: '#065f46', bg: '#d1fae5', badge: 'Leadership', desc: 'Make a transformational impact — sponsor a full program area and receive naming recognition.' },
+  { amount: '$100,000+', title: 'Legacy Donor',             color: '#92400e', bg: '#fef3c7', badge: 'Legacy',     desc: 'Secure your legacy name a facility, department, or major initiative at the JoMabel campus.' },
+];
+
+const majorGiftOpportunities = [
+  { icon: '🏫', title: 'Sponsor a Classroom',           amount: 'From $10,000', desc: 'Fund a dedicated training classroom at the Skill Acquisition & Medical Training Center.' },
+  { icon: '🩺', title: 'Sponsor Diagnostic Equipment',  amount: 'From $5,000',  desc: 'Equip the Medical Center with life-saving diagnostic tools ultrasound, labs, imaging.' },
+  { icon: '💻', title: 'Fund Telemedicine Systems',     amount: 'From $15,000', desc: 'Bring digital health and telemedicine infrastructure to connect Ufuma with global specialists.' },
+  { icon: '👶', title: 'Maternal & Child Health',       amount: 'From $7,500',  desc: 'Support safe deliveries, newborn care, immunization, and women\'s health programs.' },
+  { icon: '🎓', title: 'Fund Training Scholarships',    amount: 'From $1,000',  desc: 'Sponsor a student\'s healthcare training — clinical skills, nursing, community health.' },
+  { icon: '🏛️', title: 'Name a Facility or Department', amount: 'From $25,000', desc: 'Permanently attach your name or a loved one\'s legacy to a ward, clinic, or department.' },
+];
+
+const DonorLevels = () => {
+  const [tab, setTab] = useState<Tab>('community');
+
+  const tabs: { id: Tab; label: string; color: string; activeBg: string; activeColor: string }[] = [
+    { id: 'community',  label: 'Community Giving',  color: '#e5e7eb', activeBg: 'var(--color-primary)', activeColor: '#ffffff' },
+    { id: 'leadership', label: 'Leadership Giving',  color: '#e5e7eb', activeBg: 'var(--color-navy)',    activeColor: '#ffffff' },
+    { id: 'major',      label: 'Major Gift / Institutional', color: '#e5e7eb', activeBg: '#92400e', activeColor: '#ffffff' },
+  ];
+
+  return (
+    <section id="donor-levels" className="donor-levels-section">
+      <div style={{ textAlign: 'center', marginBottom: '36px' }}>
+        <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--color-primary-dark)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
+          Giving Levels
+        </span>
+        <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: '700', color: 'var(--color-navy)', margin: '12px 0 12px' }}>
+          Find Your Level of Impact
+        </h2>
+        <p style={{ fontSize: '14px', color: 'var(--color-text-muted)', maxWidth: '540px', margin: '0 auto', lineHeight: '1.75' }}>
+          Every gift at every level directly funds the completion of a healthcare
+          campus that will serve thousands of families for generations.
+        </p>
+      </div>
+
+      {/* Tab switcher */}
+      <div className="donor-tabs">
+        {tabs.map(t => (
+          <button key={t.id} className="donor-tab"
+            onClick={() => setTab(t.id)}
+            style={{
+              backgroundColor: tab === t.id ? t.activeBg : '#ffffff',
+              color: tab === t.id ? t.activeColor : '#374151',
+              borderColor: tab === t.id ? t.activeBg : '#e5e7eb',
+              boxShadow: tab === t.id ? 'var(--shadow-sm)' : 'none',
+            }}>
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Community Giving */}
+      {tab === 'community' && (
+        <div className="community-grid">
+          {communityLevels.map((level, i) => (
+            <div key={i} className="donor-card" style={{ backgroundColor: level.bg, border: `1px solid ${level.color}30` }}>
+              <p style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(22px, 3vw, 30px)', fontWeight: '800', color: level.color, margin: 0 }}>{level.amount}</p>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '15px', fontWeight: '700', color: '#1a1a2e', margin: 0 }}>{level.title}</h3>
+              <p style={{ fontSize: '13px', color: '#4b5563', lineHeight: '1.7', margin: 0, flex: 1 }}>{level.desc}</p>
+              <button
+                onClick={() => { const el = document.getElementById('payment-section'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                style={{
+                  backgroundColor: level.color, color: '#ffffff', border: 'none',
+                  borderRadius: '8px', padding: '10px 18px', fontSize: '13px',
+                  fontWeight: '700', cursor: 'pointer', fontFamily: 'inherit',
+                  transition: 'opacity 0.2s', marginTop: 'auto',
+                }}
+                onMouseOver={e => (e.currentTarget.style.opacity = '0.85')}
+                onMouseOut={e => (e.currentTarget.style.opacity = '1')}
+              >
+                Give {level.amount}
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Leadership Giving */}
+      {tab === 'leadership' && (
+        <div className="leadership-grid">
+          {leadershipLevels.map((level, i) => (
+            <div key={i} className="donor-card" style={{ backgroundColor: level.bg, border: `1px solid ${level.color}30` }}>
+              <span style={{
+                display: 'inline-block', background: level.color, color: '#ffffff',
+                fontSize: '10px', fontWeight: '700', letterSpacing: '0.08em',
+                textTransform: 'uppercase', padding: '3px 10px', borderRadius: '999px',
+                width: 'fit-content',
+              }}>{level.badge}</span>
+              <p style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(20px, 2.5vw, 28px)', fontWeight: '800', color: level.color, margin: 0 }}>{level.amount}</p>
+              <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '15px', fontWeight: '700', color: '#1a1a2e', margin: 0 }}>{level.title}</h3>
+              <p style={{ fontSize: '13px', color: '#4b5563', lineHeight: '1.7', margin: 0, flex: 1 }}>{level.desc}</p>
+              <button
+                onClick={() => { const el = document.getElementById('payment-section'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
+                style={{
+                  backgroundColor: level.color, color: '#ffffff', border: 'none',
+                  borderRadius: '8px', padding: '10px 18px', fontSize: '13px',
+                  fontWeight: '700', cursor: 'pointer', fontFamily: 'inherit',
+                  transition: 'opacity 0.2s', marginTop: 'auto',
+                }}
+                onMouseOver={e => (e.currentTarget.style.opacity = '0.85')}
+                onMouseOut={e => (e.currentTarget.style.opacity = '1')}
+              >
+                Give {level.amount}
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Major Gift */}
+      {tab === 'major' && (
+        <div>
+          <div style={{ textAlign: 'center', marginBottom: '28px', maxWidth: '600px', margin: '0 auto 28px' }}>
+            <p style={{ fontSize: '14px', color: 'var(--color-text-muted)', lineHeight: '1.75' }}>
+              Major gifts and institutional opportunities allow you to make a transformational,
+              named contribution to a specific facility, program, or resource at the JoMabel campus.
+              Contact us to discuss a giving plan tailored to your goals.
+            </p>
+          </div>
+          <div className="major-gift-grid">
+            {majorGiftOpportunities.map((opp, i) => (
+              <div key={i} className="major-gift-card">
+                <span style={{ fontSize: '32px' }}>{opp.icon}</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '8px' }}>
+                  <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '15px', fontWeight: '700', color: 'var(--color-navy)', margin: 0 }}>{opp.title}</h3>
+                  <span style={{
+                    background: 'var(--color-orange-light)', color: 'var(--color-orange-dark)',
+                    fontSize: '11px', fontWeight: '700', padding: '3px 10px',
+                    borderRadius: '999px', flexShrink: 0,
+                  }}>{opp.amount}</span>
+                </div>
+                <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: '1.7', margin: 0 }}>{opp.desc}</p>
+                <a href="mailto:claraogbaa2022@gmail.com"
+                  style={{ color: 'var(--color-primary-dark)', fontSize: '13px', fontWeight: '700', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px', marginTop: 'auto' }}>
+                  Inquire Now
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
 
 // ─── DONATION FORM ────────────────────────────────────────────────────────────
 const usdAmounts = [25, 50, 100, 250, 500, 1000];
@@ -274,10 +513,10 @@ const impacts = {
     { amount: '$1,000', desc: 'Sponsors a full healthcare training scholarship for one student' },
   ],
   ngn: [
-    { amount: '₦5,000',    desc: 'Provides medications for 10 children at an outreach mission' },
-    { amount: '₦25,000',   desc: 'Funds a full day of free medical consultations for a community' },
-    { amount: '₦50,000',   desc: 'Equips a nurse with essential supplies for one month' },
-    { amount: '₦250,000',  desc: 'Sponsors a full healthcare training scholarship for one student' },
+    { amount: '₦5,000',   desc: 'Provides medications for 10 children at an outreach mission' },
+    { amount: '₦25,000',  desc: 'Funds a full day of free medical consultations for a community' },
+    { amount: '₦50,000',  desc: 'Equips a nurse with essential supplies for one month' },
+    { amount: '₦250,000', desc: 'Sponsors a full healthcare training scholarship for one student' },
   ],
 };
 
@@ -303,116 +542,58 @@ const DonationForm = () => {
   return (
     <section style={{ backgroundColor: '#ffffff', fontFamily: 'var(--font-body)' }}>
       <div className="donation-layout">
-
-        {/* LEFT — navy impact panel */}
         <div className="donation-left">
-          <p style={{ color: 'var(--color-primary)', fontSize: '11px', fontWeight: '700', letterSpacing: '0.12em', textTransform: 'uppercase', margin: 0 }}>
-            Your Impact
-          </p>
+          <p style={{ color: 'var(--color-primary)', fontSize: '11px', fontWeight: '700', letterSpacing: '0.12em', textTransform: 'uppercase', margin: 0 }}>Your Impact</p>
           <h2 style={{ color: '#ffffff', fontSize: 'clamp(20px, 3vw, 28px)', fontWeight: '400', lineHeight: 1.4, margin: 0 }}>
-            Every Gift Directly Funds<br />
-            <strong style={{ fontWeight: '800' }}>Healthcare in Ufuma,<br />Anambra State</strong>
+            Every Gift Directly Funds<br /><strong style={{ fontWeight: '800' }}>Healthcare in Ufuma,<br />Anambra State</strong>
           </h2>
           <p style={{ color: '#bfdbfe', fontSize: '13.5px', lineHeight: '1.7', margin: 0 }}>
-            Your donation funds facility construction, medical equipment, and life-changing
-            community health programs for families in southeastern Nigeria.
+            Your donation funds facility construction, medical equipment, and life-changing community health programs for families in southeastern Nigeria.
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {impacts[currency].map((item, i) => (
-              <div key={i} style={{
-                backgroundColor: 'rgba(255,255,255,0.08)',
-                border: '1px solid rgba(255,255,255,0.15)',
-                borderRadius: '10px', padding: '13px 16px',
-                display: 'flex', alignItems: 'flex-start', gap: '14px',
-              }}>
+              <div key={i} style={{ backgroundColor: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: '10px', padding: '13px 16px', display: 'flex', alignItems: 'flex-start', gap: '14px' }}>
                 <span style={{ color: 'var(--color-primary)', fontSize: '13px', fontWeight: '800', minWidth: '68px', flexShrink: 0 }}>{item.amount}</span>
                 <span style={{ color: '#bfdbfe', fontSize: '12.5px', lineHeight: '1.6' }}>{item.desc}</span>
               </div>
             ))}
           </div>
-          <div style={{
-            background: 'rgba(58,165,53,0.15)',
-            border: '1px solid rgba(58,165,53,0.35)',
-            borderRadius: '10px', padding: '14px 18px',
-          }}>
-            <p style={{ color: '#86efac', fontSize: '12px', fontWeight: '700', margin: '0 0 4px', letterSpacing: '0.05em' }}>
-              ✓ 501(c)(3) TAX-EXEMPT
-            </p>
+          <div style={{ background: 'rgba(58,165,53,0.15)', border: '1px solid rgba(58,165,53,0.35)', borderRadius: '10px', padding: '14px 18px' }}>
+            <p style={{ color: '#86efac', fontSize: '12px', fontWeight: '700', margin: '0 0 4px', letterSpacing: '0.05em' }}>✓ 501(c)(3) TAX-EXEMPT</p>
             <p style={{ color: 'rgba(255,255,255,0.70)', fontSize: '12px', lineHeight: '1.6', margin: 0 }}>
-              JoMabel Healthcare Foundation USA INC. is a registered nonprofit.
-              All donations are tax-deductible to the extent allowed by law.
+              JoMabel Healthcare Foundation USA INC. is a registered nonprofit. All donations are tax-deductible to the extent allowed by law.
             </p>
           </div>
         </div>
 
-        {/* RIGHT — form panel */}
         <div className="donation-right">
-          <h3 style={{ fontSize: 'clamp(15px, 2.5vw, 18px)', fontWeight: '700', color: '#111827', margin: 0 }}>
-            Choose an amount to give
-          </h3>
-
-          {/* Currency switcher */}
+          <h3 style={{ fontSize: 'clamp(15px, 2.5vw, 18px)', fontWeight: '700', color: '#111827', margin: 0 }}>Choose an amount to give</h3>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
             <span style={{ fontSize: '13px', color: '#6b7280', fontWeight: '500' }}>Currency:</span>
             <div style={{ display: 'flex', gap: '10px' }}>
               {(['usd', 'ngn'] as const).map((c) => (
-                <button
-                  key={c}
-                  onClick={() => handleCurrencySwitch(c)}
-                  className="currency-btn"
-                  style={{
-                    border: currency === c ? '2px solid var(--color-navy)' : '2px solid #e5e7eb',
-                    backgroundColor: currency === c ? 'var(--color-navy-light)' : '#ffffff',
-                    boxShadow: currency === c ? '0 0 0 3px rgba(27,42,74,0.10)' : 'none',
-                  }}
-                >
+                <button key={c} onClick={() => handleCurrencySwitch(c)} className="currency-btn"
+                  style={{ border: currency === c ? '2px solid var(--color-navy)' : '2px solid #e5e7eb', backgroundColor: currency === c ? 'var(--color-navy-light)' : '#ffffff', boxShadow: currency === c ? '0 0 0 3px rgba(27,42,74,0.10)' : 'none' }}>
                   <span className="flag-emoji">{c === 'usd' ? '🇺🇸' : '🇳🇬'}</span>
-                  <span className="flag-label" style={{ color: currency === c ? 'var(--color-navy)' : '#6b7280' }}>
-                    {c === 'usd' ? 'USD $' : 'NGN ₦'}
-                  </span>
+                  <span className="flag-label" style={{ color: currency === c ? 'var(--color-navy)' : '#6b7280' }}>{c === 'usd' ? 'USD $' : 'NGN ₦'}</span>
                 </button>
               ))}
             </div>
           </div>
-
-          {/* Amount preset buttons */}
           <div className="amount-grid">
             {amounts.map((amt) => (
               <button key={amt} onClick={() => { setSelected(amt); setCustom(''); }}
-                style={{
-                  padding: '14px 8px', borderRadius: '8px', cursor: 'pointer',
-                  border: selected === amt ? '2px solid var(--color-navy)' : '1.5px solid #e5e7eb',
-                  backgroundColor: selected === amt ? 'var(--color-navy-light)' : '#ffffff',
-                  color: selected === amt ? 'var(--color-navy)' : '#374151',
-                  fontSize: 'clamp(12px, 1.8vw, 15px)', fontWeight: '700',
-                  transition: 'all 0.15s', fontFamily: 'inherit',
-                }}>
+                style={{ padding: '14px 8px', borderRadius: '8px', cursor: 'pointer', border: selected === amt ? '2px solid var(--color-navy)' : '1.5px solid #e5e7eb', backgroundColor: selected === amt ? 'var(--color-navy-light)' : '#ffffff', color: selected === amt ? 'var(--color-navy)' : '#374151', fontSize: 'clamp(12px, 1.8vw, 15px)', fontWeight: '700', transition: 'all 0.15s', fontFamily: 'inherit' }}>
                 {formatAmount(amt)}
               </button>
             ))}
           </div>
-
-          {/* Custom amount */}
           <div style={{ position: 'relative' }}>
-            <span style={{
-              position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)',
-              color: '#9ca3af', fontSize: '14px', fontWeight: '600', pointerEvents: 'none',
-            }}>{symbol}</span>
-            <input
-              type="number"
-              placeholder="Enter a custom amount"
-              value={custom}
+            <span style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af', fontSize: '14px', fontWeight: '600', pointerEvents: 'none' }}>{symbol}</span>
+            <input type="number" placeholder="Enter a custom amount" value={custom}
               onChange={e => { setCustom(e.target.value); setSelected(null); }}
-              style={{
-                width: '100%', padding: '13px 16px 13px 28px',
-                border: custom ? '1.5px solid var(--color-navy)' : '1.5px solid #e5e7eb',
-                borderRadius: '8px', fontSize: '14px', color: '#111827',
-                outline: 'none', boxSizing: 'border-box' as const, fontFamily: 'inherit',
-              }}
-            />
+              style={{ width: '100%', padding: '13px 16px 13px 28px', border: custom ? '1.5px solid var(--color-navy)' : '1.5px solid #e5e7eb', borderRadius: '8px', fontSize: '14px', color: '#111827', outline: 'none', boxSizing: 'border-box' as const, fontFamily: 'inherit' }} />
           </div>
-
-          {/* Name & Email */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
             <div>
               <label style={labelSt}>Full Name</label>
@@ -429,22 +610,14 @@ const DonationForm = () => {
               </div>
             </div>
           </div>
-
           <button
             onClick={() => { const el = document.getElementById('payment-section'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
-            style={{
-              backgroundColor: 'var(--color-navy)', color: '#ffffff', border: 'none',
-              borderRadius: '10px', padding: '16px', fontSize: '15px', fontWeight: '700',
-              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-              fontFamily: 'inherit', transition: 'background 0.2s',
-            }}
+            style={{ backgroundColor: 'var(--color-navy)', color: '#ffffff', border: 'none', borderRadius: '10px', padding: '16px', fontSize: '15px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontFamily: 'inherit', transition: 'background 0.2s' }}
             onMouseOver={e => (e.currentTarget.style.backgroundColor = '#0d1f4e')}
-            onMouseOut={e => (e.currentTarget.style.backgroundColor = 'var(--color-navy)')}
-          >
+            onMouseOut={e => (e.currentTarget.style.backgroundColor = 'var(--color-navy)')}>
             See Payment Options
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </button>
-
           <p style={{ fontSize: '11.5px', color: '#9ca3af', textAlign: 'center', margin: 0 }}>
             🔒 JoMabel Healthcare Foundation USA INC. — Registered 501(c)(3) Nonprofit
           </p>
@@ -459,39 +632,18 @@ const PaymentMethods = () => (
   <section id="payment-section" className="payment-section">
     <div style={{ maxWidth: '900px', margin: '0 auto' }}>
       <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-        <span style={{
-          fontSize: '11px', fontWeight: '700', color: 'var(--color-primary-dark)',
-          letterSpacing: '0.14em', textTransform: 'uppercase',
-        }}>
-          How to Give
-        </span>
-        <h2 style={{
-          fontFamily: 'var(--font-heading)',
-          fontSize: 'clamp(22px, 3vw, 30px)',
-          fontWeight: '700', color: 'var(--color-navy)',
-          margin: '12px 0 12px',
-        }}>
-          Payment Options
-        </h2>
+        <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--color-primary-dark)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>How to Give</span>
+        <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(22px, 3vw, 30px)', fontWeight: '700', color: 'var(--color-navy)', margin: '12px 0 12px' }}>Payment Options</h2>
         <p style={{ fontSize: '14px', color: 'var(--color-text-muted)', maxWidth: '540px', margin: '0 auto', lineHeight: '1.75' }}>
-          All accounts are registered under the foundation name.
-          Choose your preferred method and use the details below to complete your gift.
+          All accounts are registered under the foundation name. Choose your preferred method and use the details below to complete your gift.
         </p>
       </div>
-
       <div className="payment-grid">
-
         {/* PayPal */}
         <div className="payment-card payment-card-usa">
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <div style={{
-              width: '46px', height: '46px', borderRadius: '12px',
-              background: '#003087', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-            }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <path d="M6 8c0-2.2 1.8-4 4-4h5c2.5 0 4 1.5 3.5 4-0.5 2.5-2.5 4-5 4h-2l-1 5H7.5L10 8H6Z" fill="#009cde"/>
-                <path d="M4 10c0-2.2 1.8-4 4-4h5c2.5 0 4 1.5 3.5 4-0.5 2.5-2.5 4-5 4h-2l-1 5H5.5L8 10H4Z" fill="#ffffff" opacity="0.3"/>
-              </svg>
+            <div style={{ width: '46px', height: '46px', borderRadius: '12px', background: '#003087', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M6 8c0-2.2 1.8-4 4-4h5c2.5 0 4 1.5 3.5 4-0.5 2.5-2.5 4-5 4h-2l-1 5H7.5L10 8H6Z" fill="#009cde"/><path d="M4 10c0-2.2 1.8-4 4-4h5c2.5 0 4 1.5 3.5 4-0.5 2.5-2.5 4-5 4h-2l-1 5H5.5L8 10H4Z" fill="#ffffff" opacity="0.3"/></svg>
             </div>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
@@ -501,9 +653,7 @@ const PaymentMethods = () => (
               <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '17px', fontWeight: '700', color: 'var(--color-navy)', margin: 0 }}>PayPal</h3>
             </div>
           </div>
-          <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: '1.7', margin: 0 }}>
-            Send your gift via PayPal to the foundation's registered account.
-          </p>
+          <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: '1.7', margin: 0 }}>Send your gift via PayPal to the foundation's registered account.</p>
           <div>
             <p style={{ fontSize: '12px', fontWeight: '600', color: '#374151', marginBottom: '8px' }}>PayPal Link / Email</p>
             <div className="copy-field">
@@ -511,23 +661,13 @@ const PaymentMethods = () => (
               <CopyButton text="[PayPal — details to be provided by Dr. Ogbaa]" />
             </div>
           </div>
-          <p style={{ fontSize: '11.5px', color: 'var(--color-text-muted)', margin: 0 }}>
-            Account name: <strong style={{ color: 'var(--color-navy)' }}>JoMabel Healthcare Foundation</strong>
-          </p>
+          <p style={{ fontSize: '11.5px', color: 'var(--color-text-muted)', margin: 0 }}>Account name: <strong style={{ color: 'var(--color-navy)' }}>JoMabel Healthcare Foundation</strong></p>
         </div>
-
         {/* Zelle */}
         <div className="payment-card payment-card-usa">
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <div style={{
-              width: '46px', height: '46px', borderRadius: '12px',
-              background: '#6d1ed4', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-            }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <path d="M4 17L17 7H9" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M7 17h8" stroke="#ffffff" strokeWidth="2" strokeLinecap="round"/>
-                <path d="M20 7l-5 5" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+            <div style={{ width: '46px', height: '46px', borderRadius: '12px', background: '#6d1ed4', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 17L17 7H9" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M7 17h8" stroke="#ffffff" strokeWidth="2" strokeLinecap="round"/><path d="M20 7l-5 5" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </div>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
@@ -537,9 +677,7 @@ const PaymentMethods = () => (
               <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '17px', fontWeight: '700', color: 'var(--color-navy)', margin: 0 }}>Zelle</h3>
             </div>
           </div>
-          <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: '1.7', margin: 0 }}>
-            Send directly from your US bank app using Zelle — fast, free, and instant.
-          </p>
+          <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: '1.7', margin: 0 }}>Send directly from your US bank app using Zelle — fast, free, and instant.</p>
           <div>
             <p style={{ fontSize: '12px', fontWeight: '600', color: '#374151', marginBottom: '8px' }}>Zelle Email / Phone Number</p>
             <div className="copy-field">
@@ -547,22 +685,13 @@ const PaymentMethods = () => (
               <CopyButton text="[Zelle — details to be provided by Dr. Ogbaa]" />
             </div>
           </div>
-          <p style={{ fontSize: '11.5px', color: 'var(--color-text-muted)', margin: 0 }}>
-            Account name: <strong style={{ color: 'var(--color-navy)' }}>JoMabel Healthcare Foundation</strong>
-          </p>
+          <p style={{ fontSize: '11.5px', color: 'var(--color-text-muted)', margin: 0 }}>Account name: <strong style={{ color: 'var(--color-navy)' }}>JoMabel Healthcare Foundation</strong></p>
         </div>
-
         {/* Cash App */}
         <div className="payment-card payment-card-usa">
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <div style={{
-              width: '46px', height: '46px', borderRadius: '12px',
-              background: '#00d632', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-            }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="9" stroke="#ffffff" strokeWidth="1.5"/>
-                <path d="M12 6v12M9.5 9.5h4a1.5 1.5 0 010 3h-3a1.5 1.5 0 000 3H15" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
+            <div style={{ width: '46px', height: '46px', borderRadius: '12px', background: '#00d632', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#ffffff" strokeWidth="1.5"/><path d="M12 6v12M9.5 9.5h4a1.5 1.5 0 010 3h-3a1.5 1.5 0 000 3H15" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round"/></svg>
             </div>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
@@ -572,9 +701,7 @@ const PaymentMethods = () => (
               <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '17px', fontWeight: '700', color: 'var(--color-navy)', margin: 0 }}>Cash App</h3>
             </div>
           </div>
-          <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: '1.7', margin: 0 }}>
-            Use Cash App to send your gift using the foundation's $Cashtag.
-          </p>
+          <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: '1.7', margin: 0 }}>Use Cash App to send your gift using the foundation's $Cashtag.</p>
           <div>
             <p style={{ fontSize: '12px', fontWeight: '600', color: '#374151', marginBottom: '8px' }}>$Cashtag</p>
             <div className="copy-field">
@@ -582,23 +709,13 @@ const PaymentMethods = () => (
               <CopyButton text="[Cash App — details to be provided by Dr. Ogbaa]" />
             </div>
           </div>
-          <p style={{ fontSize: '11.5px', color: 'var(--color-text-muted)', margin: 0 }}>
-            Account name: <strong style={{ color: 'var(--color-navy)' }}>JoMabel Healthcare Foundation</strong>
-          </p>
+          <p style={{ fontSize: '11.5px', color: 'var(--color-text-muted)', margin: 0 }}>Account name: <strong style={{ color: 'var(--color-navy)' }}>JoMabel Healthcare Foundation</strong></p>
         </div>
-
         {/* First Bank Nigeria */}
         <div className="payment-card payment-card-nigeria">
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <div style={{
-              width: '46px', height: '46px', borderRadius: '12px',
-              background: '#008751', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-            }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <rect x="2" y="5" width="20" height="14" rx="2" stroke="#ffffff" strokeWidth="1.5"/>
-                <path d="M2 10h20" stroke="#ffffff" strokeWidth="1.5"/>
-                <path d="M6 14h3M11 14h3" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
+            <div style={{ width: '46px', height: '46px', borderRadius: '12px', background: '#008751', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="2" y="5" width="20" height="14" rx="2" stroke="#ffffff" strokeWidth="1.5"/><path d="M2 10h20" stroke="#ffffff" strokeWidth="1.5"/><path d="M6 14h3M11 14h3" stroke="#ffffff" strokeWidth="1.5" strokeLinecap="round"/></svg>
             </div>
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
@@ -608,9 +725,7 @@ const PaymentMethods = () => (
               <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '17px', fontWeight: '700', color: 'var(--color-navy)', margin: 0 }}>First Bank Nigeria</h3>
             </div>
           </div>
-          <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: '1.7', margin: 0 }}>
-            Transfer directly to the foundation's First Bank account via internet banking or mobile app.
-          </p>
+          <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: '1.7', margin: 0 }}>Transfer directly to the foundation's First Bank account via internet banking or mobile app.</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             <div>
               <p style={{ fontSize: '12px', fontWeight: '600', color: '#374151', marginBottom: '6px' }}>Account Number</p>
@@ -627,35 +742,16 @@ const PaymentMethods = () => (
               </div>
             </div>
           </div>
-          <p style={{ fontSize: '11.5px', color: 'var(--color-text-muted)', margin: 0 }}>
-            Bank: <strong style={{ color: 'var(--color-navy)' }}>First Bank of Nigeria</strong>
-          </p>
+          <p style={{ fontSize: '11.5px', color: 'var(--color-text-muted)', margin: 0 }}>Bank: <strong style={{ color: 'var(--color-navy)' }}>First Bank of Nigeria</strong></p>
         </div>
-
       </div>
-
-      {/* Confirmation note */}
-      <div style={{
-        marginTop: '40px', textAlign: 'center',
-        background: 'var(--color-white)',
-        border: '1px solid var(--color-border)',
-        borderRadius: '14px', padding: '28px 36px',
-        maxWidth: '640px', margin: '40px auto 0',
-        boxShadow: 'var(--shadow-sm)',
-      }}>
-        <p style={{ fontSize: '14px', fontWeight: '700', color: 'var(--color-navy)', marginBottom: '8px' }}>
-          After Your Transfer
-        </p>
+      <div style={{ marginTop: '40px', textAlign: 'center', background: 'var(--color-white)', border: '1px solid var(--color-border)', borderRadius: '14px', padding: '28px 36px', maxWidth: '640px', margin: '40px auto 0', boxShadow: 'var(--shadow-sm)' }}>
+        <p style={{ fontSize: '14px', fontWeight: '700', color: 'var(--color-navy)', marginBottom: '8px' }}>After Your Transfer</p>
         <p style={{ fontSize: '13.5px', color: 'var(--color-text-muted)', lineHeight: '1.8', margin: 0 }}>
           Please send a confirmation to{' '}
-          <a href="mailto:claraogbaa2022@gmail.com" style={{ color: 'var(--color-primary-dark)', fontWeight: '600' }}>
-            claraogbaa2022@gmail.com
-          </a>{' '}
-          with your name, amount, and payment method so we can acknowledge your gift and issue a receipt.
-          For any questions, call us at{' '}
-          <a href="tel:+15125080277" style={{ color: 'var(--color-primary-dark)', fontWeight: '600' }}>
-            +1 (512) 508-0277
-          </a>.
+          <a href="mailto:claraogbaa2022@gmail.com" style={{ color: 'var(--color-primary-dark)', fontWeight: '600' }}>claraogbaa2022@gmail.com</a>{' '}
+          with your name, amount, and payment method so we can acknowledge your gift and issue a receipt. For any questions, call us at{' '}
+          <a href="tel:+15125080277" style={{ color: 'var(--color-primary-dark)', fontWeight: '600' }}>+1 (512) 508-0277</a>.
         </p>
       </div>
     </div>
@@ -666,44 +762,20 @@ const PaymentMethods = () => (
 const OtherWays = () => (
   <section className="other-ways-section">
     <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-      <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--color-primary-dark)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>
-        Additional Options
-      </span>
-      <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(20px, 3vw, 26px)', fontWeight: '700', color: 'var(--color-navy)', margin: '12px 0 0' }}>
-        More Ways to Give
-      </h2>
+      <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--color-primary-dark)', letterSpacing: '0.14em', textTransform: 'uppercase' }}>Additional Options</span>
+      <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(20px, 3vw, 26px)', fontWeight: '700', color: 'var(--color-navy)', margin: '12px 0 0' }}>More Ways to Give</h2>
     </div>
     <div className="other-ways-grid">
       {[
-        {
-          icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="var(--color-navy-mid)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="var(--color-navy-mid)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
-          title: 'Wire Transfer',
-          desc: 'Contact us for international wire transfer details to give securely from anywhere in the world.',
-        },
-        {
-          icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="2" stroke="var(--color-navy-mid)" strokeWidth="1.5"/><path d="M9 7h6M9 11h6M9 15h4" stroke="var(--color-navy-mid)" strokeWidth="1.5" strokeLinecap="round"/><circle cx="17" cy="19" r="3" fill="var(--color-green)"/><path d="M15.5 19l1 1 2-2" stroke="#fff" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>,
-          title: 'Legacy Giving',
-          desc: 'Include JoMabel Healthcare Foundation in your estate or long-term charitable plans.',
-        },
-        {
-          icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="var(--color-navy-mid)" strokeWidth="1.5" strokeLinecap="round"/><circle cx="9" cy="7" r="4" stroke="var(--color-navy-mid)" strokeWidth="1.5"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="var(--color-navy-mid)" strokeWidth="1.5" strokeLinecap="round"/></svg>,
-          title: 'Corporate Partners',
-          desc: 'Partner with us through corporate giving, sponsorships, or employee matching gift programs.',
-        },
+        { icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="var(--color-navy-mid)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="var(--color-navy-mid)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>, title: 'Wire Transfer', desc: 'Contact us for international wire transfer details to give securely from anywhere in the world.' },
+        { icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="2" stroke="var(--color-navy-mid)" strokeWidth="1.5"/><path d="M9 7h6M9 11h6M9 15h4" stroke="var(--color-navy-mid)" strokeWidth="1.5" strokeLinecap="round"/><circle cx="17" cy="19" r="3" fill="var(--color-green)"/><path d="M15.5 19l1 1 2-2" stroke="#fff" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>, title: 'Legacy Giving', desc: 'Include JoMabel Healthcare Foundation in your estate or long-term charitable plans.' },
+        { icon: <svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="var(--color-navy-mid)" strokeWidth="1.5" strokeLinecap="round"/><circle cx="9" cy="7" r="4" stroke="var(--color-navy-mid)" strokeWidth="1.5"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="var(--color-navy-mid)" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Corporate Partners', desc: 'Partner with us through corporate giving, sponsorships, or employee matching gift programs.' },
       ].map((item, i) => (
-        <div key={i} style={{
-          backgroundColor: 'var(--color-surface)',
-          borderRadius: '14px', padding: '32px 24px',
-          display: 'flex', flexDirection: 'column', alignItems: 'center',
-          textAlign: 'center', gap: '12px', border: '1px solid var(--color-border)',
-        }}>
+        <div key={i} style={{ backgroundColor: 'var(--color-surface)', borderRadius: '14px', padding: '32px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '12px', border: '1px solid var(--color-border)' }}>
           {item.icon}
           <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '15px', fontWeight: '700', color: 'var(--color-navy)', margin: 0 }}>{item.title}</h3>
           <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: '1.7', margin: 0 }}>{item.desc}</p>
-          <a href="mailto:claraogbaa2022@gmail.com" style={{
-            color: 'var(--color-primary-dark)', fontSize: '13px', fontWeight: '700',
-            textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px',
-          }}>
+          <a href="mailto:claraogbaa2022@gmail.com" style={{ color: 'var(--color-primary-dark)', fontSize: '13px', fontWeight: '700', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
             Contact Us <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
           </a>
         </div>
@@ -717,7 +789,7 @@ const faqs = [
   { q: 'Is my donation tax-deductible?', a: 'Yes. JoMabel Healthcare Foundation USA INC. is a registered 501(c)(3) nonprofit. Donations are tax-deductible to the extent allowed by law. You will receive a receipt upon confirmation.' },
   { q: 'How will my donation be used?', a: 'All donations go directly toward facility construction, medical equipment, and community health programs in Ufuma, Anambra State, Nigeria. We are committed to full transparency in the stewardship of your gift.' },
   { q: 'How do I confirm my transfer was received?', a: 'After completing your transfer, please email claraogbaa2022@gmail.com with your name, donation amount, and payment method. We will acknowledge your gift and send a formal receipt within 2–3 business days.' },
-  { q: 'Can I donate in honor or memory of someone?', a: 'Absolutely. Please include a tribute note in your payment reference or email us with the details. We will acknowledge your memorial or honorary gift and — where appropriate — notify the family.' },
+  { q: 'Can I donate in honor or memory of someone?', a: 'Absolutely. Please include a tribute note in your payment reference or email us with the details. We will acknowledge your memorial or honorary gift and where appropriate notify the family.' },
   { q: 'Can I set up a recurring gift?', a: 'Yes. Please email us at claraogbaa2022@gmail.com to arrange a recurring giving plan. We will provide payment details and a giving schedule that works for you.' },
   { q: 'What if I have more questions?', a: 'Please reach out to Dr. Clara Ada Ogbaa directly at claraogbaa2022@gmail.com or by phone at +1 (512) 508-0277. We are always happy to speak personally with our donors.' },
 ];
@@ -727,12 +799,8 @@ const FAQ = () => {
   return (
     <section id="faq-section" style={{ backgroundColor: 'var(--color-navy)', fontFamily: 'var(--font-body)' }}>
       <div className="faq-header-block">
-        <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--color-primary)', letterSpacing: '0.14em', textTransform: 'uppercase', display: 'block', marginBottom: '12px' }}>
-          Questions & Answers
-        </span>
-        <h2 style={{ color: '#ffffff', fontFamily: 'var(--font-heading)', fontSize: 'clamp(20px, 3vw, 28px)', fontWeight: '700', marginBottom: '12px' }}>
-          Frequently Asked Questions
-        </h2>
+        <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--color-primary)', letterSpacing: '0.14em', textTransform: 'uppercase', display: 'block', marginBottom: '12px' }}>Questions & Answers</span>
+        <h2 style={{ color: '#ffffff', fontFamily: 'var(--font-heading)', fontSize: 'clamp(20px, 3vw, 28px)', fontWeight: '700', marginBottom: '12px' }}>Frequently Asked Questions</h2>
         <p style={{ color: '#93c5fd', fontSize: '14px', margin: 0, maxWidth: '500px', marginLeft: 'auto', marginRight: 'auto', lineHeight: '1.7' }}>
           Clear answers about giving, how funds are used, and how to reach us.
         </p>
@@ -743,8 +811,7 @@ const FAQ = () => {
             <button onClick={() => setOpen(open === i ? -1 : i)}
               style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '22px 0', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', gap: '16px' }}>
               <span style={{ color: '#ffffff', fontSize: 'clamp(13px, 2vw, 15px)', fontWeight: '600' }}>{faq.q}</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
-                style={{ flexShrink: 0, transform: open === i ? 'rotate(90deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, transform: open === i ? 'rotate(90deg)' : 'rotate(0)', transition: 'transform 0.2s' }}>
                 <path d="M9 18l6-6-6-6" stroke="#93c5fd" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </button>
@@ -766,6 +833,7 @@ const Donate = () => (
     <style>{donateStyles}</style>
     <Navbar />
     <DonationHero />
+    <DonorLevels />
     <DonationForm />
     <PaymentMethods />
     <OtherWays />

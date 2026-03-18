@@ -60,7 +60,7 @@ const programs = [
     iconBg: 'var(--color-primary-light)',
     tag: 'Outreach',
     title: 'Medical Outreach Missions',
-    description: 'Regular medical missions providing free consultations, medications, screenings, and referrals — reaching rural and underserved communities where healthcare access is limited or nonexistent.',
+    description: 'Regular medical missions providing free consultations, medications, screenings, and referrals reaching rural and underserved communities where healthcare access is limited or nonexistent.',
   },
   {
     id: 3,
@@ -84,7 +84,7 @@ const programs = [
     iconBg: 'var(--color-orange-light)',
     tag: 'Infrastructure',
     title: 'Infrastructure Development',
-    description: 'Building and equipping facilities that anchor long-term community health — including clinics, diagnostic centers, water and sanitation systems, and youth training complexes.',
+    description: 'Building and equipping facilities that anchor long-term community health including clinics, diagnostic centers, water and sanitation systems, and youth training complexes.',
   },
   {
     id: 6,
@@ -92,7 +92,8 @@ const programs = [
     iconBg: 'var(--color-navy-light)',
     tag: 'Education',
     title: 'Community Health Education',
-    description: 'Workshops and campaigns addressing hygiene and sanitation, disease prevention, mental and emotional wellness, and nutrition and lifestyle health for individuals and families.',
+    // ── FIXED: "nutrition and lifestyle health" → board-requested wording ──
+    description: 'Workshops and campaigns addressing hygiene and sanitation, disease prevention, mental and emotional wellness, and nutrition and healthy lifestyle for individuals and families.',
   },
 ];
 
@@ -102,7 +103,6 @@ const OurPrograms = () => {
   return (
     <div style={{ fontFamily: 'var(--font-body)' }}>
       <style>{`
-        /* ── HERO BANNER ── */
         .programs-hero {
           position: relative;
           padding: clamp(56px, 8vw, 96px) clamp(20px, 5vw, 40px);
@@ -131,19 +131,6 @@ const OurPrograms = () => {
           max-width: 700px;
           margin: 0 auto;
         }
-        .programs-hero-label {
-          display: inline-block;
-          background: rgba(41,197,246,0.18);
-          border: 1px solid rgba(41,197,246,0.35);
-          color: var(--color-primary);
-          font-size: 11px;
-          font-weight: 700;
-          padding: 5px 16px;
-          border-radius: 999px;
-          letter-spacing: 0.10em;
-          text-transform: uppercase;
-          margin-bottom: 20px;
-        }
         .programs-hero h1 {
           color: var(--color-white);
           font-family: var(--font-heading);
@@ -159,8 +146,6 @@ const OurPrograms = () => {
           line-height: 1.8;
           margin: 0 auto;
         }
-
-        /* ── CARDS SECTION ── */
         .programs-section {
           background-color: var(--color-surface);
           padding: clamp(40px, 5vw, 64px) clamp(16px, 4vw, 40px) clamp(52px, 6vw, 80px);
@@ -257,8 +242,6 @@ const OurPrograms = () => {
           transition: var(--transition);
         }
         .learn-more-btn:hover { color: var(--color-navy); gap: 8px; }
-
-        /* ── VIEW ALL CTA ── */
         .programs-cta {
           text-align: center;
           margin-top: 8px;
@@ -281,8 +264,6 @@ const OurPrograms = () => {
           transform: translateY(-1px);
           box-shadow: var(--shadow-md);
         }
-
-        /* ── RESPONSIVE ── */
         @media (max-width: 900px) {
           .programs-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
         }
@@ -294,18 +275,13 @@ const OurPrograms = () => {
 
       {/* ── HERO BANNER ── */}
       <section className="programs-hero">
-        {/* Using real outreach photo — swap to any of outreach1–5 */}
-        <img
-          className="programs-hero-bg"
-          src={outreach5}
-          alt="JoMabel outreach mission in Ufuma"
-        />
+        <img className="programs-hero-bg" src={outreach5} alt="JoMabel outreach mission in Ufuma" />
         <div className="programs-hero-overlay" />
         <div className="programs-hero-inner">
           <h1>Healthcare That Transforms Communities</h1>
           <p>
             Through six program areas, JoMabel Healthcare Foundation delivers care,
-            training, and lasting community impact across Nigeria — from a growing
+            training, and lasting community impact across Nigeria from a growing
             16,000+ sq. meter medical campus in Ufuma to outreach missions that reach
             the most vulnerable.
           </p>
@@ -317,7 +293,7 @@ const OurPrograms = () => {
         <p className="programs-section-label">Our Programs & Services</p>
         <h2 className="programs-section-title">Six Ways We Serve</h2>
         <p className="programs-section-sub">
-          Every program is designed to address a critical gap in healthcare access —
+          Every program is designed to address a critical gap in healthcare access
           from the clinic floor to the classroom, from the delivery room to the community well.
         </p>
 
@@ -350,7 +326,6 @@ const OurPrograms = () => {
             View All Programs
           </button>
         </div>
-
       </section>
     </div>
   );

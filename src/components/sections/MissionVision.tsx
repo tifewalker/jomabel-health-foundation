@@ -155,15 +155,15 @@ const MissionVision = () => {
             </p>
           </div>
 
-          {/* Vision Card */}
+          {/* Vision Card — "geography" changed to "location" per board request */}
           <div className="mv-card">
             <div className="mv-card-header">
               <div className="mv-icon-wrap"><EyeIcon /></div>
               <h3 className="mv-card-title">Our Vision</h3>
             </div>
             <p className="mv-card-text">
-              A world where every person — regardless of geography, income, or social
-              status — has access to dignified, life-saving healthcare, supported by
+              A world where every person regardless of location, income, or social
+              status has access to dignified, life-saving healthcare, supported by
               empowered communities, trained local professionals, and sustainable
               health infrastructure.
             </p>
