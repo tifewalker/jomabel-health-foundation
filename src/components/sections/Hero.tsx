@@ -281,23 +281,7 @@ const Hero = () => {
             and community-based health programs.
           </p>
 
-          {/* Progress bars */}
-          <div className="hero-progress-row">
-            {[
-              { label: 'Medical CENTER', pct: 70, color: '#29C5F6' },
-              { label: 'Training CENTER', pct: 30, color: '#16A34A' },
-            ].map((item, i) => (
-              <div key={i} className="hero-progress-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                  <span style={{ color: 'rgba(255,255,255,0.80)', fontSize: '12px', fontWeight: '600' }}>{item.label}</span>
-                  <span style={{ color: item.color, fontSize: '13px', fontWeight: '800' }}>{item.pct}%</span>
-                </div>
-                <div style={{ height: '5px', borderRadius: '999px', backgroundColor: 'rgba(255,255,255,0.15)', overflow: 'hidden' }}>
-                  <div style={{ height: '100%', borderRadius: '999px', backgroundColor: item.color, width: `${item.pct}%` }} />
-                </div>
-              </div>
-            ))}
-          </div>
+        
 
           {/* Buttons */}
           <div className="hero-btn-row">
