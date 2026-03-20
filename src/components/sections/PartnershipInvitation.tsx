@@ -8,26 +8,29 @@ const partnerTypes = [
     desc: 'From $100 to $100,000+, every gift moves us closer to completion. Choose a giving level that reflects your commitment.',
     cta: 'Donate Now',
     path: '/donate',
-    bg: 'var(--color-orange-light)',
-    border: 'var(--color-orange)',
+    bg: '#FFF7ED',
+    border: '#FED7AA',
+    btnColor: '#EA580C',
   },
   {
     icon: '🌍',
     title: 'Diaspora Supporters',
-    desc: 'Join thousands of Nigerians abroad who are investing in the healthcare transformation of their homeland.',
-    cta: 'Join the Diaspora Campaign',
+    desc: 'Join Nigerians abroad who are investing in the healthcare transformation of their homeland. Your roots, your impact.',
+    cta: 'Join the Campaign',
     path: '/donate',
-    bg: 'var(--color-primary-light)',
-    border: 'var(--color-primary)',
+    bg: '#EBF5FB',
+    border: '#BFDBFE',
+    btnColor: '#1D8FD4',
   },
   {
     icon: '🏛️',
     title: 'Institutional Funders',
-    desc: 'Foundations, grant-making bodies, and development organizations we welcome conversations about strategic partnership.',
+    desc: 'Foundations, grant-making bodies, and development organizations — we welcome strategic partnership conversations.',
     cta: 'Request a Briefing',
     path: '/contact',
-    bg: 'var(--color-navy-light)',
-    border: 'var(--color-navy-mid)',
+    bg: '#F0F9FF',
+    border: '#BAE6FD',
+    btnColor: '#0369A1',
   },
   {
     icon: '🤝',
@@ -35,8 +38,9 @@ const partnerTypes = [
     desc: 'Align your brand with a credible, high-impact healthcare initiative. Naming rights, equipment sponsorship, and program funding available.',
     cta: 'Partner With JHF',
     path: '/contact',
-    bg: 'var(--color-green-light)',
-    border: 'var(--color-green)',
+    bg: '#F0FDF4',
+    border: '#BBF7D0',
+    btnColor: '#16A34A',
   },
 ];
 
@@ -44,83 +48,122 @@ const PartnershipInvitation = () => {
   const navigate = useNavigate();
   return (
     <section style={{
-      backgroundColor: 'var(--color-white)',
+      backgroundColor: '#F9FAFB',
       padding: 'var(--section-padding-y) var(--section-padding-x)',
       fontFamily: 'var(--font-body)',
     }}>
-      <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
+      <style>{`
+        .partner-inner { max-width: 1080px; margin: 0 auto; }
+
+        .partner-cards {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 20px;
+          margin-bottom: 40px;
+        }
+        .partner-card {
+          border-radius: 14px;
+          padding: 26px 20px;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          transition: all 0.2s;
+        }
+        .partner-card:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.09);
+        }
+
+        .partner-bottom-banner {
+          background: #111827;
+          border-radius: 16px;
+          padding: clamp(28px, 4vw, 48px) clamp(24px, 4vw, 52px);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 28px;
+          flex-wrap: wrap;
+        }
+        .partner-banner-btns {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+          flex-shrink: 0;
+        }
+
+        @media (max-width: 900px) {
+          .partner-cards { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+          .partner-bottom-banner { flex-direction: column; align-items: flex-start; }
+          .partner-banner-btns { width: 100%; }
+          .partner-banner-btns button { flex: 1 1 auto; }
+        }
+        @media (max-width: 540px) {
+          .partner-cards { grid-template-columns: 1fr; gap: 14px; }
+          .partner-card { padding: 22px 18px; }
+          .partner-banner-btns { flex-direction: column; }
+          .partner-banner-btns button { width: 100%; text-align: center; }
+        }
+      `}</style>
+
+      <div className="partner-inner">
 
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '52px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
           <span style={{
-            fontSize: '11px', fontWeight: '700', color: 'var(--color-primary-dark)',
+            display: 'inline-block',
+            background: '#EBF5FB', color: '#1D8FD4',
+            fontSize: '11px', fontWeight: '700',
             letterSpacing: '0.14em', textTransform: 'uppercase',
-            display: 'block', marginBottom: '14px',
+            padding: '5px 14px', borderRadius: '999px',
+            marginBottom: '16px',
           }}>
             Partnership Invitation
           </span>
           <h2 style={{
             fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(26px, 3.5vw, 40px)',
-            fontWeight: '700', color: 'var(--color-navy)',
-            lineHeight: '1.2', margin: '0 0 16px',
+            fontSize: 'clamp(24px, 3.5vw, 38px)',
+            fontWeight: '700', color: '#111827',
+            lineHeight: '1.2', margin: '0 0 14px',
           }}>
-            We Cannot Do This Alone <br />And We Are Not Asking You to Watch.
+            We Cannot Do This Alone —<br />And We Are Not Asking You to Watch.
           </h2>
           <p style={{
-            fontSize: '15px', color: 'var(--color-text-muted)',
-            lineHeight: '1.85', maxWidth: '580px', margin: '0 auto',
+            fontSize: 'clamp(14px, 1.5vw, 16px)',
+            color: '#4B5563', lineHeight: '1.85',
+            maxWidth: '560px', margin: '0 auto',
           }}>
             JoMabel Healthcare Foundation is actively seeking partners at every level —
             from individual donors to global institutions. There is a role here for you.
           </p>
         </div>
 
-        {/* Partner type cards */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '20px',
-          marginBottom: '48px',
-        }}>
+        {/* Partner cards */}
+        <div className="partner-cards">
           {partnerTypes.map((p, i) => (
-            <div key={i} style={{
-              background: p.bg,
-              border: `1.5px solid ${p.border}30`,
-              borderRadius: '16px',
-              padding: '28px 22px',
-              display: 'flex', flexDirection: 'column', gap: '14px',
-              transition: 'var(--transition)',
-            }}
-              onMouseOver={e => {
-                (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-3px)';
-                (e.currentTarget as HTMLDivElement).style.boxShadow = 'var(--shadow-md)';
-              }}
-              onMouseOut={e => {
-                (e.currentTarget as HTMLDivElement).style.transform = 'translateY(0)';
-                (e.currentTarget as HTMLDivElement).style.boxShadow = 'none';
-              }}
-            >
-              <span style={{ fontSize: '32px' }}>{p.icon}</span>
+            <div key={i} className="partner-card" style={{ background: p.bg, border: `1.5px solid ${p.border}` }}>
+              <span style={{ fontSize: '30px' }}>{p.icon}</span>
               <h3 style={{
                 fontFamily: 'var(--font-heading)',
-                fontSize: '16px', fontWeight: '700',
-                color: 'var(--color-navy)', margin: 0, lineHeight: '1.3',
+                fontSize: '15px', fontWeight: '700',
+                color: '#111827', margin: 0, lineHeight: '1.3',
               }}>{p.title}</h3>
-              <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: '1.7', margin: 0, flex: 1 }}>{p.desc}</p>
+              <p style={{
+                fontSize: '13px', color: '#4B5563',
+                lineHeight: '1.7', margin: 0, flex: 1,
+              }}>{p.desc}</p>
               <button
                 onClick={() => navigate(p.path)}
                 style={{
-                  backgroundColor: 'var(--color-navy)',
+                  backgroundColor: p.btnColor,
                   color: '#fff', border: 'none',
-                  borderRadius: 'var(--btn-radius)',
+                  borderRadius: '8px',
                   padding: '11px 16px', fontSize: '13px',
                   fontWeight: '700', cursor: 'pointer',
-                  fontFamily: 'inherit', transition: 'var(--transition)',
-                  textAlign: 'center',
+                  fontFamily: 'inherit', transition: 'all 0.2s',
+                  textAlign: 'center', marginTop: 'auto',
                 }}
-                onMouseOver={e => (e.currentTarget.style.backgroundColor = '#0d1f4e')}
-                onMouseOut={e => (e.currentTarget.style.backgroundColor = 'var(--color-navy)')}
+                onMouseOver={e => (e.currentTarget.style.opacity = '0.85')}
+                onMouseOut={e => (e.currentTarget.style.opacity = '1')}
               >
                 {p.cta}
               </button>
@@ -129,68 +172,59 @@ const PartnershipInvitation = () => {
         </div>
 
         {/* Bottom CTA banner */}
-        <div style={{
-          background: 'linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-mid) 100%)',
-          borderRadius: '20px',
-          padding: 'clamp(32px, 4vw, 48px) clamp(28px, 4vw, 56px)',
-          display: 'flex', justifyContent: 'space-between',
-          alignItems: 'center', gap: '32px', flexWrap: 'wrap',
-        }}>
-          <div style={{ maxWidth: '580px' }}>
+        <div className="partner-bottom-banner">
+          <div style={{ maxWidth: '560px' }}>
             <h3 style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(20px, 2.5vw, 28px)',
+              fontSize: 'clamp(18px, 2.5vw, 26px)',
               fontWeight: '700', color: '#ffffff',
               lineHeight: '1.3', margin: '0 0 10px',
             }}>
               Ready to make history with us?
             </h3>
-            <p style={{ color: 'rgba(255,255,255,0.70)', fontSize: '14px', lineHeight: '1.75', margin: 0 }}>
-              Whether you give $100 or $100,000, whether you're an individual, a foundation, or
-              a corporation JoMabel Healthcare Foundation has a place for your partnership.
+            <p style={{
+              color: 'rgba(255,255,255,0.65)',
+              fontSize: 'clamp(13px, 1.5vw, 14px)',
+              lineHeight: '1.75', margin: 0,
+            }}>
+              Whether you give $100 or $100,000 — whether you're an individual, a
+              foundation, or a corporation — JoMabel Healthcare Foundation has a
+              place for your partnership.
             </p>
           </div>
-          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', flexShrink: 0 }}>
+          <div className="partner-banner-btns">
             <button
               onClick={() => navigate('/donate')}
               style={{
-                backgroundColor: 'var(--color-green)', color: '#fff',
-                border: 'none', borderRadius: 'var(--btn-radius)',
+                backgroundColor: '#16A34A', color: '#fff',
+                border: 'none', borderRadius: '8px',
                 padding: '13px 28px', fontSize: '14px', fontWeight: '700',
-                cursor: 'pointer', fontFamily: 'inherit', transition: 'var(--transition)',
-                boxShadow: '0 4px 14px rgba(58,165,53,0.35)',
+                cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.2s',
+                boxShadow: '0 4px 14px rgba(22,163,74,0.35)',
               }}
-              onMouseOver={e => (e.currentTarget.style.backgroundColor = 'var(--color-green-dark)')}
-              onMouseOut={e => (e.currentTarget.style.backgroundColor = 'var(--color-green)')}
+              onMouseOver={e => (e.currentTarget.style.backgroundColor = '#15803D')}
+              onMouseOut={e => (e.currentTarget.style.backgroundColor = '#16A34A')}
             >
               Donate Now
             </button>
             <button
               onClick={() => navigate('/contact')}
               style={{
-                backgroundColor: 'rgba(255,255,255,0.10)', color: '#fff',
+                backgroundColor: 'transparent', color: '#fff',
                 border: '1.5px solid rgba(255,255,255,0.35)',
-                borderRadius: 'var(--btn-radius)',
+                borderRadius: '8px',
                 padding: '13px 28px', fontSize: '14px', fontWeight: '600',
-                cursor: 'pointer', fontFamily: 'inherit', transition: 'var(--transition)',
+                cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.2s',
               }}
-              onMouseOver={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.18)')}
-              onMouseOut={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.10)')}
+              onMouseOver={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.10)')}
+              onMouseOut={e => (e.currentTarget.style.backgroundColor = 'transparent')}
             >
               Contact Us
             </button>
           </div>
         </div>
-      </div>
 
-      <style>{`
-        @media (max-width: 860px) {
-          .partner-cards { grid-template-columns: repeat(2, 1fr) !important; }
-        }
-        @media (max-width: 480px) {
-          .partner-cards { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
+      </div>
     </section>
   );
 };

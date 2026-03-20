@@ -7,48 +7,51 @@
 
 /* ── JOMABEL GLOBAL COLOR & DESIGN TOKENS ── */
 :root {
-  /* Brand Colors */
-  --color-primary:        #29C5F6;   /* Sky Blue */
-  --color-primary-dark:   #1AAAD8;   /* Darker Sky Blue — hover */
-  --color-primary-light:  #E8F9FE;   /* Very Light Blue — backgrounds */
+  /* Brand Accent Colors — used sparingly for buttons, highlights, tags */
+  --color-primary:        #1D8FD4;   /* Clean Blue — buttons, links, accents */
+  --color-primary-dark:   #1570A6;   /* Darker Blue — hover states */
+  --color-primary-light:  #EBF5FB;   /* Very Light Blue — subtle section bg */
 
-  --color-navy:           #1B2A4A;   /* Dark Navy — text, footer */
-  --color-navy-mid:       #2B5EA7;   /* Medium Navy — headings */
-  --color-navy-light:     #D6E4F7;   /* Light Navy — subtle bg */
+  --color-navy:           #111827;   /* Near Black — headings, strong text */
+  --color-navy-mid:       #1D4ED8;   /* Rich Blue — section accents */
+  --color-navy-light:     #DBEAFE;   /* Light Blue — tag backgrounds */
 
-  --color-green:          #3AA535;   /* Logo Green — CTA buttons */
-  --color-green-dark:     #2D8229;   /* Dark Green — button hover */
-  --color-green-light:    #E8F7E8;   /* Light Green — tag backgrounds */
+  --color-green:          #16A34A;   /* Clean Green — CTA buttons */
+  --color-green-dark:     #15803D;   /* Dark Green — button hover */
+  --color-green-light:    #DCFCE7;   /* Light Green — tag backgrounds */
 
-  --color-orange:         #F7941D;   /* Warm Orange — highlights */
-  --color-orange-dark:    #D97B0E;   /* Dark Orange — hover */
-  --color-orange-light:   #FEF3E2;   /* Light Orange — subtle bg */
+  --color-orange:         #EA580C;   /* Warm Orange — highlights */
+  --color-orange-dark:    #C2410C;   /* Dark Orange — hover */
+  --color-orange-light:   #FFF7ED;   /* Light Orange — subtle bg */
 
-  /* Neutrals */
-  --color-bg:             #FAFAF8;   /* Warm White — page background */
-  --color-surface:        #F4F6F8;   /* Light Gray — cards */
-  --color-border:         #E5E7EB;   /* Border Gray */
+  /* Neutrals — white-forward, clean, modern */
+  --color-bg:             #FFFFFF;   /* Pure White — page background */
+  --color-surface:        #F9FAFB;   /* Off White — alternating sections */
+  --color-surface-2:      #F3F4F6;   /* Light Gray — cards, inputs */
+  --color-border:         #E5E7EB;   /* Subtle Border */
+  --color-border-dark:    #D1D5DB;   /* Stronger Border */
   --color-white:          #FFFFFF;
 
-  /* Text */
-  --color-text:           #1A1A2E;   /* Deep Charcoal */
-  --color-text-muted:     #6B7280;   /* Gray — secondary text */
-  --color-text-light:     #9CA3AF;   /* Light — placeholders */
+  /* Text — clean dark on light */
+  --color-text:           #111827;   /* Near Black — primary text */
+  --color-text-muted:     #4B5563;   /* Dark Gray — secondary text */
+  --color-text-light:     #9CA3AF;   /* Light Gray — placeholders, captions */
 
   /* Typography */
   --font-heading:         'Playfair Display', Georgia, serif;
   --font-body:            'Inter', 'Segoe UI', sans-serif;
 
   /* Spacing */
-  --section-padding-y:    clamp(48px, 7vw, 96px);
+  --section-padding-y:    clamp(56px, 7vw, 100px);
   --section-padding-x:    clamp(20px, 5vw, 60px);
-  --card-radius:          14px;
+  --card-radius:          12px;
   --btn-radius:           8px;
 
-  /* Shadows */
-  --shadow-sm:            0 1px 6px rgba(0,0,0,0.06);
-  --shadow-md:            0 4px 20px rgba(0,0,0,0.08);
-  --shadow-lg:            0 8px 40px rgba(27,42,74,0.12);
+  /* Shadows — lighter, cleaner */
+  --shadow-sm:            0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md:            0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg:            0 8px 32px rgba(0,0,0,0.10);
+  --shadow-xl:            0 16px 48px rgba(0,0,0,0.12);
 
   /* Transitions */
   --transition:           all 0.2s ease;
@@ -61,6 +64,8 @@ html {
 
 *, *::before, *::after {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -70,16 +75,104 @@ body {
   background-color: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   color: var(--color-navy);
+  line-height: 1.2;
 }
 
 img {
   max-width: 100%;
   display: block;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+/* ── GLOBAL BUTTON STYLES ── */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--btn-radius);
+  padding: 12px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(29,143,212,0.30);
+}
+
+.btn-green {
+  background-color: var(--color-green);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--btn-radius);
+  padding: 12px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: var(--transition);
+}
+.btn-green:hover {
+  background-color: var(--color-green-dark);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-primary);
+  border-radius: var(--btn-radius);
+  padding: 12px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: var(--transition);
+}
+.btn-outline:hover {
+  background-color: var(--color-primary-light);
+  transform: translateY(-1px);
+}
+
+/* ── SECTION LABEL ── */
+.section-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 12px;
+}
+
+/* ── CARD BASE ── */
+.card {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+}
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
 }
 
 /* ── LEGACY UTILITY CLASSES (keep for backward compat) ── */

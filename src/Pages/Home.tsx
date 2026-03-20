@@ -14,7 +14,7 @@ import Contact from '../components/sections/Contact';
 import TheProblem from '../components/sections/TheProblem';
 import TheSolution from '../components/sections/TheSolution';
 import WhyJHF from '../components/sections/WhyJHF';
-import FounderStory from '../components/sections/FounderStory';
+//import FounderStory from '../components/sections/FounderStory';
 import ImpactMetrics from '../components/sections/ImpactMetrics';
 import PartnershipInvitation from '../components/sections/PartnershipInvitation';
 
@@ -26,9 +26,8 @@ const Home = () => {
        <MissionVision />
       <TheProblem />
       <TheSolution />
-     
       <WhyJHF />
-      <FounderStory />
+      
       <ImpactMetrics />
       <OurPrograms />
       <PartnershipInvitation />

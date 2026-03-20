@@ -1,210 +1,274 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import founderPhoto from '../../assests/images/founderphoto.jpeg';
 
-const metrics = [
-  { number: '20,000+', label: 'Patients Served Annually', sub: 'Projected at full capacity', color: 'var(--color-primary)' },
-  { number: '5,000+', label: 'Screenings Per Year', sub: 'Preventive & chronic disease', color: 'var(--color-green)' },
-  { number: '500+', label: 'Health Workers Trained', sub: 'Community & clinical staff', color: 'var(--color-orange)' },
-  { number: '2', label: 'Major Facilities', sub: '16,000 sqm total campus', color: 'var(--color-primary)' },
-];
-
-const milestones = [
-  { year: 'Founded', event: 'Dr. Ogbaa launches JHF using personal retirement savings' },
-  { year: 'Phase 1', event: 'JoMabel Medical Center construction begins in Ufuma' },
-  { year: '70%', event: 'Medical Center now 70% complete serving the community' },
-  { year: '30%', event: 'Skill Acquisition & Training Center underway' },
-  { year: 'Vision', event: 'Full campus operational 20,000+ patients served annually' },
-];
-
-const ImpactMetrics = () => {
+const FounderStory = () => {
   const navigate = useNavigate();
   return (
     <section style={{
-      backgroundColor: 'var(--color-surface)',
+      backgroundColor: '#ffffff',
       padding: 'var(--section-padding-y) var(--section-padding-x)',
       fontFamily: 'var(--font-body)',
     }}>
-      <div style={{ maxWidth: '1080px', margin: '0 auto' }}>
+      <style>{`
+        .founder-inner {
+          max-width: 1080px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: 380px 1fr;
+          gap: 72px;
+          align-items: center;
+        }
+        .founder-photo-wrap {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+        .founder-img {
+          width: 100%;
+          aspect-ratio: 4/5;
+          object-fit: cover;
+          object-position: center top;
+          border-radius: 16px;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+          display: block;
+        }
+        .founder-caption {
+          text-align: center;
+        }
+        .founder-badges {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          justify-content: center;
+        }
+        .founder-badge {
+          font-size: '11px';
+          font-weight: 600;
+          padding: 4px 12px;
+          border-radius: 999px;
+        }
+        .founder-content {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+        .founder-btns {
+          display: flex;
+          gap: 12px;
+          flex-wrap: wrap;
+          margin-top: 8px;
+        }
+        .founder-btn-primary {
+          background: #1D8FD4;
+          color: #ffffff;
+          border: none;
+          border-radius: 8px;
+          padding: 13px 28px;
+          font-size: 14px;
+          font-weight: 700;
+          cursor: pointer;
+          font-family: inherit;
+          transition: all 0.2s;
+        }
+        .founder-btn-primary:hover {
+          background: #1570A6;
+          transform: translateY(-1px);
+        }
+        .founder-btn-outline {
+          background: transparent;
+          color: #111827;
+          border: 1.5px solid #D1D5DB;
+          border-radius: 8px;
+          padding: 13px 28px;
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          font-family: inherit;
+          transition: all 0.2s;
+        }
+        .founder-btn-outline:hover {
+          border-color: #1D8FD4;
+          color: #1D8FD4;
+          transform: translateY(-1px);
+        }
+        .founder-quote-block {
+          background: #F0F9FF;
+          border-left: 4px solid #1D8FD4;
+          border-radius: 0 10px 10px 0;
+          padding: 20px 24px;
+        }
 
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '52px' }}>
-          <span style={{
-            fontSize: '11px', fontWeight: '700', color: 'var(--color-primary-dark)',
-            letterSpacing: '0.14em', textTransform: 'uppercase',
-            display: 'block', marginBottom: '14px',
-          }}>
-            Our Impact
-          </span>
-          <h2 style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(26px, 3.5vw, 40px)',
-            fontWeight: '700', color: 'var(--color-navy)',
-            lineHeight: '1.2', margin: '0 0 16px',
-          }}>
-            The Numbers Behind the Mission
-          </h2>
-          <p style={{
-            fontSize: '15px', color: 'var(--color-text-muted)',
-            lineHeight: '1.85', maxWidth: '560px', margin: '0 auto',
-          }}>
-            Every donation, every partnership, and every brick laid moves us closer
-            to a future where thousands of lives are transformed each year.
-          </p>
-        </div>
+        @media (max-width: 900px) {
+          .founder-inner {
+            grid-template-columns: 1fr;
+            gap: 40px;
+          }
+          .founder-img {
+            aspect-ratio: 3/2;
+            max-height: 380px;
+          }
+          .founder-photo-wrap {
+            max-width: 480px;
+            margin: 0 auto;
+            width: 100%;
+          }
+        }
+        @media (max-width: 540px) {
+          .founder-img { aspect-ratio: 4/3; }
+          .founder-btns { flex-direction: column; }
+          .founder-btn-primary,
+          .founder-btn-outline { text-align: center; }
+        }
+      `}</style>
 
-        {/* Metrics */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '20px', marginBottom: '56px',
-        }}>
-          {metrics.map((m, i) => (
-            <div key={i} style={{
-              background: 'var(--color-white)',
-              border: '1px solid var(--color-border)',
-              borderBottom: `4px solid ${m.color}`,
-              borderRadius: 'var(--card-radius)',
-              padding: '28px 20px',
-              textAlign: 'center',
-              boxShadow: 'var(--shadow-sm)',
-              transition: 'var(--transition)',
+      <div className="founder-inner">
+
+        {/* ── LEFT — Photo + badges ── */}
+        <div className="founder-photo-wrap">
+
+          {/* Real founder photo */}
+          <img
+            src={founderPhoto}
+            alt="Clara Ada Ogbaa, Ed.D. — Founder, JoMabel Healthcare Foundation"
+            className="founder-img"
+            onError={(e) => {
+              // Fallback placeholder if image not yet added to project
+              e.currentTarget.style.display = 'none';
+              const placeholder = e.currentTarget.nextElementSibling as HTMLElement;
+              if (placeholder) placeholder.style.display = 'flex';
             }}
-              onMouseOver={e => (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-3px)'}
-              onMouseOut={e => (e.currentTarget as HTMLDivElement).style.transform = 'translateY(0)'}
-            >
-              <p style={{
-                fontFamily: 'var(--font-heading)',
-                color: m.color,
-                fontSize: 'clamp(28px, 3.5vw, 40px)',
-                fontWeight: '800', margin: '0 0 8px',
-              }}>{m.number}</p>
-              <p style={{ color: 'var(--color-navy)', fontSize: '13px', fontWeight: '700', margin: '0 0 4px' }}>{m.label}</p>
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '12px', margin: 0 }}>{m.sub}</p>
-            </div>
-          ))}
-        </div>
+          />
+          {/* Placeholder — hidden when photo loads */}
+          <div style={{
+            display: 'none',
+            width: '100%', aspectRatio: '4/5',
+            borderRadius: '16px',
+            background: '#F3F4F6',
+            border: '2px dashed #D1D5DB',
+            flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'center',
+            gap: '12px', boxShadow: '0 8px 32px rgba(0,0,0,0.08)',
+          }}>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" opacity="0.3">
+              <circle cx="12" cy="8" r="4" stroke="#6B7280" strokeWidth="1.5"/>
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+            <p style={{ color: '#9CA3AF', fontSize: '12px', margin: 0, textAlign: 'center' }}>
+              Clara Ada Ogbaa, Ed.D.<br />
+              <span style={{ fontSize: '11px' }}>Founder photo to be added</span>
+            </p>
+          </div>
 
-        {/* Timeline + CTA */}
-        <div style={{
-          display: 'grid', gridTemplateColumns: '1fr 1fr',
-          gap: '56px', alignItems: 'center',
-        }}>
-          {/* Timeline */}
-          <div>
-            <h3 style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: '20px', fontWeight: '700',
-              color: 'var(--color-navy)', marginBottom: '28px',
-            }}>
-              Our Journey So Far
-            </h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
-              {milestones.map((m, i) => (
-                <div key={i} style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
-                  {/* Line + dot */}
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
-                    <div style={{
-                      width: '36px', height: '36px', borderRadius: '50%',
-                      background: i === milestones.length - 1 ? 'var(--color-navy-light)' : 'var(--color-primary)',
-                      border: i === milestones.length - 1 ? '2px dashed var(--color-primary)' : 'none',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      flexShrink: 0,
-                    }}>
-                      <span style={{
-                        color: i === milestones.length - 1 ? 'var(--color-primary-dark)' : '#fff',
-                        fontSize: '9px', fontWeight: '800', textAlign: 'center',
-                        lineHeight: '1.1', padding: '2px',
-                      }}>
-                        {m.year}
-                      </span>
-                    </div>
-                    {i < milestones.length - 1 && (
-                      <div style={{ width: '2px', height: '28px', backgroundColor: 'var(--color-border)' }} />
-                    )}
-                  </div>
-                  {/* Text */}
-                  <p style={{
-                    fontSize: '13.5px', color: 'var(--color-text-muted)',
-                    lineHeight: '1.65', margin: '8px 0 20px',
-                  }}>
-                    {m.event}
-                  </p>
-                </div>
+          {/* Caption */}
+          <div className="founder-caption">
+            <p style={{ fontSize: '14px', fontWeight: '700', color: '#111827', margin: '0 0 2px' }}>
+              Clara Ada Ogbaa, Ed.D.
+            </p>
+            <p style={{ fontSize: '12px', color: '#6B7280', margin: '0 0 12px' }}>
+              Founder & Executive Director — JoMabel Healthcare Foundation USA
+            </p>
+            {/* Survivor badges */}
+            <div className="founder-badges">
+              {[
+                { label: 'Breast Cancer Survivor',      bg: '#FDF2F8', color: '#9D174D', border: '#FBCFE8' },
+                { label: 'Endometrial Cancer Survivor', bg: '#F0FDF4', color: '#166534', border: '#BBF7D0' },
+                { label: 'Kidney Transplant Recipient', bg: '#EFF6FF', color: '#1E40AF', border: '#BFDBFE' },
+              ].map((b, i) => (
+                <span key={i} style={{
+                  background: b.bg,
+                  border: `1px solid ${b.border}`,
+                  color: b.color,
+                  fontSize: '11px', fontWeight: '600',
+                  padding: '4px 12px', borderRadius: '999px',
+                }}>
+                  {b.label}
+                </span>
               ))}
             </div>
           </div>
+        </div>
 
-          {/* CTA card */}
-          <div style={{
-            background: 'linear-gradient(160deg, var(--color-navy) 0%, #0d1f4e 100%)',
-            borderRadius: '20px', padding: '40px 36px',
-            display: 'flex', flexDirection: 'column', gap: '20px',
-          }}>
+        {/* ── RIGHT — Story ── */}
+        <div className="founder-content">
+
+          <div>
             <span style={{
-              fontSize: '11px', fontWeight: '700', color: 'var(--color-primary)',
+              display: 'inline-block',
+              background: '#EBF5FB', color: '#1D8FD4',
+              fontSize: '11px', fontWeight: '700',
               letterSpacing: '0.14em', textTransform: 'uppercase',
+              padding: '5px 14px', borderRadius: '999px',
+              marginBottom: '16px',
             }}>
-              Join the Mission
+              The Founder's Story
             </span>
-            <h3 style={{
+            <h2 style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: 'clamp(20px, 2.5vw, 26px)',
-              fontWeight: '700', color: '#ffffff',
-              lineHeight: '1.3', margin: 0,
+              fontSize: 'clamp(24px, 3vw, 38px)',
+              fontWeight: '700', color: '#111827',
+              lineHeight: '1.2', margin: 0,
             }}>
-              Your gift completes a campus that saves lives for generations.
-            </h3>
-            <p style={{ color: 'rgba(255,255,255,0.70)', fontSize: '14px', lineHeight: '1.75', margin: 0 }}>
-              We are at a critical stage. The Medical Center needs final funding
-              to reach completion. The Training Center is just beginning. Every
-              dollar now has maximum impact.
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              <button
-                onClick={() => navigate('/donate')}
-                style={{
-                  backgroundColor: 'var(--color-green)', color: '#fff',
-                  border: 'none', borderRadius: 'var(--btn-radius)',
-                  padding: '14px', fontSize: '14px', fontWeight: '700',
-                  cursor: 'pointer', fontFamily: 'inherit',
-                  transition: 'var(--transition)', textAlign: 'center',
-                }}
-                onMouseOver={e => (e.currentTarget.style.backgroundColor = 'var(--color-green-dark)')}
-                onMouseOut={e => (e.currentTarget.style.backgroundColor = 'var(--color-green)')}
-              >
-                Donate to Complete the Campus
-              </button>
-              <button
-                onClick={() => navigate('/contact')}
-                style={{
-                  backgroundColor: 'transparent', color: '#fff',
-                  border: '1.5px solid rgba(255,255,255,0.30)',
-                  borderRadius: 'var(--btn-radius)',
-                  padding: '14px', fontSize: '14px', fontWeight: '600',
-                  cursor: 'pointer', fontFamily: 'inherit',
-                  transition: 'var(--transition)', textAlign: 'center',
-                }}
-                onMouseOver={e => (e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.08)')}
-                onMouseOut={e => (e.currentTarget.style.backgroundColor = 'transparent')}
-              >
-                Request a Briefing
-              </button>
-            </div>
+              Born From Faith.<br />
+              Sustained by Grace.<br />
+              <span style={{ color: '#1D8FD4' }}>Built for Purpose.</span>
+            </h2>
           </div>
+
+          <p style={{ fontSize: 'clamp(14px, 1.5vw, 15px)', color: '#4B5563', lineHeight: '1.85', margin: 0 }}>
+            Clara Ada Ogbaa was born in Ufuma, Anambra State, Nigeria. She built
+            a distinguished career as an educator and humanitarian in the United
+            States — but it was her own journey through illness that transformed
+            her life's mission entirely.
+          </p>
+          <p style={{ fontSize: 'clamp(14px, 1.5vw, 15px)', color: '#4B5563', lineHeight: '1.85', margin: 0 }}>
+            A two-time cancer survivor and kidney transplant recipient, she experienced
+            firsthand what it means to fight for your life — and how access to quality
+            healthcare can mean the difference between living and dying. She knew that
+            millions in her hometown faced that same fight every day, without the
+            resources she had been fortunate enough to access.
+          </p>
+          <p style={{ fontSize: 'clamp(14px, 1.5vw, 15px)', color: '#4B5563', lineHeight: '1.85', margin: 0 }}>
+            So she did something extraordinary. Using her own modest retirement savings,
+            she began building a healthcare campus in Ufuma — not waiting for someone
+            else to act, not writing a proposal, but breaking ground. Today, JoMabel
+            Healthcare Foundation is that vision made real.
+          </p>
+
+          {/* Pull quote */}
+          <div className="founder-quote-block">
+            <p style={{
+              fontFamily: 'var(--font-heading)',
+              fontSize: 'clamp(15px, 1.8vw, 18px)',
+              fontStyle: 'italic',
+              color: '#111827', lineHeight: '1.65', margin: '0 0 10px',
+            }}>
+              "Healthcare should never be a privilege reserved for a few.
+              It is a human right — and it is the legacy we are called to leave."
+            </p>
+            <p style={{
+              color: '#1D8FD4', fontSize: '12px',
+              fontWeight: '700', margin: 0,
+              letterSpacing: '0.06em', textTransform: 'uppercase',
+            }}>
+              — Clara Ada Ogbaa, Ed.D., Founder
+            </p>
+          </div>
+
+          {/* CTAs */}
+          <div className="founder-btns">
+            <button className="founder-btn-primary" onClick={() => navigate('/about')}>
+              Read Her Full Story
+            </button>
+            <button className="founder-btn-outline" onClick={() => navigate('/donate')}>
+              Support Her Mission
+            </button>
+          </div>
+
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 860px) {
-          .impact-metrics { grid-template-columns: repeat(2, 1fr) !important; }
-          .impact-bottom { grid-template-columns: 1fr !important; gap: 40px !important; }
-        }
-        @media (max-width: 480px) {
-          .impact-metrics { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
-        }
-      `}</style>
     </section>
   );
 };
 
-export default ImpactMetrics;
+export default FounderStory;
