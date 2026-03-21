@@ -31,3 +31,5 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./build/
           server-dir: /home/jomabelh/public_html/
+          protocol: ftps
+          port: 21
