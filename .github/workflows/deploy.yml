@@ -33,3 +33,4 @@ jobs:
           server-dir: /home/jomabelh/public_html/
           protocol: ftps
           port: 21
+          security: loose
