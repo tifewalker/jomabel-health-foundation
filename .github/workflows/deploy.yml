@@ -32,5 +32,5 @@ jobs:
           local-dir: ./build/
           server-dir: /home/jomabelh/public_html/
           protocol: ftps
-          port: 990
+          port: 21
           security: loose
