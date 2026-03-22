@@ -1,6 +1,5 @@
----
 deployment:
   tasks:
     - export DEPLOYPATH=/home/jomabelh/public_html/
-    - cd /home/jomabelh/jomabel-app/jomabelhf.org && npm install && npm run build
+    - /bin/rm -rf $DEPLOYPATH*
     - /bin/cp -R /home/jomabelh/jomabel-app/jomabelhf.org/build/. $DEPLOYPATH
