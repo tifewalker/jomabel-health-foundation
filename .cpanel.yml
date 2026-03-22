@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/jomabelh/public_html/
-    - /bin/cp -R /home/jomabelh/jomabel-app/jomabelhf.org/build/. $DEPLOYPATH
+    - /bin/cp -R build $DEPLOYPATH
