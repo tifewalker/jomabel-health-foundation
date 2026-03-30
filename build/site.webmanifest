@@ -1,0 +1,23 @@
+{
+  "name": "JoMabel Healthcare Foundation",
+  "short_name": "JoMabel",
+  "description": "Building a world-class medical and training center in Ufuma, Anambra State, Nigeria.",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#1D8FD4",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}

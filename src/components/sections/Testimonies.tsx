@@ -1,206 +1,286 @@
 import React from 'react';
+import { Star, Quote } from 'lucide-react';
 
-// ── Placeholder testimonies — replace with real quotes from Dr. Ogbaa when available ──
+// ── Your authentic images ──
+import outreachImage from '../../assests/images/outreach2.jpeg';
+import maternalImage from '../../assests/images/maternal-and-child-health-.jpg';
+import roseImage from '../../assests/images/Rose.jpg';
+
 const testimonies = [
   {
     id: 1,
     quote: "Before JoMabel Healthcare Foundation reached our community, accessing medical care was a struggle. Today, my children receive proper treatment and health education. This foundation has truly restored hope to our family.",
-    name: "Adewalwe Mohammed",
+    name: "Adewale Mohammed",
     role: "Community Member, Ufuma",
+    image: outreachImage,
   },
   {
     id: 2,
     quote: "Supporting JoMabel Healthcare Foundation has been one of the most fulfilling decisions I've made. Their transparency, dedication, and real impact in underserved communities inspire confidence and trust.",
     name: "Emmanuel Eromax",
     role: "Donor & Partner",
+    image: roseImage,
   },
   {
     id: 3,
     quote: "Knowing that a clinic is being built in our community gives us peace of mind. Families no longer fear medical emergencies, and we are grateful for the compassion and care JoMabel Healthcare Foundation brings.",
     name: "Amarachi Osagie",
     role: "Community Member, Anambra State",
+    image: maternalImage,
   },
   {
     id: 4,
     quote: "The presence of JoMabel Healthcare Foundation in our area has changed lives. Their outreach programs and commitment to quality healthcare have strengthened our community and improved overall wellbeing.",
     name: "John Okere",
     role: "Community Leader",
+    image: outreachImage,
   },
 ];
 
 const Testimonies = () => {
   return (
-    <section className="testimonies-section">
+    <div className="testimonies-page">
       <style>{`
-        .testimonies-section {
-          background-color: var(--color-surface);
-          padding: var(--section-padding-y) var(--section-padding-x);
+        .testimonies-page {
           font-family: var(--font-body);
+          background-color: #FFFFFF;
         }
-        .testimonies-top-label {
+        
+        /* Header Section */
+        .testimonies-header {
           text-align: center;
-          font-size: 11px;
+          padding: 64px clamp(20px, 5vw, 48px) 48px;
+          background: linear-gradient(135deg, #F9FAFB 0%, #FFFFFF 100%);
+        }
+        .testimonies-label {
+          display: inline-block;
+          font-size: 12px;
           font-weight: 700;
-          color: var(--color-primary-dark);
-          letter-spacing: 0.14em;
+          letter-spacing: 0.1em;
           text-transform: uppercase;
-          margin-bottom: 10px;
+          color: #1D8FD4;
+          margin-bottom: 16px;
         }
-        .testimonies-heading {
-          text-align: center;
+        .testimonies-headline {
           font-family: var(--font-heading);
-          font-size: clamp(22px, 3.5vw, 32px);
+          font-size: clamp(32px, 4.5vw, 44px);
           font-weight: 700;
-          color: var(--color-navy);
-          margin-bottom: 8px;
+          color: #111827;
+          line-height: 1.2;
+          margin-bottom: 20px;
         }
-        .testimonies-sub {
-          text-align: center;
-          font-size: 14px;
-          color: var(--color-text-muted);
-          margin-bottom: 40px;
-          font-style: italic;
-        }
-        .testimonies-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 24px;
-          max-width: 1040px;
+        .testimonies-description {
+          font-size: 18px;
+          color: #4B5563;
+          line-height: 1.6;
+          max-width: 700px;
           margin: 0 auto;
         }
-        .testimony-card {
-          background-color: var(--color-white);
-          border-radius: var(--card-radius);
-          border: 1px solid var(--color-border);
-          padding: 32px 32px 24px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
+        
+        /* Testimonials Grid */
+        .testimonials-grid {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 clamp(20px, 5vw, 48px) 80px;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 32px;
+        }
+        
+        /* Testimonial Card */
+        .testimonial-card {
+          background: #FFFFFF;
+          border-radius: 24px;
+          padding: 32px;
+          transition: all 0.3s ease;
+          border: 1px solid #F0F0F0;
           position: relative;
-          box-shadow: var(--shadow-sm);
-          overflow: hidden;
-          min-height: 180px;
-          transition: var(--transition);
         }
-        .testimony-card:hover {
-          box-shadow: var(--shadow-md);
-          transform: translateY(-2px);
-          border-color: var(--color-primary);
+        .testimonial-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+          border-color: #E5E7EB;
         }
-        .testimony-quote-mark {
-          font-family: Georgia, serif;
-          font-size: 48px;
-          line-height: 1;
-          color: var(--color-primary);
-          opacity: 0.4;
-          margin-bottom: 8px;
-          display: block;
+        
+        /* Quote Icon */
+        .quote-icon {
+          margin-bottom: 20px;
         }
-        .testimony-quote {
-          font-size: 14px;
-          color: var(--color-text-muted);
-          line-height: 1.8;
-          margin: 0 0 24px;
+        .quote-icon svg {
+          width: 32px;
+          height: 32px;
+          color: #1D8FD4;
+          opacity: 0.5;
+        }
+        
+        /* Quote Text */
+        .testimonial-quote {
+          font-size: 16px;
+          color: #4B5563;
+          line-height: 1.7;
+          margin-bottom: 24px;
+          font-style: normal;
+        }
+        
+        /* Star Rating */
+        .testimonial-stars {
+          display: flex;
+          gap: 4px;
+          margin-bottom: 20px;
+        }
+        .testimonial-stars svg {
+          width: 16px;
+          height: 16px;
+          fill: #FBBF24;
+          color: #FBBF24;
+        }
+        
+        /* Author Section */
+        .testimonial-author {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          border-top: 1px solid #F0F0F0;
+          padding-top: 24px;
+        }
+        .author-image {
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+        .author-info {
           flex: 1;
         }
-        .testimony-divider {
-          height: 1px;
-          background-color: var(--color-border);
-          margin-bottom: 14px;
+        .author-name {
+          font-family: var(--font-heading);
+          font-size: 16px;
+          font-weight: 700;
+          color: #111827;
+          margin: 0 0 4px 0;
         }
-        .testimony-footer {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-        .testimony-avatar {
-          width: 36px;
-          height: 36px;
-          border-radius: 50%;
-          background: linear-gradient(135deg, var(--color-primary-light), var(--color-navy-light));
-          display: flex;
-          align-items: center;
-          justify-content: center;
+        .author-role {
           font-size: 13px;
-          font-weight: 700;
-          color: var(--color-navy-mid);
-          flex-shrink: 0;
-        }
-        .testimony-info {
-          text-align: right;
-        }
-        .testimony-name {
-          font-size: 13.5px;
-          font-weight: 700;
-          color: var(--color-navy);
-          margin: 0 0 2px;
-        }
-        .testimony-role {
-          font-size: 12px;
-          color: var(--color-text-muted);
+          color: #6B7280;
           margin: 0;
         }
-
-        /* Placeholder note */
-        .testimonies-note {
+        
+        /* CTA Section */
+        .testimonies-cta {
           text-align: center;
-          margin-top: 28px;
-          font-size: 12px;
-          color: var(--color-text-light);
-          font-style: italic;
+          padding: 48px clamp(20px, 5vw, 48px) 80px;
+          background: #F9FAFB;
         }
-
-        @media (max-width: 700px) {
-          .testimonies-grid {
+        .cta-title {
+          font-family: var(--font-heading);
+          font-size: 24px;
+          font-weight: 700;
+          color: #111827;
+          margin-bottom: 12px;
+        }
+        .cta-text {
+          font-size: 16px;
+          color: #6B7280;
+          margin-bottom: 24px;
+        }
+        .cta-button {
+          background: #1D8FD4;
+          color: #ffffff;
+          border: none;
+          border-radius: 60px;
+          padding: 12px 32px;
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+          font-family: 'Inter', sans-serif;
+          transition: all 0.2s;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .cta-button:hover {
+          background: #1570A6;
+          transform: translateY(-2px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 900px) {
+          .testimonials-grid {
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 24px;
           }
-          .testimony-card { padding: 24px 20px 20px; }
-          .testimony-quote { font-size: 13.5px; }
+        }
+        @media (max-width: 600px) {
+          .testimonies-header {
+            padding: 48px 24px 32px;
+          }
+          .testimonies-headline {
+            font-size: 28px;
+          }
+          .testimonies-description {
+            font-size: 16px;
+          }
+          .testimonial-card {
+            padding: 24px;
+          }
+          .testimonial-quote {
+            font-size: 15px;
+          }
         }
       `}</style>
 
-      <p className="testimonies-top-label">Community Voices</p>
-      <h2 className="testimonies-heading">What People Are Saying</h2>
-      <p className="testimonies-sub">Stories of hope, healing, and transformation from our communities.</p>
+      {/* Header */}
+      <div className="testimonies-header">
+        <div className="testimonies-label">Testimonials</div>
+        <h2 className="testimonies-headline">
+          Voices of Hope & Healing
+        </h2>
+        <p className="testimonies-description">
+          Real stories from community members, donors, and partners who have experienced 
+          the impact of JoMabel Healthcare Foundation firsthand.
+        </p>
+      </div>
 
-      <div className="testimonies-grid">
-        {testimonies.map((t) => (
-          <div key={t.id} className="testimony-card">
-
-            <span className="testimony-quote-mark">"</span>
-            <p className="testimony-quote">{t.quote}</p>
-
-            <div className="testimony-divider" />
-
-            <div className="testimony-footer">
-              <div className="testimony-avatar">
-                {t.name.charAt(0)}
-              </div>
-              <div className="testimony-info">
-                <p className="testimony-name">{t.name}</p>
-                <p className="testimony-role">{t.role}</p>
+      {/* Testimonials Grid */}
+      <div className="testimonials-grid">
+        {testimonies.map((testimonial) => (
+          <div key={testimonial.id} className="testimonial-card">
+            <div className="quote-icon">
+              <Quote />
+            </div>
+            <div className="testimonial-stars">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} />
+              ))}
+            </div>
+            <p className="testimonial-quote">"{testimonial.quote}"</p>
+            <div className="testimonial-author">
+              <img 
+                src={testimonial.image} 
+                alt={testimonial.name}
+                className="author-image"
+              />
+              <div className="author-info">
+                <h4 className="author-name">{testimonial.name}</h4>
+                <p className="author-role">{testimonial.role}</p>
               </div>
             </div>
-
-            {/* Sky blue corner accent */}
-            <div style={{
-              position: 'absolute', bottom: 0, right: 0,
-              width: '80px', height: '80px', pointerEvents: 'none',
-            }}>
-              <svg viewBox="0 0 80 80" fill="none" width="80" height="80">
-                <path d="M80 80 Q80 20 20 0" stroke="var(--color-primary)" strokeWidth="5" fill="none" strokeLinecap="round"/>
-                <path d="M80 80 Q80 35 35 10" stroke="var(--color-primary)" strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.3"/>
-              </svg>
-            </div>
-
           </div>
         ))}
       </div>
 
-      <p className="testimonies-note">* Testimonials to be updated with verified community voices from Dr. Ogbaa.</p>
-
-    </section>
+      {/* CTA Section */}
+      <div className="testimonies-cta">
+        <h3 className="cta-title">Share Your Story</h3>
+        <p className="cta-text">
+          Have you been impacted by JoMabel Healthcare Foundation?<br />
+          We'd love to hear your story.
+        </p>
+        <button className="cta-button" onClick={() => window.location.href = '/contact'}>
+          Share Your Experience
+        </button>
+      </div>
+    </div>
   );
 };
 

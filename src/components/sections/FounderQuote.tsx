@@ -1,184 +1,165 @@
 import React from 'react';
+import { Quote, Heart, Shield } from 'lucide-react';
 import founderPhoto from '../../assests/images/founderphoto.jpeg';
 
 const FounderQuote = () => {
   return (
-    <section style={{
-      backgroundColor: '#F9FAFB',
-      fontFamily: 'var(--font-body)',
-      padding: 'var(--section-padding-y) var(--section-padding-x)',
-    }}>
+    <section className="founder-quote-section">
       <style>{`
-        .fq-wrapper {
+        .founder-quote-section {
+          background-color: #F9FAFB;
+          font-family: var(--font-body);
+          padding: var(--section-padding-y) var(--section-padding-x);
+        }
+        
+        .fq-container {
           max-width: 1100px;
           margin: 0 auto;
-          display: grid;
-          grid-template-columns: 1fr 1.4fr;
-          gap: 0;
-          border-radius: 20px;
+          display: flex;
+          gap: 48px;
+          align-items: center;
+        }
+        
+        /* LEFT - Small Circular Image */
+        .fq-image-col {
+          flex-shrink: 0;
+        }
+        .fq-image-wrap {
+          width: 160px;
+          height: 160px;
+          border-radius: 50%;
           overflow: hidden;
-          box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+          border: 4px solid #ffffff;
         }
-
-        /* ── LEFT — Photo ── */
-        .fq-photo-side {
-          position: relative;
-          min-height: 500px;
-        }
-        .fq-photo-img {
+        .fq-image {
           width: 100%;
           height: 100%;
           object-fit: cover;
           object-position: center top;
-          display: block;
-          position: absolute;
-          inset: 0;
         }
-        .fq-photo-overlay {
-          position: absolute;
-          inset: 0;
-          background: rgba(29, 143, 212, 0.35);
-          mix-blend-mode: multiply;
-        }
-        .fq-photo-bottom {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          background: linear-gradient(to top, rgba(17,24,39,0.92) 0%, transparent 100%);
-          padding: 40px 28px 28px;
-        }
-        .fq-founder-label {
-          font-size: 11px;
-          font-weight: 700;
-          color: #29C5F6;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          margin-bottom: 6px;
+        .fq-founder-info {
+          text-align: center;
+          margin-top: 16px;
         }
         .fq-founder-name {
           font-family: var(--font-heading);
-          font-size: 22px;
+          font-size: 18px;
           font-weight: 700;
-          color: #ffffff;
-          margin: 0 0 6px;
+          color: #111827;
+          margin: 0 0 4px;
         }
-        .fq-founder-tags {
+        .fq-founder-title {
           font-size: 12px;
-          color: rgba(255,255,255,0.70);
-          letter-spacing: 0.04em;
+          color: #6B7280;
+          margin: 0;
         }
-
-        /* ── RIGHT — Content ── */
-        .fq-content-side {
-          background: #ffffff;
-          padding: clamp(36px, 5vw, 56px) clamp(28px, 4vw, 52px);
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          gap: 20px;
+        
+        /* RIGHT - Content */
+        .fq-content-col {
+          flex: 1;
         }
         .fq-heading {
           font-family: var(--font-heading);
-          font-size: clamp(22px, 2.8vw, 32px);
+          font-size: clamp(24px, 3vw, 32px);
           font-weight: 700;
           color: #111827;
-          line-height: 1.25;
-          margin: 0;
-        }
-        .fq-intro {
-          font-size: 15px;
-          color: #4B5563;
-          line-height: 1.8;
-          margin: 0;
-        }
-        .fq-pullquote {
-          background: #F0F9FF;
-          border-left: 3px solid #1D8FD4;
-          border-radius: 0 8px 8px 0;
-          padding: 20px 24px;
-        }
-        .fq-pullquote-mark-top {
-          font-family: Georgia, serif;
-          font-size: 28px;
-          line-height: 1;
-          color: #1D8FD4;
-          font-weight: 700;
-          display: block;
-          margin-bottom: 6px;
-        }
-        .fq-pullquote-mark-bottom {
-          font-family: Georgia, serif;
-          font-size: 28px;
-          line-height: 1;
-          color: #1D8FD4;
-          font-weight: 700;
-          display: block;
-          text-align: right;
-          margin-top: 6px;
-        }
-        .fq-pullquote p {
-          font-family: var(--font-heading);
-          font-size: clamp(14px, 1.6vw, 16px);
-          font-style: italic;
-          color: #111827;
-          line-height: 1.7;
-          margin: 0;
-        }
-        .fq-body {
-          font-size: 15px;
-          color: #4B5563;
-          line-height: 1.8;
-          margin: 0;
+          line-height: 1.2;
+          margin: 0 0 20px;
         }
         .fq-survivor-tags {
           display: flex;
           flex-wrap: wrap;
-          gap: 8px;
+          gap: 10px;
+          margin-bottom: 20px;
         }
         .fq-survivor-tag {
-          border-radius: 999px;
-          padding: 4px 14px;
+          border-radius: 40px;
+          padding: 5px 14px;
           font-size: 12px;
           font-weight: 600;
         }
-
-        /* ── RESPONSIVE ── */
+        .fq-text {
+          font-size: 16px;
+          color: #4B5563;
+          line-height: 1.7;
+          margin-bottom: 24px;
+        }
+        .fq-pullquote {
+          background: #F0F9FF;
+          border-left: 4px solid #1D8FD4;
+          border-radius: 0 16px 16px 0;
+          padding: 24px 28px;
+          margin-bottom: 24px;
+        }
+        .fq-pullquote p {
+          font-family: var(--font-heading);
+          font-size: 18px;
+          font-style: italic;
+          color: #111827;
+          line-height: 1.6;
+          margin: 0;
+        }
+        .fq-pullquote-author {
+          font-size: 13px;
+          font-weight: 600;
+          color: #1D8FD4;
+          margin-top: 12px;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+        }
+        
+        /* Responsive */
         @media (max-width: 768px) {
-          .fq-wrapper { grid-template-columns: 1fr; }
-          .fq-photo-side { min-height: 360px; }
+          .fq-container {
+            flex-direction: column;
+            text-align: center;
+            gap: 32px;
+          }
+          .fq-pullquote {
+            text-align: left;
+          }
+          .fq-survivor-tags {
+            justify-content: center;
+          }
         }
         @media (max-width: 480px) {
-          .fq-photo-side { min-height: 280px; }
+          .fq-image-wrap {
+            width: 120px;
+            height: 120px;
+          }
+          .fq-pullquote p {
+            font-size: 16px;
+          }
         }
       `}</style>
 
-      <div className="fq-wrapper">
-
-        {/* ── LEFT — Real founder photo ── */}
-        <div className="fq-photo-side">
-          <img
-            className="fq-photo-img"
-            src={founderPhoto}
-            alt="Clara Ada Ogbaa, Ed.D. — Founder, JoMabel Healthcare Foundation"
-          />
-          <div className="fq-photo-overlay" />
-          <div className="fq-photo-bottom">
-            <p className="fq-founder-label">Founder & Executive Director</p>
+      <div className="fq-container">
+        
+        {/* LEFT - Small Circular Image */}
+        <div className="fq-image-col">
+          <div className="fq-image-wrap">
+            <img
+              className="fq-image"
+              src={founderPhoto}
+              alt="Clara Ada Ogbaa, Ed.D. — Founder, JoMabel Healthcare Foundation"
+            />
+          </div>
+          <div className="fq-founder-info">
             <h3 className="fq-founder-name">Clara Ada Ogbaa, Ed.D.</h3>
-            <p className="fq-founder-tags">Educator &nbsp;|&nbsp; Humanitarian &nbsp;|&nbsp; Survivor</p>
+            <p className="fq-founder-title">Founder & Executive Director</p>
           </div>
         </div>
-
-        {/* ── RIGHT — Content ── */}
-        <div className="fq-content-side">
-
+        
+        {/* RIGHT - Content */}
+        <div className="fq-content-col">
+          
           <h2 className="fq-heading">
             Born From Faith. Sustained by Grace.<br />
             Built For Purpose.
           </h2>
-
-          {/* Survivor tags */}
+          
+          {/* Survivor Tags */}
           <div className="fq-survivor-tags">
             <span className="fq-survivor-tag" style={{ background: '#FDF2F8', color: '#9D174D', border: '1px solid #FBCFE8' }}>
               Breast Cancer Survivor
@@ -190,31 +171,32 @@ const FounderQuote = () => {
               Kidney Transplant Recipient
             </span>
           </div>
-
-          <p className="fq-intro">
+          
+          <p className="fq-text">
             Clara Ada Ogbaa is a Nigerian-American educator, humanitarian, two-time
             cancer survivor, and kidney transplant recipient. Having experienced
             firsthand the life-saving power of quality healthcare, she made a
-            profound decision — to use her modest retirement savings to bring that
+            profound decision to use her modest retirement savings to bring that
             same standard of care to her hometown of Ufuma, Anambra State, Nigeria.
           </p>
-
+          
           <div className="fq-pullquote">
-            <span className="fq-pullquote-mark-top">"</span>
             <p>
-              Healthcare should never be a privilege reserved for a few.
-              It is a human right — and it is the legacy we are called to leave.
+              "Healthcare should never be a privilege reserved for a few.
+              It is a human right — and it is the legacy we are called to leave."
             </p>
-            <span className="fq-pullquote-mark-bottom">"</span>
+            <div className="fq-pullquote-author">
+              Clara Ada Ogbaa, Ed.D.
+            </div>
           </div>
-
-          <p className="fq-body">
+          
+          <p className="fq-text" style={{ marginBottom: 0 }}>
             What began as one woman's act of personal sacrifice has grown into
             JoMabel Healthcare Foundation — a nonprofit now building a 16,000+ sq. meter
-            medical and training CENTER that will serve thousands of families
+            medical and training center that will serve thousands of families
             for generations to come.
           </p>
-
+          
         </div>
       </div>
     </section>

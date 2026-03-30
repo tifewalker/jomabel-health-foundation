@@ -1,23 +1,6 @@
 import React from 'react';
-
-const HeartIcon = () => (
-  <svg width="38" height="38" viewBox="0 0 24 24" fill="none">
-    <path
-      d="M12 21C12 21 3 14.5 3 8.5C3 5.42 5.42 3 8.5 3C10.24 3 11.8 3.85 12 5C12.2 3.85 13.76 3 15.5 3C18.58 3 21 5.42 21 8.5C21 14.5 12 21 12 21Z"
-      stroke="var(--color-primary-dark)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
-    />
-  </svg>
-);
-
-const EyeIcon = () => (
-  <svg width="38" height="38" viewBox="0 0 24 24" fill="none">
-    <path
-      d="M12 5C7 5 2.73 8.11 1 12.5C2.73 16.89 7 20 12 20C17 20 21.27 16.89 23 12.5C21.27 8.11 17 5 12 5Z"
-      stroke="var(--color-primary-dark)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"
-    />
-    <circle cx="12" cy="12.5" r="3" stroke="var(--color-primary-dark)" strokeWidth="1.6" />
-  </svg>
-);
+import { Heart, Eye } from 'lucide-react';
+import outreachImage from '../../assests/images/outreach5.jpeg';
 
 const MissionVision = () => {
   return (
@@ -31,7 +14,7 @@ const MissionVision = () => {
           align-items: center;
         }
         .mv-container {
-          max-width: 1100px;
+          max-width: 1200px;
           margin: 0 auto;
           width: 100%;
           display: grid;
@@ -42,110 +25,142 @@ const MissionVision = () => {
         .mv-left {
           display: flex;
           flex-direction: column;
-          gap: 28px;
+          gap: 32px;
         }
         .mv-top-label {
-          font-size: 11px;
-          font-weight: 700;
-          color: var(--color-primary-dark);
-          letter-spacing: 0.14em;
+          font-size: 12px;
+          font-weight: 600;
+          color: var(--color-primary);
+          letter-spacing: 0.1em;
           text-transform: uppercase;
-          margin-bottom: 4px;
+          margin-bottom: 8px;
         }
         .mv-heading {
           font-family: var(--font-heading);
-          font-size: clamp(32px, 4.5vw, 48px);
+          font-size: clamp(36px, 4.5vw, 48px);
           font-weight: 700;
           color: var(--color-navy);
-          line-height: 1.15;
-          margin: 0 0 16px;
+          line-height: 1.2;
+          margin: 0 0 20px 0;
         }
-        .mv-who-intro {
-          font-size: 15px;
+        .mv-description {
+          font-size: 16px;
           color: var(--color-text-muted);
-          line-height: 1.8;
+          line-height: 1.6;
           margin: 0;
-          max-width: 420px;
+          max-width: 480px;
         }
         .mv-card {
           background: var(--color-surface);
-          border-radius: var(--card-radius);
-          border-left: 4px solid var(--color-primary);
-          padding: 24px 24px 24px 20px;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
+          border-radius: 16px;
+          padding: 24px;
+          transition: all 0.2s;
+          border: 1px solid var(--color-border);
+        }
+        .mv-card:hover {
+          box-shadow: var(--shadow-md);
+          border-color: var(--color-primary-light);
         }
         .mv-card-header {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 14px;
+          margin-bottom: 12px;
         }
         .mv-icon-wrap {
-          width: 48px;
-          height: 48px;
-          border-radius: 12px;
+          width: 52px;
+          height: 52px;
+          border-radius: 14px;
           background-color: var(--color-primary-light);
           display: flex;
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
+          color: var(--color-primary);
+        }
+        .mv-icon-wrap svg {
+          width: 26px;
+          height: 26px;
+          stroke-width: 1.8;
         }
         .mv-card-title {
           font-family: var(--font-heading);
-          font-size: 20px;
+          font-size: 22px;
           font-weight: 700;
           color: var(--color-navy);
           margin: 0;
         }
         .mv-card-text {
-          font-size: 14px;
+          font-size: 15px;
           color: var(--color-text-muted);
-          line-height: 1.8;
+          line-height: 1.6;
           margin: 0;
+        }
+        .mv-image-wrapper {
+          position: relative;
         }
         .mv-image {
           width: 100%;
-          height: 520px;
+          height: auto;
+          min-height: 480px;
           object-fit: cover;
-          border-radius: 20px;
+          border-radius: 24px;
           display: block;
           box-shadow: var(--shadow-lg);
         }
 
-        @media (max-width: 860px) {
+        @media (max-width: 900px) {
           .mv-container {
             grid-template-columns: 1fr;
-            gap: 40px;
+            gap: 48px;
           }
-          .mv-image { height: 320px; }
-          .mv-who-intro { max-width: 100%; }
+          .mv-image {
+            min-height: 380px;
+          }
+          .mv-description {
+            max-width: 100%;
+          }
         }
-        @media (max-width: 480px) {
-          .mv-heading { font-size: 32px; }
-          .mv-image { height: 260px; }
+        @media (max-width: 600px) {
+          .mv-heading {
+            font-size: 32px;
+          }
+          .mv-image {
+            min-height: 280px;
+          }
+          .mv-card {
+            padding: 20px;
+          }
+          .mv-card-title {
+            font-size: 20px;
+          }
         }
       `}</style>
 
       <div className="mv-container">
 
-        {/* ── Left Column ── */}
+        {/* Left Column */}
         <div className="mv-left">
           <div>
             <p className="mv-top-label">Who We Are</p>
-            <h2 className="mv-heading">Compassionate Care.<br />Built to Last.</h2>
-            <p className="mv-who-intro">
-              JoMabel Healthcare Foundation is a nonprofit organization dedicated to
-              expanding access to compassionate, high-quality healthcare for underserved
-              communities in Nigeria and beyond. We believe that every person deserves
-              dignity, wellness, and the opportunity to live a healthy life.
+            <h2 className="mv-heading">
+              Compassionate Care.<br />
+              Built to Last.
+            </h2>
+            <p className="mv-description">
+              JoMabel Healthcare Foundation is dedicated to expanding access to compassionate, 
+              high-quality healthcare for underserved communities in southeastern Nigeria. 
+              We believe that every person deserves dignity, wellness, and the opportunity 
+              to live a healthy life.
             </p>
           </div>
 
           {/* Mission Card */}
           <div className="mv-card">
             <div className="mv-card-header">
-              <div className="mv-icon-wrap"><HeartIcon /></div>
+              <div className="mv-icon-wrap">
+                <Heart />
+              </div>
               <h3 className="mv-card-title">Our Mission</h3>
             </div>
             <p className="mv-card-text">
@@ -155,26 +170,27 @@ const MissionVision = () => {
             </p>
           </div>
 
-          {/* Vision Card — "geography" changed to "location" per board request */}
+          {/* Vision Card */}
           <div className="mv-card">
             <div className="mv-card-header">
-              <div className="mv-icon-wrap"><EyeIcon /></div>
+              <div className="mv-icon-wrap">
+                <Eye />
+              </div>
               <h3 className="mv-card-title">Our Vision</h3>
             </div>
             <p className="mv-card-text">
-              A world where every person regardless of location, income, or social
-              status has access to dignified, life-saving healthcare, supported by
-              empowered communities, trained local professionals, and sustainable
-              health infrastructure.
+              A world where every person — regardless of location, income, or social status — 
+              has access to dignified, life-saving healthcare, supported by empowered communities, 
+              trained local professionals, and sustainable health infrastructure.
             </p>
           </div>
         </div>
 
-        {/* ── Right Column: Image ── */}
-        <div>
+        {/* Right Column: Authentic Image */}
+        <div className="mv-image-wrapper">
           <img
-            src="https://images.unsplash.com/photo-1584515933487-779824d29309?w=800&q=80"
-            alt="Healthcare worker with community"
+            src={outreachImage}
+            alt="JoMabel Healthcare Foundation community outreach in southeastern Nigeria"
             className="mv-image"
           />
         </div>

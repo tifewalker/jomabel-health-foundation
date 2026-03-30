@@ -1,164 +1,165 @@
 import React from 'react';
-
-const stats = [
-  { number: '70%',   label: 'of rural Nigerians',          sub: 'lack access to basic healthcare' },
-  { number: '1:5000', label: 'Doctor-to-patient ratio',    sub: 'in rural Southeast Nigeria' },
-  { number: '80km+', label: 'Average distance traveled',   sub: 'to reach the nearest specialist' },
-  { number: '#6',    label: 'Nigeria ranks',               sub: 'among highest maternal death rates globally' },
-];
+import { Users, Stethoscope, Navigation, Baby } from 'lucide-react';
 
 const TheProblem = () => (
-  <section style={{
-    backgroundColor: '#F9FAFB',
-    padding: 'var(--section-padding-y) var(--section-padding-x)',
-    fontFamily: 'var(--font-body)',
-  }}>
+  <section className="problem-section">
     <style>{`
-      .problem-inner {
-        max-width: 1080px;
+      .problem-section {
+        background-color: #FFFFFF;
+        padding: 80px clamp(20px, 5vw, 48px);
+        font-family: var(--font-body);
+      }
+      .problem-container {
+        max-width: 1100px;
         margin: 0 auto;
+        text-align: center;
       }
-      .problem-top {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 64px;
-        align-items: start;
-        margin-bottom: 56px;
+      
+      /* Headline */
+      .problem-headline {
+        font-family: var(--font-heading);
+        font-size: clamp(36px, 5vw, 52px);
+        font-weight: 700;
+        color: #111827;
+        line-height: 1.2;
+        margin-bottom: 20px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
       }
-      .problem-stats {
+      
+      /* Description */
+      .problem-description {
+        font-size: 18px;
+        color: #4B5563;
+        line-height: 1.6;
+        max-width: 700px;
+        margin: 0 auto 48px auto;
+      }
+      
+      /* Stats Grid — 4 columns with icons */
+      .stats-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
-        margin-bottom: 48px;
+        gap: 32px;
+        max-width: 1000px;
+        margin: 0 auto;
       }
-      .problem-stat-card {
-        background: #F9FAFB;
-        border: 1px solid #E5E7EB;
-        border-top: 3px solid #1D8FD4;
-        border-radius: 12px;
-        padding: 24px 18px;
-        transition: box-shadow 0.2s;
+      
+      .stat-card {
+        text-align: center;
       }
-      .problem-stat-card:hover {
-        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      
+      .stat-icon {
+        width: 64px;
+        height: 64px;
+        margin: 0 auto 20px auto;
+        background: #F3F4F6;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #1D8FD4;
       }
-      .problem-quote {
-        background: #F0F9FF;
-        border-left: 4px solid #1D8FD4;
-        border-radius: 0 12px 12px 0;
-        padding: 24px 28px;
-        max-width: 780px;
+      
+      .stat-icon svg {
+        width: 32px;
+        height: 32px;
+        stroke-width: 1.5;
       }
-
-      @media (max-width: 860px) {
-        .problem-top { grid-template-columns: 1fr; gap: 32px; }
-        .problem-stats { grid-template-columns: repeat(2, 1fr); }
+      
+      .stat-number {
+        font-family: var(--font-heading);
+        font-size: clamp(28px, 4vw, 42px);
+        font-weight: 800;
+        color: #111827;
+        margin: 0 0 8px 0;
+        line-height: 1.2;
       }
-      @media (max-width: 480px) {
-        .problem-stats { grid-template-columns: 1fr 1fr; gap: 12px; }
-        .problem-quote { padding: 18px 20px; }
+      
+      .stat-label {
+        font-size: 14px;
+        color: #6B7280;
+        margin: 0;
+        line-height: 1.4;
       }
-      @media (max-width: 360px) {
-        .problem-stats { grid-template-columns: 1fr; }
+      
+      /* Responsive */
+      @media (max-width: 900px) {
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 40px;
+        }
+        .problem-description {
+          font-size: 16px;
+          margin-bottom: 48px;
+        }
+      }
+      
+      @media (max-width: 550px) {
+        .stats-grid {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+        .problem-headline {
+          font-size: 28px;
+        }
+        .problem-description {
+          font-size: 15px;
+        }
       }
     `}</style>
 
-    <div className="problem-inner">
-
-      {/* Top — label + heading left, description right */}
-      <div className="problem-top">
-        <div>
-          <span style={{
-            display: 'inline-block',
-            background: '#EBF5FB',
-            color: '#1D8FD4',
-            fontSize: '11px', fontWeight: '700',
-            letterSpacing: '0.14em', textTransform: 'uppercase',
-            padding: '5px 14px', borderRadius: '999px',
-            marginBottom: '18px',
-          }}>
-            The Problem
-          </span>
-          <h2 style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: 'clamp(26px, 3.5vw, 40px)',
-            fontWeight: '700', color: '#111827',
-            lineHeight: '1.2', margin: 0,
-          }}>
-            A Healthcare Crisis Hidden<br />in Plain Sight
-          </h2>
-        </div>
-
-        <div style={{ paddingTop: '8px' }}>
-          <p style={{
-            fontSize: 'clamp(14px, 1.5vw, 16px)',
-            color: '#4B5563',
-            lineHeight: '1.85', margin: '0 0 16px',
-          }}>
-            In Ufuma, Anambra State, and across rural Southeast Nigeria, millions of
-            people live without reliable access to quality healthcare. Hospitals are
-            distant, understaffed, and under-equipped. Preventable diseases claim
-            lives every day.
-          </p>
-          <p style={{
-            fontSize: 'clamp(14px, 1.5vw, 16px)',
-            color: '#4B5563',
-            lineHeight: '1.85', margin: 0,
-          }}>
-            Mothers die in childbirth from conditions that are entirely treatable.
-            Children grow up without basic vaccinations. Elderly patients travel
-            hours by road to reach a doctor. This is not a distant statistic —
-            it is the daily reality of an entire region that deserves better.
-          </p>
-        </div>
-      </div>
-
-      {/* Stats */}
-      <div className="problem-stats">
-        {stats.map((s, i) => (
-          <div key={i} className="problem-stat-card">
-            <p style={{
-              fontFamily: 'var(--font-heading)',
-              color: '#1D8FD4',
-              fontSize: 'clamp(24px, 3vw, 36px)',
-              fontWeight: '800', margin: '0 0 6px',
-            }}>{s.number}</p>
-            <p style={{
-              color: '#111827',
-              fontSize: '13px', fontWeight: '700',
-              margin: '0 0 4px', lineHeight: '1.4',
-            }}>{s.label}</p>
-            <p style={{
-              color: '#6B7280',
-              fontSize: '12px', margin: 0, lineHeight: '1.5',
-            }}>{s.sub}</p>
+    <div className="problem-container">
+      
+      {/* Headline */}
+      <h2 className="problem-headline">
+        Healthcare Access Is Not a Reality<br />
+        for Millions in Nigeria
+      </h2>
+      
+      {/* Description */}
+      <p className="problem-description">
+        In rural southeastern Nigeria, families face impossible choices between food and medical care. 
+        Geographic barriers, inadequate infrastructure, and economic hardship leave entire communities 
+        without access to basic healthcare.
+      </p>
+      
+      {/* Stats Grid with Icons */}
+      <div className="stats-grid">
+        <div className="stat-card">
+          <div className="stat-icon">
+            <Users />
           </div>
-        ))}
+          <div className="stat-number">70%</div>
+          <div className="stat-label">of rural Nigerians lack access to basic healthcare</div>
+        </div>
+        
+        <div className="stat-card">
+          <div className="stat-icon">
+            <Stethoscope />
+          </div>
+          <div className="stat-number">1:5000</div>
+          <div className="stat-label">doctor-to-patient ratio in rural Southeast Nigeria</div>
+        </div>
+        
+        <div className="stat-card">
+          <div className="stat-icon">
+            <Navigation />
+          </div>
+          <div className="stat-number">80km+</div>
+          <div className="stat-label">average distance to nearest specialist</div>
+        </div>
+        
+        <div className="stat-card">
+          <div className="stat-icon">
+            <Baby />
+          </div>
+          <div className="stat-number">#6</div>
+          <div className="stat-label">Nigeria ranks among highest maternal death rates globally</div>
+        </div>
       </div>
-
-      {/* Pull quote */}
-      <div className="problem-quote">
-        <p style={{
-          fontFamily: 'var(--font-heading)',
-          fontSize: 'clamp(15px, 1.8vw, 19px)',
-          fontStyle: 'italic',
-          color: '#111827',
-          lineHeight: '1.7', margin: '0 0 12px',
-        }}>
-          "The people of Ufuma do not lack the will to be healthy — they lack the
-          infrastructure, the access, and the systems that make healthcare possible.
-          That is what JoMabel Healthcare Foundation exists to build."
-        </p>
-        <p style={{
-          color: '#1D8FD4',
-          fontSize: '12px', fontWeight: '700',
-          margin: 0, letterSpacing: '0.06em',
-          textTransform: 'uppercase',
-        }}>
-          — Clara Ada Ogbaa, Founder & Executive Director
-        </p>
-      </div>
-
+      
     </div>
   </section>
 );

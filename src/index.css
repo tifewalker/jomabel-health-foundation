@@ -40,6 +40,7 @@
   /* Typography */
   --font-heading:         'Playfair Display', Georgia, serif;
   --font-body:            'Inter', 'Segoe UI', sans-serif;
+  --font-subtitle:        'Inter', sans-serif;  /* NEW: dedicated subtitle font */
 
   /* Spacing */
   --section-padding-y:    clamp(56px, 7vw, 100px);
@@ -71,6 +72,7 @@ html {
 body {
   font-family: var(--font-body);
   font-size: 16px;
+  font-weight: 400;  /* Explicit regular weight for better readability */
   color: var(--color-text);
   background-color: var(--color-bg);
   -webkit-font-smoothing: antialiased;
@@ -82,6 +84,26 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   color: var(--color-navy);
   line-height: 1.2;
+  font-weight: 700;
+}
+
+/* ── SUBTITLE & SECONDARY TEXT STYLES ── */
+.subtitle,
+.hero-subtitle,
+.section-description,
+.lead-text {
+  font-family: var(--font-subtitle);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* Hero specific subtitle — lighter and cleaner */
+.hero-subtitle {
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: -0.2px;
 }
 
 img {
@@ -92,6 +114,11 @@ img {
 a {
   color: var(--color-primary);
   text-decoration: none;
+  transition: var(--transition);
+}
+
+a:hover {
+  color: var(--color-primary-dark);
 }
 
 /* ── GLOBAL BUTTON STYLES ── */
@@ -184,4 +211,23 @@ a {
 }
 .donation-card {
   box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+}
+
+/* ── RESPONSIVE TYPOGRAPHY ADJUSTMENTS ── */
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+  
+  .subtitle,
+  .hero-subtitle,
+  .section-description {
+    letter-spacing: -0.2px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
 }

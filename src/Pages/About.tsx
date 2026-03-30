@@ -3,6 +3,7 @@ import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Testimonies from '../components/sections/Testimonies';
 import FounderQuote from '../components/sections/FounderQuote';
+import { Heart, Eye, Target, Shield, Users, Lightbulb, HandHeart } from 'lucide-react';
 import logo from '../assests/images/logo.jpeg';
 import logo2 from '../assests/images/logo2.png';
 import logo3 from '../assests/images/logo3.png';
@@ -247,7 +248,7 @@ const AboutHero = () => (
         <h1 className="about-hero-h1">About Us</h1>
         <p style={{ fontSize: '14px', color: '#4B5563', lineHeight: '1.8', maxWidth: '360px' }}>
           JoMabel Healthcare Foundation is a faith-guided, U.S.-based nonprofit
-          developing a world-class 16,000+ sq. meter medical and training CENTER
+          developing a world-class 16,000+ sq. meter medical and training center
           in Ufuma, Anambra State, Nigeria.
         </p>
       </div>
@@ -298,15 +299,15 @@ const HistorySection = () => (
         </p>
         <p style={{ fontSize: '14px', color: '#4B5563', lineHeight: '1.85', margin: 0 }}>
           Today, JoMabel Healthcare Foundation stands as a testament to vision,
-          legacy, and sustained commitment a bridge between past and future,
+          legacy, and sustained commitment — a bridge between past and future,
           tradition and innovation, compassion and strategic action.
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '8px' }}>
           {[
             'Founded with small-scale medical missions and grassroots outreach',
-            'Expanded into fully operational medical CENTER in Ufuma',
+            'Expanded into fully operational medical center in Ufuma',
             'Launched youth training, maternal health & community education programs',
-            'Now developing 16,000+ sq. meter medical & training CENTER',
+            'Now developing 16,000+ sq. meter medical & training center',
           ].map((item, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
               <div style={{
@@ -327,13 +328,13 @@ const HistorySection = () => (
 
 // ─── CORE VALUES ─────────────────────────────────────────────────────────────
 const coreValues = [
-  { icon: '🤲', title: 'Dignity',               desc: 'Every human being deserves respectful, compassionate care.' },
-  { icon: '⚖️', title: 'Equity',                desc: 'We prioritize communities historically excluded from quality healthcare.' },
-  { icon: '🌿', title: 'Service',               desc: 'We serve with humility, excellence, and a commitment to healing.' },
-  { icon: '♻️', title: 'Sustainability',         desc: 'We build systems that last beyond individual projects.' },
-  { icon: '🔍', title: 'Integrity',             desc: 'We steward resources with transparency and accountability.' },
-  { icon: '🌍', title: 'Community Empowerment', desc: 'We invest in local leadership, youth, and families.' },
-  { icon: '💡', title: 'Innovation',            desc: 'We embrace modern solutions to long-standing healthcare challenges.' },
+  { icon: HandHeart, title: 'Dignity', desc: 'Every human being deserves respectful, compassionate care.' },
+  { icon: Shield, title: 'Equity', desc: 'We prioritize communities historically excluded from quality healthcare.' },
+  { icon: Heart, title: 'Service', desc: 'We serve with humility, excellence, and a commitment to healing.' },
+  { icon: Target, title: 'Sustainability', desc: 'We build systems that last beyond individual projects.' },
+  { icon: Shield, title: 'Integrity', desc: 'We steward resources with transparency and accountability.' },
+  { icon: Users, title: 'Community Empowerment', desc: 'We invest in local leadership, youth, and families.' },
+  { icon: Lightbulb, title: 'Innovation', desc: 'We embrace modern solutions to long-standing healthcare challenges.' },
 ];
 
 const CoreValues = () => (
@@ -351,13 +352,18 @@ const CoreValues = () => (
       </h2>
     </div>
     <div className="values-grid">
-      {coreValues.map((v, i) => (
-        <div key={i} className="value-card">
-          <div style={{ fontSize: '28px', marginBottom: '12px' }}>{v.icon}</div>
-          <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '15px', fontWeight: '700', color: '#111827', margin: '0 0 8px' }}>{v.title}</h3>
-          <p style={{ fontSize: '13px', color: '#4B5563', lineHeight: '1.7', margin: 0 }}>{v.desc}</p>
-        </div>
-      ))}
+      {coreValues.map((v, i) => {
+        const IconComponent = v.icon;
+        return (
+          <div key={i} className="value-card">
+            <div style={{ marginBottom: '12px', color: '#1D8FD4' }}>
+              <IconComponent size={32} />
+            </div>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '15px', fontWeight: '700', color: '#111827', margin: '0 0 8px' }}>{v.title}</h3>
+            <p style={{ fontSize: '13px', color: '#4B5563', lineHeight: '1.7', margin: 0 }}>{v.desc}</p>
+          </div>
+        );
+      })}
     </div>
   </section>
 );
@@ -374,7 +380,7 @@ const MissionVisionSection = () => (
         Our Purpose
       </span>
       <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: '700', color: '#111827', margin: '12px 0 0' }}>
-        Mission &amp; Vision
+        Mission & Vision
       </h2>
     </div>
 
@@ -382,8 +388,8 @@ const MissionVisionSection = () => (
       {/* Mission */}
       <div style={{ paddingRight: '48px' }}>
         <div style={{ border: '1px solid #E5E7EB', borderRadius: '12px', padding: '28px', borderLeft: '4px solid #1D8FD4', backgroundColor: '#ffffff', boxShadow: '0 1px 6px rgba(0,0,0,0.06)' }}>
-          <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#EBF5FB', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px' }}>
-            <span style={{ fontSize: '20px' }}>🎯</span>
+          <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#EBF5FB', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px', color: '#1D8FD4' }}>
+            <Target size={26} />
           </div>
           <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', fontWeight: '700', color: '#111827', marginBottom: '12px' }}>Our Mission</h3>
           <p style={{ fontSize: '14px', color: '#4B5563', lineHeight: '1.8', margin: 0 }}>
@@ -399,14 +405,13 @@ const MissionVisionSection = () => (
       {/* Vision */}
       <div style={{ paddingLeft: '48px' }}>
         <div style={{ border: '1px solid #E5E7EB', borderRadius: '12px', padding: '28px', borderRight: '4px solid #16A34A', backgroundColor: '#ffffff', boxShadow: '0 1px 6px rgba(0,0,0,0.06)' }}>
-          <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#DCFCE7', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px' }}>
-            <span style={{ fontSize: '20px' }}>🌍</span>
+          <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#DCFCE7', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '16px', color: '#16A34A' }}>
+            <Eye size={26} />
           </div>
           <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '18px', fontWeight: '700', color: '#111827', marginBottom: '12px' }}>Our Vision</h3>
-          {/* "geography" → "location" per board feedback */}
           <p style={{ fontSize: '14px', color: '#4B5563', lineHeight: '1.8', margin: 0 }}>
-            A world where every person regardless of location, income, or social
-            status has access to dignified, life-saving healthcare, supported by
+            A world where every person — regardless of location, income, or social
+            status — has access to dignified, life-saving healthcare, supported by
             empowered communities, trained local professionals, and sustainable
             health infrastructure.
           </p>
@@ -414,7 +419,7 @@ const MissionVisionSection = () => (
       </div>
     </div>
 
-    {/* ── CENTER LOGOS — replaces credentials section ── */}
+    {/* Center Logos */}
     <div className="center-logos-wrap">
       <span style={{
         display: 'inline-block', background: '#EBF5FB', color: '#1D8FD4',
@@ -428,29 +433,22 @@ const MissionVisionSection = () => (
         Two Facilities. One Integrated Vision.
       </h3>
       <p style={{ fontSize: '14px', color: '#6B7280', lineHeight: '1.75', maxWidth: '480px', margin: '0 auto 0' }}>
-        The JoMabel Medical CENTER and the Skill Acquisition &amp; Training CENTER 
+        The JoMabel Medical Center and the Skill Acquisition & Training Center 
         together forming a world-class healthcare campus in Ufuma, Anambra State.
       </p>
       <div className="center-logos-grid">
         <div className="center-logo-card">
           <img src={logo2} alt="JoMabel Medical Center" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
-          <p style={{ fontSize: '13px', fontWeight: '700', color: '#111827', margin: 0 }}>JoMabel Medical CENTER</p>
+          <p style={{ fontSize: '13px', fontWeight: '700', color: '#111827', margin: 0 }}>JoMabel Medical Center</p>
           <p style={{ fontSize: '12px', color: '#6B7280', margin: 0 }}>6,000 sqm · 70% Complete</p>
         </div>
         <div className="center-logo-card">
           <img src={logo3} alt="JoMabel Skills & Training Center" style={{ width: '100%', height: 'auto', objectFit: 'contain' }} />
-          <p style={{ fontSize: '13px', fontWeight: '700', color: '#111827', margin: 0 }}>Skill Acquisition &amp; Training CENTER</p>
+          <p style={{ fontSize: '13px', fontWeight: '700', color: '#111827', margin: 0 }}>Skill Acquisition & Training Center</p>
           <p style={{ fontSize: '12px', color: '#6B7280', margin: 0 }}>10,000 sqm · 30% Complete</p>
         </div>
       </div>
     </div>
-
-    {/* ── CREDENTIALS — commented out until available ──
-    <div className="credentials-wrap">
-      <h3>Registration & Credentials</h3>
-      <p>Credential logos and registration details to be added.</p>
-    </div>
-    */}
   </section>
 );
 
@@ -484,10 +482,7 @@ const OurTeam = () => (
       {boardMembers.map((m, i) => (
         <div key={i} className="team-card">
           <div className="team-photo-placeholder">
-            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" opacity="0.3">
-              <circle cx="12" cy="8" r="4" stroke="#6B7280" strokeWidth="1.5"/>
-              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round"/>
-            </svg>
+            <Users size={36} color="#9CA3AF" />
           </div>
           <div style={{ padding: '16px 16px 18px' }}>
             <p style={{ fontFamily: 'var(--font-heading)', fontSize: '14px', fontWeight: '700', color: '#111827', margin: '0 0 4px' }}>
@@ -500,7 +495,6 @@ const OurTeam = () => (
         </div>
       ))}
     </div>
-    
   </section>
 );
 

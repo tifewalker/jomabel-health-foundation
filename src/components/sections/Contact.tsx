@@ -1,193 +1,433 @@
 import React, { useState } from "react";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
+
+// ── Your authentic images ──
+import outreachImage from '../../assests/images/outreach2.jpeg';
+import maternalImage from '../../assests/images/maternal-and-child-health-.jpg';
 
 const Contact = () => {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>): void => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission here
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 3000);
+  };
+
   return (
-    <section className="contact-section">
+    <div className="contact-page">
       <style>{`
-        .contact-section {
+        .contact-page {
           font-family: var(--font-body);
-          background-color: var(--color-bg);
+          background-color: #FFFFFF;
         }
-        .contact-heading-wrap {
+        
+        /* Hero Section with Image */
+        .contact-hero {
+          position: relative;
+          height: 50vh;
+          min-height: 380px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           text-align: center;
-          padding: clamp(36px, 5vw, 56px) clamp(16px, 4vw, 24px) clamp(28px, 4vw, 40px);
+          overflow: hidden;
         }
-        .contact-top-label {
-          font-size: 11px;
-          font-weight: 700;
-          color: var(--color-primary-dark);
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          margin-bottom: 10px;
+        .contact-hero-image {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
         }
-        .contact-heading-wrap h2 {
+        .contact-hero-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%);
+        }
+        .contact-hero-content {
+          position: relative;
+          z-index: 2;
+          max-width: 800px;
+          padding: 0 24px;
+        }
+        .contact-hero h1 {
           font-family: var(--font-heading);
-          font-size: clamp(22px, 4vw, 32px);
+          font-size: clamp(36px, 5vw, 52px);
           font-weight: 700;
-          color: var(--color-navy);
-          margin-bottom: 14px;
+          color: #ffffff;
+          line-height: 1.2;
+          margin-bottom: 20px;
         }
-        .contact-heading-wrap p {
-          font-size: clamp(13px, 2vw, 14.5px);
-          color: var(--color-text-muted);
-          line-height: 1.75;
-          max-width: 560px;
+        .contact-hero p {
+          font-size: 18px;
+          color: rgba(255,255,255,0.9);
+          line-height: 1.6;
+          max-width: 600px;
           margin: 0 auto;
+        }
+        
+        /* Contact Grid */
+        .contact-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 64px clamp(20px, 5vw, 48px);
         }
         .contact-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 0;
-          max-width: 1000px;
-          margin: 0 auto clamp(40px, 6vw, 64px);
-          border-radius: 16px;
-          overflow: hidden;
-          box-shadow: var(--shadow-lg);
+          gap: 48px;
         }
-
-        /* ── LEFT — form panel ── */
-        .contact-left {
-          background: linear-gradient(160deg, var(--color-navy) 0%, var(--color-navy-mid) 60%, var(--color-primary-dark) 100%);
-          padding: clamp(24px, 4vw, 36px) clamp(20px, 3vw, 32px);
+        
+        /* Left Column - Contact Info */
+        .contact-info {
+          background: #F9FAFB;
+          border-radius: 28px;
+          padding: 40px;
         }
-        .contact-left-label {
-          color: rgba(255,255,255,0.80);
-          font-size: 14px;
+        .info-header {
+          margin-bottom: 32px;
+        }
+        .info-label {
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #1D8FD4;
+          margin-bottom: 12px;
+        }
+        .info-title {
+          font-family: var(--font-heading);
+          font-size: 28px;
+          font-weight: 700;
+          color: #111827;
+          margin-bottom: 12px;
+        }
+        .info-description {
+          font-size: 16px;
+          color: #6B7280;
           line-height: 1.6;
-          margin-bottom: 24px;
-          font-weight: 400;
         }
-        .contact-form-card {
-          background-color: var(--color-white);
-          border-radius: 12px;
-          padding: clamp(20px, 3vw, 28px) clamp(16px, 2.5vw, 24px);
+        
+        .info-details {
           display: flex;
           flex-direction: column;
+          gap: 24px;
+          margin: 32px 0;
+        }
+        .info-item {
+          display: flex;
+          align-items: flex-start;
           gap: 16px;
         }
-        .contact-label {
-          display: block;
-          font-size: 12px;
-          font-weight: 600;
-          color: var(--color-text);
-          margin-bottom: 6px;
-        }
-        .contact-input {
-          width: 100%;
-          padding: 10px 12px;
-          border: 1px solid var(--color-border);
-          border-radius: 8px;
-          font-size: 13.5px;
-          color: var(--color-text);
-          outline: none;
-          box-sizing: border-box;
-          background-color: var(--color-white);
-          font-family: inherit;
-          transition: var(--transition);
-        }
-        .contact-input:focus {
-          border-color: var(--color-primary);
-          box-shadow: 0 0 0 3px rgba(41,197,246,0.12);
-        }
-        .contact-send-btn {
-          background-color: var(--color-primary-dark);
-          color: var(--color-white);
-          border: none;
-          border-radius: var(--btn-radius);
-          padding: 14px;
-          font-size: 14px;
-          font-weight: 700;
-          cursor: pointer;
-          width: 100%;
-          letter-spacing: 0.02em;
-          font-family: inherit;
-          transition: var(--transition);
-        }
-        .contact-send-btn:hover {
-          background-color: var(--color-navy);
-          transform: translateY(-1px);
-        }
-
-        /* ── RIGHT — info panel ── */
-        .contact-right {
-          background-color: var(--color-white);
-          padding: clamp(24px, 4vw, 36px) clamp(20px, 3vw, 32px);
-          display: flex;
-          flex-direction: column;
-          gap: 20px;
-        }
-        .contact-info-icon {
-          width: 32px;
-          height: 32px;
-          border-radius: 8px;
-          background-color: var(--color-primary-light);
+        .info-icon {
+          width: 48px;
+          height: 48px;
+          background: #EFF6FF;
+          border-radius: 16px;
           display: flex;
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
+          color: #1D8FD4;
         }
-        .contact-email-link {
-          font-size: 13px;
-          color: var(--color-text-muted);
+        .info-icon svg {
+          width: 24px;
+          height: 24px;
+        }
+        .info-content h4 {
+          font-size: 16px;
+          font-weight: 700;
+          color: #111827;
+          margin: 0 0 4px 0;
+        }
+        .info-content p, .info-content a {
+          font-size: 14px;
+          color: #6B7280;
           text-decoration: none;
-          transition: var(--transition);
+          transition: color 0.2s;
+          margin: 0;
+          line-height: 1.5;
         }
-        .contact-email-link:hover { color: var(--color-primary-dark); }
-
-        @media (max-width: 768px) {
+        .info-content a:hover {
+          color: #1D8FD4;
+        }
+        
+        /* Map */
+        .contact-map {
+          margin-top: 32px;
+          border-radius: 20px;
+          overflow: hidden;
+          height: 200px;
+        }
+        .contact-map iframe {
+          width: 100%;
+          height: 100%;
+          border: 0;
+        }
+        
+        /* Right Column - Form */
+        .contact-form-card {
+          background: #FFFFFF;
+          border: 1px solid #E5E7EB;
+          border-radius: 28px;
+          padding: 40px;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+        }
+        .form-header {
+          margin-bottom: 28px;
+        }
+        .form-title {
+          font-family: var(--font-heading);
+          font-size: 24px;
+          font-weight: 700;
+          color: #111827;
+          margin-bottom: 8px;
+        }
+        .form-subtitle {
+          font-size: 14px;
+          color: #6B7280;
+        }
+        
+        .form-group {
+          margin-bottom: 20px;
+        }
+        .form-label {
+          display: block;
+          font-size: 13px;
+          font-weight: 600;
+          color: #374151;
+          margin-bottom: 6px;
+        }
+        .form-input, .form-select, .form-textarea {
+          width: 100%;
+          padding: 12px 14px;
+          border: 1px solid #E5E7EB;
+          border-radius: 12px;
+          font-size: 14px;
+          color: #111827;
+          outline: none;
+          font-family: inherit;
+          transition: all 0.2s;
+          background: #FFFFFF;
+        }
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+          border-color: #1D8FD4;
+          box-shadow: 0 0 0 3px rgba(29,143,212,0.1);
+        }
+        .form-textarea {
+          resize: vertical;
+          min-height: 120px;
+        }
+        
+        .submit-btn {
+          background: #1D8FD4;
+          color: #ffffff;
+          border: none;
+          border-radius: 12px;
+          padding: 14px 28px;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+          font-family: 'Inter', sans-serif;
+          transition: all 0.2s;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          width: 100%;
+          justify-content: center;
+        }
+        .submit-btn:hover {
+          background: #1570A6;
+          transform: translateY(-1px);
+        }
+        
+        .success-message {
+          background: #DCFCE7;
+          color: #166534;
+          padding: 12px 16px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-bottom: 20px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 900px) {
           .contact-grid {
             grid-template-columns: 1fr;
-            margin: 0 clamp(16px, 4vw, 32px) 40px;
-            border-radius: 14px;
+            gap: 32px;
+          }
+          .contact-info, .contact-form-card {
+            padding: 32px;
           }
         }
-        @media (max-width: 480px) {
-          .contact-grid { margin: 0 12px 32px; }
+        @media (max-width: 768px) {
+          .contact-hero {
+            min-height: 320px;
+          }
+          .contact-hero h1 {
+            font-size: 28px;
+          }
+          .contact-hero p {
+            font-size: 16px;
+          }
+          .info-title {
+            font-size: 24px;
+          }
+          .form-title {
+            font-size: 22px;
+          }
+        }
+        @media (max-width: 550px) {
+          .contact-info, .contact-form-card {
+            padding: 24px;
+          }
         }
       `}</style>
 
-      {/* ── Heading ── */}
-      <div className="contact-heading-wrap">
-        <p className="contact-top-label">Get In Touch</p>
-        <h2>We'd Love to Hear From You</h2>
-        <p>
-          Have questions, want to donate, volunteer, or partner with us?
-          Reach out through the form below or contact us directly —
-          we're here to help.
-        </p>
+      {/* Hero Section with Image */}
+      <div className="contact-hero">
+       
+        <div className="contact-hero-overlay" />
+        <div className="contact-hero-content">
+          <h1>Let's Connect</h1>
+          <p>
+            Have questions, want to donate, volunteer, or partner with us? 
+            We'd love to hear from you.
+          </p>
+        </div>
       </div>
 
-      <div className="contact-grid">
+      {/* Contact Grid */}
+      <div className="contact-container">
+        <div className="contact-grid">
 
-        {/* ── LEFT — Form ── */}
-        <div className="contact-left">
-          <p className="contact-left-label">
-            Fill out the form and our team will get back to you as soon as possible.
-          </p>
+          {/* Left Column - Contact Information */}
+          <div className="contact-info">
+            <div className="info-header">
+              <div className="info-label">Get In Touch</div>
+              <h2 className="info-title">Reach Out to Us</h2>
+              <p className="info-description">
+                We're here to answer your questions and discuss how you can be part 
+                of our mission to transform healthcare in Nigeria.
+              </p>
+            </div>
 
+            <div className="info-details">
+              <div className="info-item">
+                <div className="info-icon">
+                  <Mail />
+                </div>
+                <div className="info-content">
+                  <h4>Email Us</h4>
+                  <a href="mailto:info@jomablhf.org">info@jomablhf.org</a>
+                </div>
+              </div>
+
+              <div className="info-item">
+                <div className="info-icon">
+                  <Phone />
+                </div>
+                <div className="info-content">
+                  <h4>Call Us</h4>
+                  <a href="tel:+15125080277">+1 (512) 508-0277</a>
+                </div>
+              </div>
+
+              <div className="info-item">
+                <div className="info-icon">
+                  <MapPin />
+                </div>
+                <div className="info-content">
+                  <h4>Our Location</h4>
+                  <p>Ufuma, Anambra State, Nigeria<br />Texas, United States</p>
+                </div>
+              </div>
+
+              <div className="info-item">
+                <div className="info-icon">
+                  <Clock />
+                </div>
+                <div className="info-content">
+                  <h4>Office Hours</h4>
+                  <p>Monday - Friday: 9:00 AM - 5:00 PM (CST)</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Map */}
+            <div className="contact-map">
+              <iframe
+                title="Ufuma Anambra Nigeria"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15877.834034512345!2d6.985!3d6.034!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1043f3b0b0b0b0b1%3A0x0!2sUfuma%2C%20Anambra%20State%2C%20Nigeria!5e0!3m2!1sen!2sng!4v1700000000000"
+                width="100%" 
+                height="100%"
+                style={{ border: 0, display: 'block' }}
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+          </div>
+
+          {/* Right Column - Form */}
           <div className="contact-form-card">
-            <div>
-              <label className="contact-label">Full Name</label>
-              <input name="name" type="text" placeholder="Your full name"
-                value={form.name} onChange={handleChange} className="contact-input" />
+            <div className="form-header">
+              <h3 className="form-title">Send Us a Message</h3>
+              <p className="form-subtitle">We'll get back to you within 24-48 hours</p>
             </div>
-            <div>
-              <label className="contact-label">Email Address</label>
-              <input name="email" type="email" placeholder="your@email.com"
-                value={form.email} onChange={handleChange} className="contact-input" />
-            </div>
-            <div>
-              <label className="contact-label">Subject</label>
-              <div style={{ position: 'relative' }}>
-                <select name="subject" value={form.subject} onChange={handleChange}
-                  className="contact-input" style={{ appearance: 'none', cursor: 'pointer' }}>
+
+            {submitted && (
+              <div className="success-message">
+                <CheckCircle size={18} />
+                <span>Thank you! Your message has been sent successfully.</span>
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label className="form-label">Full Name</label>
+                <input 
+                  name="name" 
+                  type="text" 
+                  placeholder="Your full name"
+                  value={form.name} 
+                  onChange={handleChange} 
+                  className="form-input" 
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Email Address</label>
+                <input 
+                  name="email" 
+                  type="email" 
+                  placeholder="your@email.com"
+                  value={form.email} 
+                  onChange={handleChange} 
+                  className="form-input" 
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Subject</label>
+                <select 
+                  name="subject" 
+                  value={form.subject} 
+                  onChange={handleChange}
+                  className="form-select" 
+                  required
+                >
                   <option value="">Select a topic</option>
                   <option>General Enquiry</option>
                   <option>Donations</option>
@@ -196,116 +436,30 @@ const Contact = () => {
                   <option>Legacy Giving</option>
                   <option>Media & Press</option>
                 </select>
-                <svg style={{ position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
-                  width="16" height="16" viewBox="0 0 24 24" fill="none">
-                  <path d="M6 9l6 6 6-6" stroke="#6b7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
               </div>
-            </div>
-            <div>
-              <label className="contact-label">Message</label>
-              <textarea name="message" placeholder="Write your message here..." value={form.message}
-                onChange={handleChange} rows={5}
-                className="contact-input" style={{ resize: 'vertical', minHeight: '110px' }} />
-            </div>
 
-            {/* reCAPTCHA placeholder */}
-            <div style={{
-              border: '1px solid var(--color-border)', borderRadius: '8px', padding: '14px 16px',
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              backgroundColor: 'var(--color-surface)',
-            }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <div style={{ width: '20px', height: '20px', border: '2px solid var(--color-border)', borderRadius: '4px', flexShrink: 0 }} />
-                <span style={{ fontSize: '13.5px', color: 'var(--color-text)' }}>I'm not a robot</span>
+              <div className="form-group">
+                <label className="form-label">Message</label>
+                <textarea 
+                  name="message" 
+                  placeholder="Write your message here..." 
+                  value={form.message}
+                  onChange={handleChange} 
+                  className="form-textarea" 
+                  required
+                />
               </div>
-              <div style={{ textAlign: 'center' }}>
-                <div style={{ fontSize: '20px' }}>🔄</div>
-                <div style={{ fontSize: '9px', color: 'var(--color-text-light)', lineHeight: '1.2' }}>reCAPTCHA<br/>Privacy · Terms</div>
-              </div>
-            </div>
 
-            <button className="contact-send-btn">Send Message</button>
-          </div>
-        </div>
-
-        {/* ── RIGHT — Map + Info ── */}
-        <div className="contact-right">
-
-          {/* Map */}
-          <div style={{ borderRadius: '12px', overflow: 'hidden', flexShrink: 0 }}>
-            <iframe
-              title="Ufuma Anambra Nigeria"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15877.834034512345!2d6.985!3d6.034!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1043f3b0b0b0b0b1%3A0x0!2sUfuma%2C%20Anambra%20State%2C%20Nigeria!5e0!3m2!1sen!2sng!4v1700000000000"
-              width="100%" height="200"
-              style={{ border: 0, display: 'block' }}
-              loading="lazy" referrerPolicy="no-referrer-when-downgrade"
-            />
+              <button type="submit" className="submit-btn">
+                Send Message
+                <Send size={16} />
+              </button>
+            </form>
           </div>
 
-          {/* Foundation info */}
-          <div>
-            <h3 style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: '18px', fontWeight: '700',
-              color: 'var(--color-navy)', marginBottom: '4px',
-            }}>
-              JoMabel Healthcare Foundation
-            </h3>
-            <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', marginBottom: '14px' }}>
-              Ufuma, Anambra State, Nigeria &nbsp;·&nbsp; Texas, USA
-            </p>
-            <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', lineHeight: '1.75', marginBottom: '24px' }}>
-              We are committed to improving access to healthcare and community health
-              education. To visit, collaborate, or learn more about our programs,
-              please contact us to schedule an appointment.
-            </p>
-
-            {/* Contact details — real client info */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                <div className="contact-info-icon">
-                  <Mail size={15} color="var(--color-primary-dark)" />
-                </div>
-                <div>
-                  <p style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-navy)', margin: '0 0 2px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Email</p>
-                  <a href="mailto:claraogbaa2022@gmail.com" className="contact-email-link">
-                    claraogbaa2022@gmail.com
-                  </a>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                <div className="contact-info-icon">
-                  <Phone size={15} color="var(--color-primary-dark)" />
-                </div>
-                <div>
-                  <p style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-navy)', margin: '0 0 2px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Phone</p>
-                  <a href="tel:+15125080277" className="contact-email-link">
-                    +1 (512) 508-0277
-                  </a>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
-                <div className="contact-info-icon">
-                  <MapPin size={15} color="var(--color-primary-dark)" />
-                </div>
-                <div>
-                  <p style={{ fontSize: '12px', fontWeight: '700', color: 'var(--color-navy)', margin: '0 0 2px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Location</p>
-                  <p style={{ fontSize: '13px', color: 'var(--color-text-muted)', margin: 0, lineHeight: '1.6' }}>
-                    Ufuma, Anambra State, Nigeria<br />
-                    Texas, United States
-                  </p>
-                </div>
-              </div>
-
-            </div>
-          </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

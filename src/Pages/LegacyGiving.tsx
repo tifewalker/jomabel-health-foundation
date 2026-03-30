@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
+import { ArrowRight, Mail, Phone, Heart, Shield, Star, Check } from 'lucide-react';
 
 import an1 from '../assests/images/an1.jpg';
 import outreach3 from '../assests/images/outreach3.jpeg';
@@ -80,7 +81,7 @@ const legacyStyles = `
     background: #F9FAFB;
   }
 
-  /* ─── MEMORIAL BRICKS — now light ───────────────── */
+  /* ─── MEMORIAL BRICKS ───────────────────────────── */
   .bricks-section {
     background: #ffffff;
     padding: clamp(48px, 6vw, 80px) clamp(20px, 5vw, 64px);
@@ -207,7 +208,7 @@ const LegacyHero = () => {
   const navigate = useNavigate();
   return (
     <section className="legacy-hero">
-      <img src={an1} alt="JoMabel Medical CENTER" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
+      <img src={an1} alt="JoMabel Medical Center" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
       <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, rgba(10,20,55,0.95) 0%, rgba(15,30,70,0.78) 55%, rgba(15,30,70,0.25) 100%)' }} />
       <div className="legacy-hero-content">
         <span style={{ display: 'inline-block', background: 'rgba(41,197,246,0.15)', border: '1px solid rgba(41,197,246,0.35)', color: '#29C5F6', fontSize: '11px', fontWeight: '700', letterSpacing: '0.12em', textTransform: 'uppercase', padding: '5px 16px', borderRadius: '999px', marginBottom: '22px' }}>
@@ -222,10 +223,11 @@ const LegacyHero = () => {
         </p>
         <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
           <button onClick={() => { const el = document.getElementById('legacy-form'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
-            style={{ backgroundColor: '#16A34A', color: '#fff', border: 'none', borderRadius: '8px', padding: '13px 28px', fontSize: '14px', fontWeight: '700', cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.2s' }}
+            style={{ backgroundColor: '#16A34A', color: '#fff', border: 'none', borderRadius: '8px', padding: '13px 28px', fontSize: '14px', fontWeight: '700', cursor: 'pointer', fontFamily: 'inherit', transition: 'all 0.2s', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
             onMouseOver={e => (e.currentTarget.style.backgroundColor = '#15803D')}
             onMouseOut={e => (e.currentTarget.style.backgroundColor = '#16A34A')}>
             Express Your Intent
+            <ArrowRight size={16} />
           </button>
           <button onClick={() => { const el = document.getElementById('naming-section'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
             style={{ backgroundColor: 'rgba(255,255,255,0.10)', color: '#fff', border: '1.5px solid rgba(255,255,255,0.40)', borderRadius: '8px', padding: '13px 28px', fontSize: '14px', fontWeight: '700', cursor: 'pointer', fontFamily: 'inherit', backdropFilter: 'blur(4px)', transition: 'all 0.2s' }}
@@ -258,7 +260,7 @@ const LegacyIntro = () => (
         <p style={{ fontSize: '14px', color: '#4B5563', lineHeight: '1.85', margin: 0 }}>
           By including JoMabel Healthcare Foundation in your estate plans, you
           become part of a living legacy of healing — helping to build and sustain
-          a world-class medical CENTER that will serve thousands of families in
+          a world-class medical center that will serve thousands of families in
           southeastern Nigeria for generations.
         </p>
       </div>
@@ -268,21 +270,24 @@ const LegacyIntro = () => (
           Ways to Give a Legacy Gift
         </span>
         {[
-          { icon: '📜', title: 'Bequest in Your Will or Trust', desc: 'Designate JoMabel Healthcare Foundation as a beneficiary in your will or living trust — a fixed amount, a percentage, or the residue of your estate.' },
-          { icon: '🏦', title: 'Beneficiary Designation', desc: 'Name the foundation as a beneficiary on life insurance policies, retirement accounts (IRA, 401k), or investment accounts.' },
-          { icon: '🤝', title: 'Charitable Gift Annuity', desc: 'Make a gift and receive fixed income payments for life, with the remainder supporting JoMabel\'s mission upon your passing.' },
-          { icon: '🏛️', title: 'Endowment Fund', desc: 'Establish a named endowment in your honor or a loved one\'s — creating a permanent fund whose earnings support our programs in perpetuity.' },
-        ].map((item, i) => (
-          <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '14px' }}>
-            <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: '#EBF5FB', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', flexShrink: 0 }}>
-              {item.icon}
+          { icon: Heart, title: 'Bequest in Your Will or Trust', desc: 'Designate JoMabel Healthcare Foundation as a beneficiary in your will or living trust — a fixed amount, a percentage, or the residue of your estate.' },
+          { icon: Shield, title: 'Beneficiary Designation', desc: 'Name the foundation as a beneficiary on life insurance policies, retirement accounts (IRA, 401k), or investment accounts.' },
+          { icon: Star, title: 'Charitable Gift Annuity', desc: 'Make a gift and receive fixed income payments for life, with the remainder supporting JoMabel\'s mission upon your passing.' },
+          { icon: Heart, title: 'Endowment Fund', desc: 'Establish a named endowment in your honor or a loved one\'s — creating a permanent fund whose earnings support our programs in perpetuity.' },
+        ].map((item, i) => {
+          const IconComponent = item.icon;
+          return (
+            <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '14px' }}>
+              <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: '#EBF5FB', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: '#1D8FD4' }}>
+                <IconComponent size={18} />
+              </div>
+              <div>
+                <p style={{ fontSize: '13.5px', fontWeight: '700', color: '#111827', margin: '0 0 4px' }}>{item.title}</p>
+                <p style={{ fontSize: '12.5px', color: '#4B5563', lineHeight: '1.65', margin: 0 }}>{item.desc}</p>
+              </div>
             </div>
-            <div>
-              <p style={{ fontSize: '13.5px', fontWeight: '700', color: '#111827', margin: '0 0 4px' }}>{item.title}</p>
-              <p style={{ fontSize: '12.5px', color: '#4B5563', lineHeight: '1.65', margin: 0 }}>{item.desc}</p>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   </section>
@@ -291,7 +296,7 @@ const LegacyIntro = () => (
 // ─── NAMING OPPORTUNITIES ─────────────────────────────────────────────────────
 const namingOpportunities = [
   { tier: 'Founding Benefactor', amount: '$250,000+', amountNgn: '₦400M+', color: '#b45309', bg: '#fef3c7', badge: 'Highest Honor',
-    perks: ['Name a major facility or wing of the CENTER', 'Permanent engraved plaque at the main entrance', 'Named in all official foundation publications', 'Invited to the CENTER dedication ceremony', 'Recognized in the Foundation Hall of Honor'] },
+    perks: ['Name a major facility or wing of the center', 'Permanent engraved plaque at the main entrance', 'Named in all official foundation publications', 'Invited to the center dedication ceremony', 'Recognized in the Foundation Hall of Honor'] },
   { tier: 'Legacy Builder', amount: '$100,000+', amountNgn: '₦160M+', color: '#1d4ed8', bg: '#dbeafe', badge: 'Distinguished',
     perks: ['Name a clinic, ward, or training room', 'Engraved recognition plaque in the facility', 'Listed in the foundation\'s annual legacy report', 'Invited to legacy donor events', 'Recognized on the foundation website'] },
   { tier: 'Community Pillar', amount: '$25,000+', amountNgn: '₦40M+', color: '#15803d', bg: '#dcfce7', badge: 'Honored',
@@ -308,7 +313,7 @@ const NamingOpportunities = () => (
         Attach Your Name to a Lasting Legacy
       </h2>
       <p style={{ fontSize: '14px', color: '#4B5563', maxWidth: '560px', margin: '0 auto', lineHeight: '1.75' }}>
-        Honor yourself, a loved one, or someone whose memory you want to preserve — permanently embedded in the story of this CENTER.
+        Honor yourself, a loved one, or someone whose memory you want to preserve — permanently embedded in the story of this center.
       </p>
     </div>
     <div className="naming-grid">
@@ -322,9 +327,7 @@ const NamingOpportunities = () => (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '9px' }}>
               {opp.perks.map((perk, j) => (
                 <div key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: '9px' }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: '2px' }}>
-                    <path d="M20 6L9 17l-5-5" stroke={opp.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
+                  <Check size={14} style={{ flexShrink: 0, marginTop: '2px', color: opp.color }} />
                   <span style={{ fontSize: '12.5px', color: '#4B5563', lineHeight: '1.6' }}>{perk}</span>
                 </div>
               ))}
@@ -344,7 +347,7 @@ const NamingOpportunities = () => (
   </section>
 );
 
-// ─── MEMORIAL BRICKS — light clean design ────────────────────────────────────
+// ─── MEMORIAL BRICKS ──────────────────────────────────────────────────────────
 const brickNames = [
   'In Memory of\nChukwuemeka Eze', 'In Honor of\nDr. & Mrs. Okafor',
   'The Adeyemi\nFamily', '', 'In Memory of\nChioma Nwosu',
@@ -365,13 +368,12 @@ const MemorialBricks = () => (
       </div>
 
       <div className="bricks-grid">
-        {/* Left — text */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <p style={{ color: '#4B5563', fontSize: '14px', lineHeight: '1.85', margin: 0 }}>
             Dedication bricks will be permanently installed in the JoMabel Medical
-            CENTER courtyard and walkways — a living memorial garden where patients,
+            Center courtyard and walkways — a living memorial garden where patients,
             families, and visitors will walk for generations, reading the names of
-            those who made this CENTER possible.
+            those who made this center possible.
           </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {[
@@ -389,14 +391,14 @@ const MemorialBricks = () => (
             ))}
           </div>
           <button onClick={() => { const el = document.getElementById('legacy-form'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
-            style={{ alignSelf: 'flex-start', backgroundColor: '#16A34A', color: '#fff', border: 'none', borderRadius: '8px', padding: '12px 28px', fontSize: '14px', fontWeight: '700', cursor: 'pointer', fontFamily: 'inherit', marginTop: '8px', transition: 'all 0.2s' }}
+            style={{ alignSelf: 'flex-start', backgroundColor: '#16A34A', color: '#fff', border: 'none', borderRadius: '8px', padding: '12px 28px', fontSize: '14px', fontWeight: '700', cursor: 'pointer', fontFamily: 'inherit', marginTop: '8px', transition: 'all 0.2s', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
             onMouseOver={e => (e.currentTarget.style.backgroundColor = '#15803D')}
             onMouseOut={e => (e.currentTarget.style.backgroundColor = '#16A34A')}>
             Dedicate a Brick
+            <ArrowRight size={14} />
           </button>
         </div>
 
-        {/* Right — brick wall preview */}
         <div>
           <p style={{ color: '#9CA3AF', fontSize: '11px', fontWeight: '600', letterSpacing: '0.10em', textTransform: 'uppercase', marginBottom: '16px' }}>
             Preview — Memorial Walkway
@@ -423,10 +425,10 @@ const MemorialBricks = () => (
 
 // ─── CIRCLE OF DIGNITY ────────────────────────────────────────────────────────
 const circleTiers = [
-  { name: 'Platinum Circle', threshold: '$50,000+', thresholdNgn: '₦80M+', color: '#475569', bg: '#f1f5f9', border: '#94a3b8', icon: '⬟', perks: ['Lifetime honorary membership', 'Named in all foundation communications', 'Annual personal briefing from Clara Ada Ogbaa', 'Invited to all major foundation events', 'Prominent recognition on donors wall'] },
-  { name: 'Gold Circle', threshold: '$25,000+', thresholdNgn: '₦40M+', color: '#92400e', bg: '#fef3c7', border: '#d97706', icon: '◈', perks: ['Founding member recognition', 'Named in annual reports', 'Invited to legacy donor reception', 'Quarterly foundation updates', 'Recognition on foundation website'] },
-  { name: 'Silver Circle', threshold: '$10,000+', thresholdNgn: '₦16M+', color: '#1e3a8a', bg: '#dbeafe', border: '#3b82f6', icon: '◇', perks: ['Recognition in annual report', 'Named on legacy donors wall', 'Invited to annual legacy event', 'Regular impact updates', 'Certificate of appreciation'] },
-  { name: 'Dignity Circle', threshold: '$5,000+', thresholdNgn: '₦8M+', color: '#166534', bg: '#dcfce7', border: '#16a34a', icon: '○', perks: ['Legacy donor recognition', 'Named in foundation newsletters', 'Annual update on your impact', 'Certificate of legacy commitment', 'Personal thank-you from Clara Ada Ogbaa'] },
+  { name: 'Platinum Circle', threshold: '$50,000+', thresholdNgn: '₦80M+', color: '#475569', bg: '#f1f5f9', border: '#94a3b8', icon: Star, perks: ['Lifetime honorary membership', 'Named in all foundation communications', 'Annual personal briefing from Clara Ada Ogbaa', 'Invited to all major foundation events', 'Prominent recognition on donors wall'] },
+  { name: 'Gold Circle', threshold: '$25,000+', thresholdNgn: '₦40M+', color: '#92400e', bg: '#fef3c7', border: '#d97706', icon: Star, perks: ['Founding member recognition', 'Named in annual reports', 'Invited to legacy donor reception', 'Quarterly foundation updates', 'Recognition on foundation website'] },
+  { name: 'Silver Circle', threshold: '$10,000+', thresholdNgn: '₦16M+', color: '#1e3a8a', bg: '#dbeafe', border: '#3b82f6', icon: Star, perks: ['Recognition in annual report', 'Named on legacy donors wall', 'Invited to annual legacy event', 'Regular impact updates', 'Certificate of appreciation'] },
+  { name: 'Dignity Circle', threshold: '$5,000+', thresholdNgn: '₦8M+', color: '#166534', bg: '#dcfce7', border: '#16a34a', icon: Heart, perks: ['Legacy donor recognition', 'Named in foundation newsletters', 'Annual update on your impact', 'Certificate of legacy commitment', 'Personal thank-you from Clara Ada Ogbaa'] },
 ];
 
 const CircleOfDignity = () => (
@@ -439,28 +441,31 @@ const CircleOfDignity = () => (
         The Circle of Dignity
       </h2>
       <p style={{ fontSize: '14px', color: '#4B5563', maxWidth: '560px', margin: '0 auto', lineHeight: '1.75' }}>
-        The Circle of Dignity honors those who make a significant commitment to the JoMabel legacy — with lifetime recognition tied to the very CENTER their generosity helped build.
+        The Circle of Dignity honors those who make a significant commitment to the JoMabel legacy — with lifetime recognition tied to the very center their generosity helped build.
       </p>
     </div>
     <div className="cod-tiers">
-      {circleTiers.map((tier, i) => (
-        <div key={i} className="cod-tier" style={{ background: tier.bg, border: `2px solid ${tier.border}` }}>
-          <div style={{ fontSize: '28px', color: tier.color }}>{tier.icon}</div>
-          <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', fontWeight: '700', color: tier.color, margin: 0 }}>{tier.name}</h3>
-          <p style={{ fontSize: 'clamp(15px, 2vw, 20px)', fontWeight: '800', color: tier.color, margin: 0 }}>{tier.threshold}</p>
-          <p style={{ fontSize: '11.5px', color: tier.color, opacity: 0.7, margin: 0 }}>{tier.thresholdNgn}</p>
-          <div style={{ borderTop: `1px solid ${tier.border}`, paddingTop: '12px', marginTop: '4px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {tier.perks.map((perk, j) => (
-              <div key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: '3px' }}>
-                  <path d="M20 6L9 17l-5-5" stroke={tier.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <span style={{ fontSize: '12px', color: '#374151', lineHeight: '1.55' }}>{perk}</span>
-              </div>
-            ))}
+      {circleTiers.map((tier, i) => {
+        const IconComponent = tier.icon;
+        return (
+          <div key={i} className="cod-tier" style={{ background: tier.bg, border: `2px solid ${tier.border}` }}>
+            <div style={{ fontSize: '28px', color: tier.color }}>
+              <IconComponent size={28} />
+            </div>
+            <h3 style={{ fontFamily: 'var(--font-heading)', fontSize: '16px', fontWeight: '700', color: tier.color, margin: 0 }}>{tier.name}</h3>
+            <p style={{ fontSize: 'clamp(15px, 2vw, 20px)', fontWeight: '800', color: tier.color, margin: 0 }}>{tier.threshold}</p>
+            <p style={{ fontSize: '11.5px', color: tier.color, opacity: 0.7, margin: 0 }}>{tier.thresholdNgn}</p>
+            <div style={{ borderTop: `1px solid ${tier.border}`, paddingTop: '12px', marginTop: '4px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {tier.perks.map((perk, j) => (
+                <div key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px' }}>
+                  <Check size={12} style={{ flexShrink: 0, marginTop: '3px', color: tier.color }} />
+                  <span style={{ fontSize: '12px', color: '#374151', lineHeight: '1.55' }}>{perk}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   </section>
 );
@@ -469,9 +474,7 @@ const CircleOfDignity = () => (
 const LegacyQuoteStrip = () => (
   <section className="legacy-quote-strip">
     <div style={{ maxWidth: '760px', margin: '0 auto' }}>
-      <svg width="36" height="28" viewBox="0 0 36 28" fill="none" style={{ marginBottom: '20px', margin: '0 auto 20px' }}>
-        <path d="M0 28V16.8C0 12.2667 1.2 8.4 3.6 5.2C6.06667 1.93333 9.6 0 14.2 0L15.6 3.2C12.9333 3.86667 10.8 5.4 9.2 7.8C7.66667 10.1333 6.9 12.6667 6.9 15.4H13V28H0ZM20.4 28V16.8C20.4 12.2667 21.6 8.4 24 5.2C26.4667 1.93333 30 0 34.6 0L36 3.2C33.3333 3.86667 31.2 5.4 29.6 7.8C28.0667 10.1333 27.3 12.6667 27.3 15.4H33.4V28H20.4Z" fill="#1D8FD4"/>
-      </svg>
+      <Heart size={36} style={{ margin: '0 auto 20px', color: '#1D8FD4' }} />
       <blockquote style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(18px, 3vw, 26px)', fontWeight: '700', color: '#111827', lineHeight: '1.45', fontStyle: 'italic', margin: '0 0 20px' }}>
         "Healthcare should never be a privilege reserved for a few. It is a human right —
         and it is the legacy we are called to leave."
@@ -495,7 +498,7 @@ const LegacyForm = () => {
       <section id="legacy-form" className="legacy-form-section">
         <div style={{ maxWidth: '600px', margin: '0 auto', textAlign: 'center', padding: '40px 20px' }}>
           <div style={{ width: '72px', height: '72px', borderRadius: '50%', background: '#DCFCE7', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="#16A34A" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <Check size={32} color="#16A34A" />
           </div>
           <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '26px', fontWeight: '700', color: '#111827', marginBottom: '14px' }}>Thank You, {form.firstName}.</h2>
           <p style={{ fontSize: '14px', color: '#4B5563', lineHeight: '1.8', marginBottom: '24px' }}>
@@ -525,7 +528,6 @@ const LegacyForm = () => {
         </div>
 
         <div className="legacy-form-grid">
-          {/* Left — form */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
               <div className="form-field">
@@ -575,20 +577,18 @@ const LegacyForm = () => {
               onMouseOver={e => (e.currentTarget.style.backgroundColor = '#1D8FD4')}
               onMouseOut={e => (e.currentTarget.style.backgroundColor = '#111827')}>
               Submit Legacy Intention
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <ArrowRight size={16} />
             </button>
             <p style={{ fontSize: '11.5px', color: '#9CA3AF', textAlign: 'center', margin: 0 }}>
               Your information is confidential and will only be used to follow up on your legacy intentions.
             </p>
           </div>
 
-          {/* Right — photo + what happens next + contact */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             <div style={{ borderRadius: '16px', overflow: 'hidden', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
               <img src={outreach3} alt="JoMabel team" style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} />
             </div>
 
-            {/* What happens next — light */}
             <div style={{ background: '#F0F9FF', border: '1px solid #BAE6FD', borderRadius: '14px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <p style={{ color: '#1D8FD4', fontSize: '11px', fontWeight: '700', letterSpacing: '0.12em', textTransform: 'uppercase', margin: 0 }}>
                 What Happens Next
@@ -606,16 +606,15 @@ const LegacyForm = () => {
               ))}
             </div>
 
-            {/* Direct contact */}
             <div style={{ border: '1px solid #E5E7EB', borderRadius: '14px', padding: '24px', display: 'flex', flexDirection: 'column', gap: '12px', background: '#ffffff' }}>
               <p style={{ fontSize: '13px', fontWeight: '700', color: '#111827', margin: 0 }}>Prefer to speak directly?</p>
               <p style={{ fontSize: '13px', color: '#4B5563', lineHeight: '1.7', margin: 0 }}>Clara Ada Ogbaa welcomes personal conversations about legacy giving.</p>
               <a href="mailto:claraogbaa2022@gmail.com" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#1D8FD4', fontSize: '13px', fontWeight: '600', textDecoration: 'none' }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" strokeWidth="1.5"/><path d="M22 6l-10 7L2 6" stroke="currentColor" strokeWidth="1.5"/></svg>
+                <Mail size={14} />
                 claraogbaa2022@gmail.com
               </a>
               <a href="tel:+15125080277" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#1D8FD4', fontSize: '13px', fontWeight: '600', textDecoration: 'none' }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.5 12 19.79 19.79 0 01.47 3.36 2 2 0 012.45 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.4a16 16 0 006.29 6.29l.79-.79a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="1.5"/></svg>
+                <Phone size={14} />
                 +1 (512) 508-0277
               </a>
             </div>

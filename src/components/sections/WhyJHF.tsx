@@ -1,128 +1,210 @@
 import React from 'react';
+import { 
+  Building2, 
+  UserCheck, 
+  Heart, 
+  MapPin, 
+  Globe2, 
+  TrendingUp,
+  Shield,
+  Target
+} from 'lucide-react';
 
-const differentiators = [
-  {
-    icon: '🏗️',
-    title: 'Infrastructure Already Underway',
-    desc: 'This is not a promise or a proposal. Two facilities are actively under construction — 70% and 30% complete. Donors can see real progress, real bricks, real buildings rising in Ufuma.',
-  },
-  {
-    icon: '👩‍⚕️',
-    title: 'Founder-Led Credibility',
-    desc: 'Clara Ada Ogbaa launched this initiative from her own retirement savings. Her personal sacrifice, survival story, and decades of service give this foundation unmatched authenticity.',
-  },
-  {
-    icon: '🔗',
-    title: 'Integrated Systems Approach',
-    desc: 'We are not building a single clinic. We are building an ecosystem — medical center, training campus, outreach programs, digital health, and community education working as one.',
-  },
-  {
-    icon: '📍',
-    title: 'Deeply Rooted Locally',
-    desc: 'Founded by someone from Ufuma, for Ufuma. Our work is driven by intimate knowledge of the community\'s needs, culture, and long-term vision — not outside assumptions.',
-  },
-  {
-    icon: '🌍',
-    title: 'Global Diaspora Network',
-    desc: 'With a Texas-based 501(c)(3) foundation and strong ties to the Nigerian diaspora, JHF bridges global resources with local impact in ways few organizations can.',
-  },
-  {
-    icon: '📈',
-    title: 'A Scalable Model',
-    desc: 'The JHF campus model is designed to be replicated. What we build in Ufuma demonstrates what is possible for rural healthcare transformation across Nigeria and beyond.',
-  },
-];
+const WhyJHF = () => {
+  const differentiators = [
+    {
+      icon: Building2,
+      title: 'Infrastructure Already Underway',
+      desc: 'This is not a promise or a proposal. Two facilities are actively under construction — 70% and 30% complete. Donors can see real progress, real bricks, real buildings rising in Ufuma.',
+    },
+    {
+      icon: UserCheck,
+      title: 'Founder-Led Credibility',
+      desc: 'Clara Ada Ogbaa launched this initiative from her own retirement savings. Her personal sacrifice, survival story, and decades of service give this foundation unmatched authenticity.',
+    },
+    {
+      icon: Heart,
+      title: 'Integrated Systems Approach',
+      desc: 'We are not building a single clinic. We are building an ecosystem — medical center, training campus, outreach programs, digital health, and community education working as one.',
+    },
+    {
+      icon: MapPin,
+      title: 'Deeply Rooted Locally',
+      desc: 'Founded by someone from Ufuma, for Ufuma. Our work is driven by intimate knowledge of the community\'s needs, culture, and long-term vision — not outside assumptions.',
+    },
+    {
+      icon: Globe2,
+      title: 'Global Diaspora Network',
+      desc: 'With a Texas-based 501(c)(3) foundation and strong ties to the Nigerian diaspora, JHF bridges global resources with local impact in ways few organizations can.',
+    },
+    {
+      icon: TrendingUp,
+      title: 'A Scalable Model',
+      desc: 'The JHF campus model is designed to be replicated. What we build in Ufuma demonstrates what is possible for rural healthcare transformation across Nigeria and beyond.',
+    },
+  ];
 
-const WhyJHF = () => (
-  <section style={{
-    backgroundColor: '#F9FAFB',
-    padding: 'var(--section-padding-y) var(--section-padding-x)',
-    fontFamily: 'var(--font-body)',
-  }}>
-    <style>{`
-      .why-inner { max-width: 1080px; margin: 0 auto; }
-      .why-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-      }
-      .why-card {
-        background: #ffffff;
-        border-radius: 12px;
-        border: 1px solid #E5E7EB;
-        padding: 28px 22px;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        transition: all 0.2s;
-      }
-      .why-card:hover {
-        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-        border-color: #1D8FD4;
-        transform: translateY(-3px);
-      }
+  return (
+    <section className="why-section">
+      <style>{`
+        .why-section {
+          background-color: #FFFFFF;
+          padding: var(--section-padding-y) var(--section-padding-x);
+          font-family: var(--font-body);
+        }
+        .why-container {
+          max-width: 1200px;
+          margin: 0 auto;
+        }
+        
+        /* Header */
+        .why-header {
+          text-align: center;
+          max-width: 800px;
+          margin: 0 auto 64px auto;
+        }
+        .why-label {
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #1D8FD4;
+          margin-bottom: 16px;
+        }
+        .why-headline {
+          font-family: var(--font-heading);
+          font-size: clamp(36px, 4.5vw, 48px);
+          font-weight: 700;
+          color: #111827;
+          line-height: 1.2;
+          margin-bottom: 20px;
+        }
+        .why-description {
+          font-size: 18px;
+          color: #4B5563;
+          line-height: 1.6;
+        }
+        
+        /* Grid - 3 columns */
+        .why-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 48px 32px;
+          margin-top: 32px;
+        }
+        
+        .why-card {
+          text-align: left;
+        }
+        
+        .why-icon {
+          width: 56px;
+          height: 56px;
+          margin-bottom: 20px;
+          background: #F3F4F6;
+          border-radius: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #1D8FD4;
+          transition: all 0.2s;
+        }
+        
+        .why-card:hover .why-icon {
+          background: #EBF5FB;
+          transform: scale(1.02);
+        }
+        
+        .why-icon svg {
+          width: 28px;
+          height: 28px;
+          stroke-width: 1.5;
+        }
+        
+        .why-card-title {
+          font-family: var(--font-heading);
+          font-size: 18px;
+          font-weight: 700;
+          color: #111827;
+          margin-bottom: 12px;
+          line-height: 1.3;
+        }
+        
+        .why-card-desc {
+          font-size: 15px;
+          color: #6B7280;
+          line-height: 1.6;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+          .why-grid {
+            gap: 40px 28px;
+          }
+        }
+        
+        @media (max-width: 900px) {
+          .why-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+          }
+        }
+        
+        @media (max-width: 600px) {
+          .why-grid {
+            grid-template-columns: 1fr;
+            gap: 36px;
+          }
+          .why-headline {
+            font-size: 28px;
+          }
+          .why-description {
+            font-size: 16px;
+          }
+          .why-card {
+            text-align: center;
+          }
+          .why-icon {
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
+      `}</style>
 
-      @media (max-width: 860px) {
-        .why-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-      }
-      @media (max-width: 540px) {
-        .why-grid { grid-template-columns: 1fr; gap: 14px; }
-        .why-card { padding: 22px 18px; }
-      }
-    `}</style>
-
-    <div className="why-inner">
-
-      {/* Header */}
-      <div style={{ textAlign: 'center', marginBottom: '48px' }}>
-        <span style={{
-          display: 'inline-block',
-          background: '#EBF5FB', color: '#1D8FD4',
-          fontSize: '11px', fontWeight: '700',
-          letterSpacing: '0.14em', textTransform: 'uppercase',
-          padding: '5px 14px', borderRadius: '999px',
-          marginBottom: '16px',
-        }}>
-          Why JHF Is Different
-        </span>
-        <h2 style={{
-          fontFamily: 'var(--font-heading)',
-          fontSize: 'clamp(24px, 3.5vw, 38px)',
-          fontWeight: '700', color: '#111827',
-          lineHeight: '1.2', margin: '0 0 14px',
-        }}>
-          More Than a Nonprofit.<br />A Movement Built to Last.
-        </h2>
-        <p style={{
-          fontSize: 'clamp(14px, 1.5vw, 16px)',
-          color: '#4B5563', lineHeight: '1.85',
-          maxWidth: '560px', margin: '0 auto',
-        }}>
-          JoMabel Healthcare Foundation stands apart from typical health organizations
-          in ways that matter deeply to donors, partners, and the communities we serve.
-        </p>
+      <div className="why-container">
+        
+        {/* Header */}
+        <div className="why-header">
+          <div className="why-label">Why JHF</div>
+          <h2 className="why-headline">
+            More Than a Nonprofit.<br />
+            A Movement Built to Last.
+          </h2>
+          <p className="why-description">
+            JoMabel Healthcare Foundation stands apart from typical health organizations
+            in ways that matter deeply to donors, partners, and the communities we serve.
+          </p>
+        </div>
+        
+        {/* Grid Cards */}
+        <div className="why-grid">
+          {differentiators.map((item, index) => {
+            const IconComponent = item.icon;
+            return (
+              <div key={index} className="why-card">
+                <div className="why-icon">
+                  <IconComponent />
+                </div>
+                <h3 className="why-card-title">{item.title}</h3>
+                <p className="why-card-desc">{item.desc}</p>
+              </div>
+            );
+          })}
+        </div>
+        
       </div>
-
-      {/* 3×2 grid */}
-      <div className="why-grid">
-        {differentiators.map((d, i) => (
-          <div key={i} className="why-card">
-            <span style={{ fontSize: '30px' }}>{d.icon}</span>
-            <h3 style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: '15px', fontWeight: '700',
-              color: '#111827', margin: 0, lineHeight: '1.3',
-            }}>{d.title}</h3>
-            <p style={{
-              fontSize: '13.5px', color: '#4B5563',
-              lineHeight: '1.75', margin: 0,
-            }}>{d.desc}</p>
-          </div>
-        ))}
-      </div>
-
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default WhyJHF;
