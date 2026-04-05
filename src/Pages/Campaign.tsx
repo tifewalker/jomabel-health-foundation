@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -39,7 +39,7 @@ const CampaignHero = () => {
         </h1>
         <p className="hero-description">
           A 16,000+ sq. meter world-class medical and training center rising
-          in Ufuma, Anambra State, Nigeria — powered by compassion, designed
+          in Ufuma, Anambra State, Nigeria powered by compassion, designed
           for generational impact.
         </p>
         <div className="hero-buttons">
@@ -56,56 +56,188 @@ const CampaignHero = () => {
   );
 };
 
-// ─── VISION STATS ────────────────────────────────────────────────────────────
-const VisionStats = () => (
-  <section className="vision-stats">
-    <div className="container">
-      <div className="section-header">
-        <span className="section-label">The Vision</span>
-        <h2 className="section-title">A Center Built for Generations</h2>
-      </div>
+// ─── VISION STATS WITH COUNT-UP ──────────────────────────────────────────────
+const VisionStats = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [animatedNumbers, setAnimatedNumbers] = useState({
+    size: 0,
+    facilities: 0,
+    programs: 0
+  });
+  const sectionRef = useRef<HTMLElement>(null);
 
-      <div className="stats-grid">
-        {[
-          { number: '16,000+', label: 'Square Meters', sub: 'Total Center Size' },
-          { number: '2', label: 'Major Facilities', sub: 'Medical + Training Center' },
-          { number: '6+', label: 'Program Areas', sub: 'Healthcare & Training' },
-          { number: '∞', label: 'Generational Impact', sub: 'Ufuma, Anambra State' },
-        ].map((s, i) => (
-          <div key={i} className="stat-card">
-            <p className="stat-number">{s.number}</p>
-            <p className="stat-label">{s.label}</p>
-            <p className="stat-sub">{s.sub}</p>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (isVisible) {
+      // Animate 16,000
+      let startSize = 0;
+      const sizeInterval = setInterval(() => {
+        if (startSize < 16000) {
+          startSize += 500;
+          setAnimatedNumbers(prev => ({ ...prev, size: startSize }));
+        } else {
+          clearInterval(sizeInterval);
+        }
+      }, 15);
+
+      // Animate 2 facilities
+      let startFacilities = 0;
+      const facilitiesInterval = setInterval(() => {
+        if (startFacilities < 2) {
+          startFacilities++;
+          setAnimatedNumbers(prev => ({ ...prev, facilities: startFacilities }));
+        } else {
+          clearInterval(facilitiesInterval);
+        }
+      }, 100);
+
+      // Animate 6 programs
+      let startPrograms = 0;
+      const programsInterval = setInterval(() => {
+        if (startPrograms < 6) {
+          startPrograms++;
+          setAnimatedNumbers(prev => ({ ...prev, programs: startPrograms }));
+        } else {
+          clearInterval(programsInterval);
+        }
+      }, 100);
+    }
+  }, [isVisible]);
+
+  return (
+    <section ref={sectionRef} className={`vision-stats ${isVisible ? 'visible' : ''}`}>
+      <div className="container">
+        <div className="section-header">
+          <span className="section-label">The Vision</span>
+          <h2 className="section-title">A Center Built for Generations</h2>
+        </div>
+
+        <div className="stats-grid">
+          <div className="stat-card">
+            <p className="stat-number">{animatedNumbers.size.toLocaleString()}+</p>
+            <p className="stat-label">Square Meters</p>
+            <p className="stat-sub">Total Center Size</p>
           </div>
-        ))}
-      </div>
+          <div className="stat-card">
+            <p className="stat-number">{animatedNumbers.facilities}</p>
+            <p className="stat-label">Major Facilities</p>
+            <p className="stat-sub">Medical + Training Center</p>
+          </div>
+          <div className="stat-card">
+            <p className="stat-number">{animatedNumbers.programs}+</p>
+            <p className="stat-label">Program Areas</p>
+            <p className="stat-sub">Healthcare & Training</p>
+          </div>
+          <div className="stat-card">
+            <p className="stat-number">∞</p>
+            <p className="stat-label">Generational Impact</p>
+            <p className="stat-sub">Ufuma, Anambra State</p>
+          </div>
+        </div>
 
-      <div className="vision-description">
-        <p>
-          The JoMabel Medical and Training Center in Ufuma, Anambra State will serve as
-          a transformative hub for healthcare delivery, professional training, and community
-          empowerment — bringing world-class facilities to southeastern Nigeria and creating
-          a lasting legacy of health, dignity, and opportunity.
-        </p>
+        <div className="vision-description">
+          <p>
+            The JoMabel Medical and Training Center in Ufuma, Anambra State will serve as
+            a transformative hub for healthcare delivery, professional training, and community
+            empowerment bringing world-class facilities to southeastern Nigeria and creating
+            a lasting legacy of health, dignity, and opportunity.
+          </p>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
-// ─── FACILITIES BREAKDOWN ────────────────────────────────────────────────────
+// ─── FACILITIES BREAKDOWN WITH ANIMATION (MOBILE FIX) ────────────────────────
 const FacilitiesBreakdown = () => {
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
+  const [animatedProgress, setAnimatedProgress] = useState({ medical: 0, training: 0 });
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    // Check if on mobile
+    const isMobile = window.innerWidth < 768;
+    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: '50px' } // Lower threshold for mobile
+    );
+
+    // On mobile, trigger after a short delay to ensure visibility
+    if (isMobile) {
+      const timer = setTimeout(() => {
+        setIsVisible(true);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (isVisible) {
+      // Animate Medical Center progress to 70%
+      let medicalProgress = 0;
+      const medicalInterval = setInterval(() => {
+        if (medicalProgress < 70) {
+          medicalProgress++;
+          setAnimatedProgress(prev => ({ ...prev, medical: medicalProgress }));
+        } else {
+          clearInterval(medicalInterval);
+        }
+      }, 25);
+
+      // Animate Training Center progress to 30%
+      let trainingProgress = 0;
+      const trainingInterval = setInterval(() => {
+        if (trainingProgress < 30) {
+          trainingProgress++;
+          setAnimatedProgress(prev => ({ ...prev, training: trainingProgress }));
+        } else {
+          clearInterval(trainingInterval);
+        }
+      }, 40);
+    }
+  }, [isVisible]);
+
   const facilities = [
     {
       name: 'JoMabel Medical Center',
       size: '6,000 sqm',
-      status: '70% Completed',
-      pct: 70,
+      status: `${animatedProgress.medical}% Completed`,
+      pct: animatedProgress.medical,
       accentColor: '#1D8FD4',
       badge: 'Under Construction',
       badgeBg: '#DBEAFE',
       badgeColor: '#1E40AF',
-      description: 'The operational heart of the JoMabel campus — delivering primary care, diagnostics, and specialist services to Ufuma and surrounding communities.',
+      description: 'The operational heart of the JoMabel campus delivering primary care, diagnostics, and specialist services to Ufuma and surrounding communities.',
       services: [
         'Primary & Preventive Care',
         'Maternal & Child Health',
@@ -119,8 +251,8 @@ const FacilitiesBreakdown = () => {
     {
       name: 'Skill Acquisition & Medical Training Center',
       size: '10,000 sqm',
-      status: '30% Completed',
-      pct: 30,
+      status: `${animatedProgress.training}% Completed`,
+      pct: animatedProgress.training,
       accentColor: '#16A34A',
       badge: 'Foundation Stage',
       badgeBg: '#DCFCE7',
@@ -139,14 +271,14 @@ const FacilitiesBreakdown = () => {
   ];
 
   return (
-    <section id="facilities-section" className="facilities-section">
+    <section ref={sectionRef} id="facilities-section" className={`facilities-section ${isVisible ? 'visible' : ''}`}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">The Center Facilities</span>
           <h2 className="section-title">Two Facilities. One Integrated Vision.</h2>
           <p className="section-description">
             Together, the Medical Center and Training Center form a fully integrated
-            healthcare campus — delivering care today while building the workforce of tomorrow.
+            healthcare campus delivering care today while building the workforce of tomorrow.
           </p>
         </div>
 
@@ -227,6 +359,27 @@ const FacilitiesBreakdown = () => {
 // ─── ARCHITECTURAL RENDERS GALLERY ───────────────────────────────────────────
 const RendersGallery = () => {
   const [active, setActive] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const renders = [
     { src: render1, label: 'Main Entrance — Front View' },
     { src: render6, label: 'J&M Nursing Training Center, Ufuma' },
@@ -236,7 +389,7 @@ const RendersGallery = () => {
     { src: render3, label: 'Site Floor Plan' },
   ];
   return (
-    <section className="gallery-section">
+    <section ref={sectionRef} className={`gallery-section ${isVisible ? 'visible' : ''}`}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">Architectural Plans</span>
@@ -267,40 +420,84 @@ const RendersGallery = () => {
 };
 
 // ─── CONSTRUCTION VIDEOS ─────────────────────────────────────────────────────
-const ConstructionVideos = () => (
-  <section className="videos-section">
-    <div className="container">
-      <div className="section-header">
-        <span className="section-label">Watch It Rise</span>
-        <h2 className="section-title">From Blueprint to Reality</h2>
-        <p className="section-description">
-          Watch our 16,000+ sq. meter medical center rising in Ufuma, Anambra State.
-          Every brick is a step toward dignified healthcare for generations.
-        </p>
-      </div>
+const ConstructionVideos = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
-      <div className="videos-grid">
-        {[
-          { src: construction4, label: 'Construction Progress — Phase 1' },
-          { src: construction2, label: 'Construction Progress — Phase 2' },
-          { src: construction3, label: 'Construction Progress — Phase 3' },
-          { src: construction1, label: 'Construction Progress — Phase 4' },
-        ].map((v, i) => (
-          <div key={i} className="video-card">
-            <video src={v.src} controls muted playsInline className="video-player" />
-            <div className="video-label">
-              <p>{v.label}</p>
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className={`videos-section ${isVisible ? 'visible' : ''}`}>
+      <div className="container">
+        <div className="section-header">
+          <span className="section-label">Watch It Rise</span>
+          <h2 className="section-title">From Blueprint to Reality</h2>
+          <p className="section-description">
+            Watch our 16,000+ sq. meter medical center rising in Ufuma, Anambra State.
+            Every brick is a step toward dignified healthcare for generations.
+          </p>
+        </div>
+
+        <div className="videos-grid">
+          {[
+            { src: construction4, label: 'Construction Progress — Phase 1' },
+            { src: construction2, label: 'Construction Progress — Phase 2' },
+            { src: construction3, label: 'Construction Progress — Phase 3' },
+            { src: construction1, label: 'Construction Progress — Phase 4' },
+          ].map((v, i) => (
+            <div key={i} className="video-card">
+              <video src={v.src} controls muted playsInline className="video-player" />
+              <div className="video-label">
+                <p>{v.label}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 // ─── ONGOING OUTREACH CAMPAIGNS ──────────────────────────────────────────────
 const OutreachCampaigns = () => {
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const campaigns = [
     { img: outreach5, title: 'Medical Outreach Mission — Ufuma', desc: 'Free consultations, screenings, medications and referrals delivered directly to community members in Ufuma, Anambra State — reaching hundreds of families in a single day.', tag: 'Outreach Mission' },
     { img: outreach1, title: 'Community Health Screenings', desc: 'Working alongside the Nigerian Red Cross, our teams deliver free health screenings and consultations to underserved communities, identifying critical health needs early.', tag: 'Health Screening' },
@@ -309,7 +506,7 @@ const OutreachCampaigns = () => {
     { img: outreach2, title: 'Registration & Preventive Care', desc: 'Outreach stations provide registration, triage, and preventive care services — ensuring every community member receives the attention and follow-up they deserve.', tag: 'Preventive Care' },
   ];
   return (
-    <section className="outreach-section">
+    <section ref={sectionRef} className={`outreach-section ${isVisible ? 'visible' : ''}`}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">On The Ground</span>
@@ -352,7 +549,7 @@ const OutreachCampaigns = () => {
   );
 };
 
-// ─── MAIN CAMPAIGN COMPONENT ─────────────────────────────────────────────────
+// ─── MAIN CAMPAIGN COMPONENT WITH ANIMATION STYLES ───────────────────────────
 const Campaign = () => (
   <div className="campaign-page">
     <style>{`
@@ -458,11 +655,59 @@ const Campaign = () => (
         border-color: rgba(255,255,255,0.6);
       }
       
-      /* Vision Stats */
+      /* Vision Stats with Animation */
       .vision-stats {
         background-color: #F9FAFB;
         padding: 64px clamp(20px, 5vw, 48px);
       }
+      .vision-stats .stat-card {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .vision-stats.visible .stat-card:nth-child(1) {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.1s;
+      }
+      .vision-stats.visible .stat-card:nth-child(2) {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.2s;
+      }
+      .vision-stats.visible .stat-card:nth-child(3) {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.3s;
+      }
+      .vision-stats.visible .stat-card:nth-child(4) {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.4s;
+      }
+      .vision-stats .section-label,
+      .vision-stats .section-title,
+      .vision-stats .vision-description {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .vision-stats.visible .section-label {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0s;
+      }
+      .vision-stats.visible .section-title {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.05s;
+      }
+      .vision-stats.visible .vision-description {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.5s;
+      }
+      
       .container {
         max-width: 1200px;
         margin: 0 auto;
@@ -531,170 +776,338 @@ const Campaign = () => (
         line-height: 1.7;
       }
       
-      /* Facilities Section */
-      .facilities-section {
-        padding: 80px clamp(20px, 5vw, 48px);
-        background: #ffffff;
-      }
-      .section-description {
-        font-size: 16px;
-        color: #6B7280;
-        max-width: 600px;
-        margin: 16px auto 0;
-        text-align: center;
-      }
-      .facilities-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 40px;
-        margin-bottom: 48px;
-      }
-      .facility-card {
-        background: #ffffff;
-        border: 1px solid #E5E7EB;
-        border-radius: 28px;
-        overflow: hidden;
-        transition: all 0.3s ease;
-      }
-      .facility-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 32px rgba(0,0,0,0.08);
-      }
-      .facility-image-wrap {
-        position: relative;
-        height: 240px;
-        overflow: hidden;
-      }
-      .facility-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-      .facility-image-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
-      }
-      .facility-badges {
-        position: absolute;
-        bottom: 16px;
-        left: 16px;
-        right: 16px;
-        display: flex;
-        justify-content: space-between;
-      }
-      .facility-badge {
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        padding: 5px 12px;
-        border-radius: 40px;
-      }
-      .facility-size {
-        background: rgba(0,0,0,0.6);
-        color: #ffffff;
-        font-size: 12px;
-        font-weight: 600;
-        padding: 4px 12px;
-        border-radius: 40px;
-      }
-      .facility-content {
-        padding: 28px;
-      }
-      .facility-name {
-        font-family: var(--font-heading);
-        font-size: 20px;
-        font-weight: 700;
-        color: #111827;
-        margin-bottom: 12px;
-      }
-      .facility-description {
-        font-size: 14px;
-        color: #6B7280;
-        line-height: 1.6;
-        margin-bottom: 20px;
-      }
-      .progress-section {
-        background: #F9FAFB;
-        border-radius: 12px;
-        padding: 14px 16px;
-        margin-bottom: 20px;
-      }
-      .progress-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 8px;
-      }
-      .progress-label {
-        font-size: 12px;
-        color: #6B7280;
-        font-weight: 600;
-      }
-      .progress-status {
-        font-size: 13px;
-        font-weight: 700;
-      }
-      .progress-bar {
-        height: 8px;
-        background: #E5E7EB;
-        border-radius: 4px;
-        overflow: hidden;
-      }
-      .progress-fill {
-        height: 100%;
-        border-radius: 4px;
-        transition: width 0.5s ease;
-      }
-      .services-section {
-        margin-bottom: 24px;
-      }
-      .services-label {
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: #9CA3AF;
-        margin-bottom: 12px;
-      }
-      .services-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-      }
-      .service-item {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 12px;
-        color: #4B5563;
-      }
-      .service-dot {
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        flex-shrink: 0;
-      }
-      .facility-cta {
-        width: 100%;
-        border: none;
-        border-radius: 10px;
-        padding: 12px;
-        font-size: 13px;
-        font-weight: 600;
-        color: #ffffff;
-        cursor: pointer;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        transition: all 0.2s;
-      }
-      .facility-cta:hover {
-        opacity: 0.85;
-        transform: translateY(-1px);
-      }
-      
+    /* Facilities Section */
+.facilities-section {
+  padding: 80px clamp(20px, 5vw, 48px);
+  background: #ffffff;
+}
+
+/* Default visible state - always visible on mobile */
+.facilities-section .facility-card {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.facilities-section .section-label,
+.facilities-section .section-title,
+.facilities-section .section-description {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* Animation only on desktop when visible class is added */
+@media (min-width: 769px) {
+  .facilities-section .facility-card {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  
+  .facilities-section .section-label,
+  .facilities-section .section-title,
+  .facilities-section .section-description {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .facilities-section.visible .facility-card:nth-child(1) {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.2s;
+  }
+  
+  .facilities-section.visible .facility-card:nth-child(2) {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.4s;
+  }
+  
+  .facilities-section.visible .section-label {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0s;
+  }
+  
+  .facilities-section.visible .section-title {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s;
+  }
+  
+  .facilities-section.visible .section-description {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.2s;
+  }
+}
+
+.section-description {
+  font-size: 16px;
+  color: #6B7280;
+  max-width: 600px;
+  margin: 16px auto 0;
+  text-align: center;
+}
+
+.facilities-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+
+.facility-card {
+  background: #ffffff;
+  border: 1px solid #E5E7EB;
+  border-radius: 28px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.facility-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+}
+
+.facility-image-wrap {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+}
+
+.facility-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.facility-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+}
+
+.facility-badges {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.facility-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 40px;
+}
+
+.facility-size {
+  background: rgba(0,0,0,0.6);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 40px;
+}
+
+.facility-content {
+  padding: 28px;
+}
+
+.facility-name {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 12px;
+}
+
+.facility-description {
+  font-size: 14px;
+  color: #6B7280;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.progress-section {
+  background: #F9FAFB;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.progress-label {
+  font-size: 12px;
+  color: #6B7280;
+  font-weight: 600;
+}
+
+.progress-status {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #E5E7EB;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.services-section {
+  margin-bottom: 24px;
+}
+
+.services-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #9CA3AF;
+  margin-bottom: 12px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.service-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #4B5563;
+}
+
+.service-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.facility-cta {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.facility-cta:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .facilities-section {
+    padding: 48px 20px;
+  }
+  
+  .facilities-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .facility-image-wrap {
+    height: 180px;
+  }
+  
+  .facility-content {
+    padding: 20px;
+  }
+  
+  .facility-name {
+    font-size: 18px;
+  }
+  
+  .facility-description {
+    font-size: 13px;
+  }
+  
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .service-item {
+    font-size: 11px;
+  }
+  
+  .facility-cta {
+    padding: 10px;
+    font-size: 12px;
+  }
+  
+  .section-description {
+    font-size: 14px;
+  }
+}
+
+/* Small Mobile Devices */
+@media (max-width: 480px) {
+  .facilities-section {
+    padding: 32px 16px;
+  }
+  
+  .facility-image-wrap {
+    height: 160px;
+  }
+  
+  .facility-content {
+    padding: 16px;
+  }
+  
+  .facility-badge {
+    font-size: 9px;
+    padding: 3px 8px;
+  }
+  
+  .facility-size {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+  
+  .progress-section {
+    padding: 10px 12px;
+  }
+  
+  .progress-label,
+  .progress-status {
+    font-size: 11px;
+  }
+  
+  .services-label {
+    font-size: 9px;
+  }
+}
       /* Why Ufuma */
       .why-ufuma {
         background: #F0F9FF;
@@ -749,6 +1162,39 @@ const Campaign = () => (
         background: #F9FAFB;
         padding: 80px clamp(20px, 5vw, 48px);
       }
+      .gallery-section .gallery-main,
+      .gallery-section .gallery-thumbs {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .gallery-section.visible .gallery-main {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.2s;
+      }
+      .gallery-section.visible .gallery-thumbs {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.4s;
+      }
+      .gallery-section .section-label,
+      .gallery-section .section-title {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .gallery-section.visible .section-label {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0s;
+      }
+      .gallery-section.visible .section-title {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.1s;
+      }
+      
       .gallery-main {
         position: relative;
         border-radius: 20px;
@@ -806,6 +1252,54 @@ const Campaign = () => (
         padding: 80px clamp(20px, 5vw, 48px);
         background: #ffffff;
       }
+      .videos-section .video-card {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .videos-section.visible .video-card:nth-child(1) {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.2s;
+      }
+      .videos-section.visible .video-card:nth-child(2) {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.3s;
+      }
+      .videos-section.visible .video-card:nth-child(3) {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.4s;
+      }
+      .videos-section.visible .video-card:nth-child(4) {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.5s;
+      }
+      .videos-section .section-label,
+      .videos-section .section-title,
+      .videos-section .section-description {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .videos-section.visible .section-label {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0s;
+      }
+      .videos-section.visible .section-title {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.1s;
+      }
+      .videos-section.visible .section-description {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.2s;
+      }
+      
       .videos-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -838,6 +1332,54 @@ const Campaign = () => (
         background: #F9FAFB;
         padding: 80px clamp(20px, 5vw, 48px);
       }
+      .outreach-section .campaign-large,
+      .outreach-section .campaign-card {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .outreach-section.visible .campaign-large {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.2s;
+      }
+      .outreach-section.visible .campaign-card:nth-child(1) {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.3s;
+      }
+      .outreach-section.visible .campaign-card:nth-child(2) {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.4s;
+      }
+      .outreach-section.visible .campaign-card:nth-child(3) {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.5s;
+      }
+      .outreach-section.visible .campaign-card:nth-child(4) {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.6s;
+      }
+      .outreach-section .section-label,
+      .outreach-section .section-title {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      }
+      .outreach-section.visible .section-label {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0s;
+      }
+      .outreach-section.visible .section-title {
+        opacity: 1;
+        transform: translateY(0);
+        transition-delay: 0.1s;
+      }
+      
       .campaign-mosaic {
         display: grid;
         grid-template-columns: 1fr 1fr;

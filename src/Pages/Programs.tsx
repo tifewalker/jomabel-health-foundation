@@ -145,8 +145,8 @@ const GeographicFocus = () => (
       <span className="geo-label">Where We Work</span>
       <h3 className="geo-title">Geographic Focus</h3>
       <p className="geo-description">
-        Our primary work is rooted in southeastern Nigeria — specifically
-        Anambra State and surrounding regions — with a growing diaspora
+        Our primary work is rooted in southeastern Nigeria specifically
+        Anambra State and surrounding regions with a growing diaspora
         network and global partnerships that amplify our reach and impact.
       </p>
     </div>
@@ -192,7 +192,7 @@ const Programs = () => {
       icon: Stethoscope,
       category: 'Medical Outreach',
       title: 'Medical Outreach Missions',
-      description: 'Regular medical missions providing free consultations, medications, screenings, and referrals — reaching rural and underserved communities.',
+      description: 'Regular medical missions providing free consultations, medications, screenings, and referrals reaching rural and underserved communities.',
       bullets: ['Free consultations & medications', 'Health screenings & referrals', 'Reaching rural communities'],
       image: outreach1,
       color: '#1D8FD4',
@@ -219,7 +219,7 @@ const Programs = () => {
       icon: Building2,
       category: 'Infrastructure',
       title: 'Healthcare Infrastructure Development',
-      description: 'Building and equipping facilities that anchor long-term community health — including clinics, diagnostic centers, and water systems.',
+      description: 'Building and equipping facilities that anchor long-term community health including clinics, diagnostic centers, and water systems.',
       bullets: ['Clinics & diagnostic centers', 'Water & sanitation systems', 'Youth training complexes'],
       image: outreach5,
       color: '#1D4ED8',

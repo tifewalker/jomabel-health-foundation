@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import CookieConsent from './components/common/CookieConsent'; 
 
 import Home from './Pages/Home';
 import About from './Pages/About';
@@ -8,22 +9,33 @@ import Donate from './Pages/Donate';
 import ContactPage from './Pages/ContactPage';
 import Campaign from './Pages/Campaign';
 import LegacyGiving from './Pages/LegacyGiving';
+import ROI from './Pages/ROI';
+import Impact from './Pages/Impact';
+import Blog from './Pages/Blog';
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/programs" element={<Programs />} />
-        <Route path="/donate" element={<Donate />} />
-        <Route path="/Contact" element={<ContactPage />} />
-        <Route path="/campaign" element={<Campaign />} />
-        <Route path="/legacy" element={<LegacyGiving />} />
-      </Routes>
-     
+      {/* Main content wrapper for accessibility skip link */}
+      <div id="main-content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/programs" element={<Programs />} />
+          <Route path="/donate" element={<Donate />} />
+          <Route path="/Contact" element={<ContactPage />} />
+          <Route path="/campaign" element={<Campaign />} />
+          <Route path="/legacy" element={<LegacyGiving />} />
+          <Route path="/roi" element={<ROI />} />
+          <Route path="/impact" element={<Impact />} />
+          <Route path="/blog" element={<Blog />} />
+          
+        </Routes>
+      </div>
+      
+      {/* Cookie Consent - appears on every page */}
+      <CookieConsent />
     </Router>
-   
   );
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { 
   Building2, 
   UserCheck, 
@@ -11,6 +11,9 @@ import {
 } from 'lucide-react';
 
 const WhyJHF = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
   const differentiators = [
     {
       icon: Building2,
@@ -44,8 +47,29 @@ const WhyJHF = () => {
     },
   ];
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="why-section">
+    <section 
+      ref={sectionRef} 
+      className={`why-section ${isVisible ? 'visible' : ''}`}
+    >
       <style>{`
         .why-section {
           background-color: #FFFFFF;
@@ -70,6 +94,9 @@ const WhyJHF = () => {
           text-transform: uppercase;
           color: #1D8FD4;
           margin-bottom: 16px;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
         .why-headline {
           font-family: var(--font-heading);
@@ -78,11 +105,26 @@ const WhyJHF = () => {
           color: #111827;
           line-height: 1.2;
           margin-bottom: 20px;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+          transition-delay: 0.1s;
         }
         .why-description {
           font-size: 18px;
           color: #4B5563;
           line-height: 1.6;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+          transition-delay: 0.2s;
+        }
+        
+        .why-section.visible .why-label,
+        .why-section.visible .why-headline,
+        .why-section.visible .why-description {
+          opacity: 1;
+          transform: translateY(0);
         }
         
         /* Grid - 3 columns */
@@ -95,6 +137,41 @@ const WhyJHF = () => {
         
         .why-card {
           text-align: left;
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        /* Staggered animation for cards */
+        .why-section.visible .why-card:nth-child(1) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.3s;
+        }
+        .why-section.visible .why-card:nth-child(2) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.4s;
+        }
+        .why-section.visible .why-card:nth-child(3) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.5s;
+        }
+        .why-section.visible .why-card:nth-child(4) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.6s;
+        }
+        .why-section.visible .why-card:nth-child(5) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.7s;
+        }
+        .why-section.visible .why-card:nth-child(6) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.8s;
         }
         
         .why-icon {
@@ -107,12 +184,12 @@ const WhyJHF = () => {
           align-items: center;
           justify-content: center;
           color: #1D8FD4;
-          transition: all 0.2s;
+          transition: all 0.3s ease;
         }
         
         .why-card:hover .why-icon {
           background: #EBF5FB;
-          transform: scale(1.02);
+          transform: scale(1.05);
         }
         
         .why-icon svg {
@@ -128,6 +205,11 @@ const WhyJHF = () => {
           color: #111827;
           margin-bottom: 12px;
           line-height: 1.3;
+          transition: color 0.3s ease;
+        }
+        
+        .why-card:hover .why-card-title {
+          color: #1D8FD4;
         }
         
         .why-card-desc {

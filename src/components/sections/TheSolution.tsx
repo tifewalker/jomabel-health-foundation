@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Building2, GraduationCap, Users, Smartphone, TrendingUp, Target } from 'lucide-react';
-import solutionImage from '../../assests/images/outreach5.jpeg'; // Use your outreach image
+import solutionImage from '../../assests/images/outreach1.jpeg'; 
 
 const pillars = [
   {
     icon: Building2,
     title: 'World-Class Medical Center',
-    desc: 'A 6,000 sqm facility delivering primary care, maternal health, diagnostics, chronic disease management, and specialist services — permanently rooted in Ufuma.',
+    desc: 'A 6,000 sqm facility delivering primary care, maternal health, diagnostics, chronic disease management, and specialist services permanently rooted in Ufuma.',
   },
   {
     icon: GraduationCap,
@@ -28,9 +28,86 @@ const pillars = [
 
 const TheSolution = () => {
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
   
+  // Animated number states
+  const [animatedStats, setAnimatedStats] = useState({
+    campusSize: 0,
+    livesImpacted: 0,
+    medicalProgress: 0,
+    trainingProgress: 0
+  });
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Animate numbers when section becomes visible
+  useEffect(() => {
+    if (isVisible) {
+      // Animate 16,000+ campus size
+      let startCampus = 0;
+      const campusInterval = setInterval(() => {
+        if (startCampus < 16000) {
+          startCampus += 500;
+          setAnimatedStats(prev => ({ ...prev, campusSize: startCampus }));
+        } else {
+          clearInterval(campusInterval);
+        }
+      }, 15);
+
+      // Animate 50,000+ lives impacted
+      let startLives = 0;
+      const livesInterval = setInterval(() => {
+        if (startLives < 50000) {
+          startLives += 1000;
+          setAnimatedStats(prev => ({ ...prev, livesImpacted: startLives }));
+        } else {
+          clearInterval(livesInterval);
+        }
+      }, 15);
+
+      // Animate Medical Center progress 70%
+      let startMedical = 0;
+      const medicalInterval = setInterval(() => {
+        if (startMedical < 70) {
+          startMedical++;
+          setAnimatedStats(prev => ({ ...prev, medicalProgress: startMedical }));
+        } else {
+          clearInterval(medicalInterval);
+        }
+      }, 20);
+
+      // Animate Training Center progress 30%
+      let startTraining = 0;
+      const trainingInterval = setInterval(() => {
+        if (startTraining < 30) {
+          startTraining++;
+          setAnimatedStats(prev => ({ ...prev, trainingProgress: startTraining }));
+        } else {
+          clearInterval(trainingInterval);
+        }
+      }, 30);
+    }
+  }, [isVisible]);
+
   return (
-    <section className="solution-section">
+    <section ref={sectionRef} className={`solution-section ${isVisible ? 'visible' : ''}`}>
       <style>{`
         .solution-section {
           background-color: #FFFFFF;
@@ -177,11 +254,25 @@ const TheSolution = () => {
           border: 1px solid #E5E7EB;
           border-radius: 20px;
           padding: 28px;
-          transition: all 0.2s;
+          transition: all 0.3s ease;
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
+        }
+        .solution-section.visible .progress-card:nth-child(1) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.3s;
+        }
+        .solution-section.visible .progress-card:nth-child(2) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.5s;
         }
         .progress-card:hover {
           box-shadow: 0 8px 24px rgba(0,0,0,0.08);
           border-color: #1D8FD4;
+          transform: translateY(-4px);
         }
         .progress-header {
           display: flex;
@@ -227,6 +318,7 @@ const TheSolution = () => {
           border-radius: 4px;
           background-color: #1D8FD4;
           width: 0%;
+          transition: width 0.5s ease-out;
         }
         .progress-status {
           display: flex;
@@ -255,6 +347,18 @@ const TheSolution = () => {
         .pillar-card {
           text-align: center;
           padding: 24px;
+          transition: transform 0.3s ease;
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .solution-section.visible .pillar-card:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.6s; }
+        .solution-section.visible .pillar-card:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.7s; }
+        .solution-section.visible .pillar-card:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.8s; }
+        .solution-section.visible .pillar-card:nth-child(4) { opacity: 1; transform: translateY(0); transition-delay: 0.9s; }
+        
+        .pillar-card:hover {
+          transform: translateY(-5px);
         }
         .pillar-icon {
           width: 72px;
@@ -288,6 +392,41 @@ const TheSolution = () => {
           font-size: 14px;
           color: #6B7280;
           line-height: 1.6;
+        }
+        
+        /* Header and Two Column Animations */
+        .solution-header .solution-label,
+        .solution-header .solution-headline,
+        .solution-header .solution-description {
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .solution-section.visible .solution-header .solution-label {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0s;
+        }
+        .solution-section.visible .solution-header .solution-headline {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.1s;
+        }
+        .solution-section.visible .solution-header .solution-description {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.2s;
+        }
+        
+        .solution-two-col {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .solution-section.visible .solution-two-col {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.2s;
         }
         
         /* Responsive */
@@ -336,7 +475,7 @@ const TheSolution = () => {
             Healthcare System
           </h2>
           <p className="solution-description">
-            More than a clinic — a permanent, self-sustaining campus of care, training, 
+            More than a clinic a permanent, self-sustaining campus of care, training, 
             and community health that will serve Ufuma and surrounding communities for generations.
           </p>
         </div>
@@ -361,11 +500,11 @@ const TheSolution = () => {
             </p>
             <div className="solution-stats">
               <div className="solution-stat">
-                <div className="solution-stat-number">16,000+</div>
+                <div className="solution-stat-number">{animatedStats.campusSize.toLocaleString()}+</div>
                 <div className="solution-stat-label">sqm total campus</div>
               </div>
               <div className="solution-stat">
-                <div className="solution-stat-number">50,000+</div>
+                <div className="solution-stat-number">{animatedStats.livesImpacted.toLocaleString()}+</div>
                 <div className="solution-stat-label">lives impacted annually</div>
               </div>
             </div>
@@ -396,17 +535,17 @@ const TheSolution = () => {
                   <h4>JoMabel Medical Center</h4>
                   <p className="progress-size">6,000 sqm</p>
                 </div>
-                <div className="progress-percent">70%</div>
+                <div className="progress-percent">{animatedStats.medicalProgress}%</div>
               </div>
               <p className="progress-detail">
                 Primary care, diagnostics, maternal health & specialist services
               </p>
               <div className="progress-bar">
-                <div className="progress-bar-fill" style={{ width: '70%' }}></div>
+                <div className="progress-bar-fill" style={{ width: `${animatedStats.medicalProgress}%` }}></div>
               </div>
               <div className="progress-status">
                 <span>Under active construction</span>
-                <span>70% complete</span>
+                <span>{animatedStats.medicalProgress}% complete</span>
               </div>
             </div>
             <div className="progress-card">
@@ -415,17 +554,17 @@ const TheSolution = () => {
                   <h4>Skill & Training Center</h4>
                   <p className="progress-size">10,000 sqm</p>
                 </div>
-                <div className="progress-percent">30%</div>
+                <div className="progress-percent">{animatedStats.trainingProgress}%</div>
               </div>
               <p className="progress-detail">
                 Clinical training, community health worker programs & mentorship
               </p>
               <div className="progress-bar">
-                <div className="progress-bar-fill" style={{ width: '30%' }}></div>
+                <div className="progress-bar-fill" style={{ width: `${animatedStats.trainingProgress}%` }}></div>
               </div>
               <div className="progress-status">
                 <span>Foundation stage underway</span>
-                <span>30% complete</span>
+                <span>{animatedStats.trainingProgress}% complete</span>
               </div>
             </div>
           </div>

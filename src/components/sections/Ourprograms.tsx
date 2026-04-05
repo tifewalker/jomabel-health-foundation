@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Building2, 
@@ -74,13 +74,109 @@ const programs = [
 
 const OurPrograms = () => {
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  
+  // Animated impact numbers
+  const [animatedStats, setAnimatedStats] = useState({
+    campus: 0,
+    patients: 0,
+    workers: 0,
+    maternal: 0
+  });
+
+  useEffect(() => {
+    // Set visible to true immediately on mobile to ensure content shows
+    const isMobile = window.innerWidth < 768;
+    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setIsVisible(true);
+          setHasAnimated(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: '50px' } // Lower threshold for mobile
+    );
+
+    // On mobile, trigger immediately after a short delay
+    if (isMobile) {
+      const timer = setTimeout(() => {
+        setIsVisible(true);
+        setHasAnimated(true);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasAnimated]);
+
+  // Animate numbers when section becomes visible
+  useEffect(() => {
+    if (isVisible) {
+      // Animate 16,000+ campus
+      let startCampus = 0;
+      const campusInterval = setInterval(() => {
+        if (startCampus < 16000) {
+          startCampus += 500;
+          setAnimatedStats(prev => ({ ...prev, campus: startCampus }));
+        } else {
+          clearInterval(campusInterval);
+        }
+      }, 15);
+
+      // Animate 5,000+ patients
+      let startPatients = 0;
+      const patientsInterval = setInterval(() => {
+        if (startPatients < 5000) {
+          startPatients += 100;
+          setAnimatedStats(prev => ({ ...prev, patients: startPatients }));
+        } else {
+          clearInterval(patientsInterval);
+        }
+      }, 15);
+
+      // Animate 200+ workers
+      let startWorkers = 0;
+      const workersInterval = setInterval(() => {
+        if (startWorkers < 200) {
+          startWorkers += 5;
+          setAnimatedStats(prev => ({ ...prev, workers: startWorkers }));
+        } else {
+          clearInterval(workersInterval);
+        }
+      }, 20);
+
+      // Animate 1,000+ maternal
+      let startMaternal = 0;
+      const maternalInterval = setInterval(() => {
+        if (startMaternal < 1000) {
+          startMaternal += 20;
+          setAnimatedStats(prev => ({ ...prev, maternal: startMaternal }));
+        } else {
+          clearInterval(maternalInterval);
+        }
+      }, 15);
+    }
+  }, [isVisible]);
 
   return (
-    <div className="programs-page">
+    <div 
+      ref={sectionRef} 
+      className={`programs-page ${isVisible ? 'visible' : ''}`}
+    >
       <style>{`
         .programs-page {
           font-family: var(--font-body);
           background-color: #FFFFFF;
+          width: 100%;
+          overflow-x: hidden;
         }
         
         /* Hero Section with Image */
@@ -155,6 +251,32 @@ const OurPrograms = () => {
           line-height: 1.2;
           margin-bottom: 20px;
         }
+        
+        /* Animation styles - with fallback */
+        .impact-label,
+        .impact-headline {
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .programs-page:not(.visible) .impact-label,
+        .programs-page:not(.visible) .impact-headline {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        
+        .programs-page.visible .impact-label,
+        .programs-page.visible .impact-headline {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        
+        .programs-page.visible .impact-label {
+          transition-delay: 0s;
+        }
+        .programs-page.visible .impact-headline {
+          transition-delay: 0.1s;
+        }
+        
         .impact-stats {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
@@ -167,7 +289,30 @@ const OurPrograms = () => {
           background: #ffffff;
           border-radius: 20px;
           box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+          transition: all 0.3s ease;
         }
+        
+        .programs-page:not(.visible) .impact-stat {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        
+        .programs-page.visible .impact-stat {
+          opacity: 1;
+          transform: translateY(0);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .programs-page.visible .impact-stat:nth-child(1) { transition-delay: 0.2s; }
+        .programs-page.visible .impact-stat:nth-child(2) { transition-delay: 0.3s; }
+        .programs-page.visible .impact-stat:nth-child(3) { transition-delay: 0.4s; }
+        .programs-page.visible .impact-stat:nth-child(4) { transition-delay: 0.5s; }
+        
+        .impact-stat:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        
         .impact-stat-number {
           font-family: var(--font-heading);
           font-size: clamp(32px, 4vw, 44px);
@@ -210,6 +355,30 @@ const OurPrograms = () => {
           margin-bottom: 16px;
         }
         
+        .programs-label,
+        .programs-headline {
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .programs-page:not(.visible) .programs-label,
+        .programs-page:not(.visible) .programs-headline {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        
+        .programs-page.visible .programs-label,
+        .programs-page.visible .programs-headline {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        
+        .programs-page.visible .programs-label {
+          transition-delay: 0.5s;
+        }
+        .programs-page.visible .programs-headline {
+          transition-delay: 0.6s;
+        }
+        
         /* 3-Column Program Cards with Images */
         .programs-grid {
           display: grid;
@@ -224,15 +393,41 @@ const OurPrograms = () => {
           transition: all 0.3s ease;
           border: 1px solid #F0F0F0;
         }
+        
+        .programs-page:not(.visible) .program-card {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        
+        .programs-page.visible .program-card {
+          opacity: 1;
+          transform: translateY(0);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .programs-page.visible .program-card:nth-child(1) { transition-delay: 0.7s; }
+        .programs-page.visible .program-card:nth-child(2) { transition-delay: 0.8s; }
+        .programs-page.visible .program-card:nth-child(3) { transition-delay: 0.9s; }
+        .programs-page.visible .program-card:nth-child(4) { transition-delay: 1.0s; }
+        .programs-page.visible .program-card:nth-child(5) { transition-delay: 1.1s; }
+        .programs-page.visible .program-card:nth-child(6) { transition-delay: 1.2s; }
+        
         .program-card:hover {
           transform: translateY(-4px);
           box-shadow: 0 12px 32px rgba(0,0,0,0.12);
         }
+        
         .program-card-image {
           width: 100%;
           height: 220px;
           object-fit: cover;
+          transition: transform 0.3s ease;
         }
+        
+        .program-card:hover .program-card-image {
+          transform: scale(1.02);
+        }
+        
         .program-card-content {
           padding: 24px;
         }
@@ -285,6 +480,19 @@ const OurPrograms = () => {
           text-align: center;
           color: #ffffff;
         }
+        
+        .programs-page:not(.visible) .cta-section {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        
+        .programs-page.visible .cta-section {
+          opacity: 1;
+          transform: translateY(0);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+          transition-delay: 1.3s;
+        }
+        
         .cta-container {
           max-width: 700px;
           margin: 0 auto;
@@ -332,21 +540,57 @@ const OurPrograms = () => {
         @media (max-width: 768px) {
           .programs-hero {
             min-height: 400px;
+            height: auto;
           }
           .programs-hero h1 {
-            font-size: 32px;
+            font-size: 28px;
           }
           .programs-hero p {
-            font-size: 16px;
+            font-size: 14px;
           }
           .impact-stats {
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 16px;
           }
-        }
-        @media (max-width: 700px) {
+          .impact-section {
+            padding: 48px 20px;
+          }
+          .programs-section {
+            padding: 48px 20px;
+          }
           .programs-grid {
             grid-template-columns: 1fr;
+            gap: 24px;
+          }
+          .program-card-image {
+            height: 180px;
+          }
+          .cta-title {
+            font-size: 24px;
+          }
+          .cta-description {
+            font-size: 16px;
+          }
+          .cta-btn {
+            padding: 12px 28px;
+            font-size: 14px;
+          }
+        }
+        @media (max-width: 480px) {
+          .impact-stat {
+            padding: 16px;
+          }
+          .impact-stat-number {
+            font-size: 28px;
+          }
+          .program-card-content {
+            padding: 16px;
+          }
+          .program-card-title {
+            font-size: 16px;
+          }
+          .program-card-description {
+            font-size: 13px;
           }
         }
       `}</style>
@@ -369,26 +613,26 @@ const OurPrograms = () => {
         </div>
       </div>
 
-      {/* Impact Stats */}
+      {/* Impact Stats with Count-up Numbers */}
       <div className="impact-section">
         <div className="impact-container">
           <div className="impact-label">Our Impact</div>
           <h2 className="impact-headline">Making Healthcare Accessible<br />to Those Who Need It Most</h2>
           <div className="impact-stats">
             <div className="impact-stat">
-              <div className="impact-stat-number">16,000+</div>
+              <div className="impact-stat-number">{animatedStats.campus.toLocaleString()}+</div>
               <div className="impact-stat-label">sqm medical & training campus under construction</div>
             </div>
             <div className="impact-stat">
-              <div className="impact-stat-number">5,000+</div>
+              <div className="impact-stat-number">{animatedStats.patients.toLocaleString()}+</div>
               <div className="impact-stat-label">patients served through outreach missions</div>
             </div>
             <div className="impact-stat">
-              <div className="impact-stat-number">200+</div>
+              <div className="impact-stat-number">{animatedStats.workers.toLocaleString()}+</div>
               <div className="impact-stat-label">community health workers trained</div>
             </div>
             <div className="impact-stat">
-              <div className="impact-stat-number">1,000+</div>
+              <div className="impact-stat-number">{animatedStats.maternal.toLocaleString()}+</div>
               <div className="impact-stat-label">women & children receiving maternal health services</div>
             </div>
           </div>

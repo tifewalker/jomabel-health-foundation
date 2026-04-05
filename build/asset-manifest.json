@@ -1,19 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.9644eab1.css",
-    "main.js": "/static/js/main.4b106f2f.js",
-    "static/js/453.a0be1bc5.chunk.js": "/static/js/453.a0be1bc5.chunk.js",
+    "main.css": "/static/css/main.2af3a8b6.css",
+    "main.js": "/static/js/main.85f45052.js",
+    "static/js/453.c721f293.chunk.js": "/static/js/453.c721f293.chunk.js",
     "static/media/construction2.mp4": "/static/media/construction2.f35e5f19a8c4744a7bf6.mp4",
     "static/media/construction1.mp4": "/static/media/construction1.d790bd150284861c659d.mp4",
     "static/media/construction4.mp4": "/static/media/construction4.f088e0b0b6645d39cc0e.mp4",
     "static/media/imag1.png": "/static/media/imag1.34641e0fd80c7dbbe8c5.png",
     "static/media/construction3.mp4": "/static/media/construction3.e2b4b65e7b7be30bb024.mp4",
+    "static/media/nneka-ogbaa.png": "/static/media/nneka-ogbaa.0c8548825e0e9c373e56.png",
     "static/media/Rose.jpg": "/static/media/Rose.31fc84eafb65cc3ba1f9.jpg",
     "static/media/outreach1.jpeg": "/static/media/outreach1.0276fa5e58f0344aa431.jpeg",
-    "static/media/founderphoto.jpeg": "/static/media/founderphoto.d719626d36bd54c503da.jpeg",
+    "static/media/comfort-obi.jpeg": "/static/media/comfort-obi.efd56f9a945af18ad888.jpeg",
+    "static/media/founderphoto.jpeg": "/static/media/founderphoto.350cd90bcd4f0391b251.jpeg",
     "static/media/logonavbar.png": "/static/media/logonavbar.47f2be3c8bf5e598f668.png",
+    "static/media/ike-ogbaa.jpeg": "/static/media/ike-ogbaa.4ed60c9ba94d6bf7a51a.jpeg",
     "static/media/IMG_3338.jpg": "/static/media/IMG_3338.332f0fae27a9ba20288d.jpg",
     "static/media/outreach5.jpeg": "/static/media/outreach5.dec6ac1376592deb08d9.jpeg",
+    "static/media/doyin.jpeg": "/static/media/doyin.23225108f5e5c8b98dc2.jpeg",
     "static/media/outreach4.jpeg": "/static/media/outreach4.b5c2419f4101d4a402cc.jpeg",
     "static/media/maternal-and-child-health-.jpg": "/static/media/maternal-and-child-health-.6f0bedc3e54a19520c54.jpg",
     "static/media/logo3.png": "/static/media/logo3.b5c24de26681385529b0.png",
@@ -28,12 +32,12 @@
     "static/media/an4.jpg": "/static/media/an4.82512c69a8ba33a0dbe7.jpg",
     "static/media/logo.jpeg": "/static/media/logo.291ede29fee3dbb982e8.jpeg",
     "index.html": "/index.html",
-    "main.9644eab1.css.map": "/static/css/main.9644eab1.css.map",
-    "main.4b106f2f.js.map": "/static/js/main.4b106f2f.js.map",
-    "453.a0be1bc5.chunk.js.map": "/static/js/453.a0be1bc5.chunk.js.map"
+    "main.2af3a8b6.css.map": "/static/css/main.2af3a8b6.css.map",
+    "main.85f45052.js.map": "/static/js/main.85f45052.js.map",
+    "453.c721f293.chunk.js.map": "/static/js/453.c721f293.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.9644eab1.css",
-    "static/js/main.4b106f2f.js"
+    "static/css/main.2af3a8b6.css",
+    "static/js/main.85f45052.js"
   ]
 }

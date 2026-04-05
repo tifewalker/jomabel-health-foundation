@@ -191,8 +191,8 @@ const Footer = () => {
                 </div>
                 <div>
                   <p style={{ color: 'rgba(255,255,255,0.45)', fontSize: '10px', fontWeight: '700', letterSpacing: '0.08em', textTransform: 'uppercase', margin: '0 0 2px' }}>Email</p>
-                  <a href="mailto:claraogbaa2022@gmail.com" className="footer-link" style={{ fontSize: '12.5px' }}>
-                    claraogbaa2022@gmail.com
+                  <a href="mailto:info@jomabelhf.org" className="footer-link" style={{ fontSize: '12.5px' }}>
+                    info@jomabelhf.org
                   </a>
                 </div>
               </div>

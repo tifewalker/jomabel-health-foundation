@@ -2,20 +2,24 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import logo from '../../assests/images/logonavbar.png';
+import AccessibilityWidget from '../common/AccessibilityWidget';
 import TextToSpeech from './TextToSpeech';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  const menuItems = [
-    { id: 'home',     label: 'Home',          path: '/' },
-    { id: 'programs', label: 'Programs',      path: '/programs' },
-    { id: 'campaign', label: 'Campaign',      path: '/campaign' },
-    { id: 'about',    label: 'About Us',      path: '/about' },
-    { id: 'legacy',   label: 'Legacy Giving', path: '/legacy' },
-    { id: 'contact',  label: 'Contact Us',    path: '/contact' },
-  ];
+ const menuItems = [
+  { id: 'home',     label: 'Home',              path: '/' },
+  { id: 'about',    label: 'About',             path: '/about' },
+  { id: 'campus',   label: 'Campaign', path: '/campaign' },
+  { id: 'programs', label: 'Programs',          path: '/programs' },
+  { id: 'impact',   label: 'Impact',            path: '/impact' },
+  { id: 'roi',      label: 'ROI',               path: '/roi' },
+  { id: 'donate',   label: 'Donate',            path: '/donate' },
+  { id: 'blog',     label: 'Blog',              path: '/blog' },
+  { id: 'contact',  label: 'Contact',           path: '/contact' },
+];
 
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
@@ -24,7 +28,33 @@ const Navbar = () => {
 
   return (
     <>
+      {/* Skip to content link - for keyboard users */}
+      <a href="#main-content" className="skip-to-content">
+        Skip to main content
+      </a>
+
       <style>{`
+        /* Skip to content link styles */
+        .skip-to-content {
+          position: absolute;
+          top: -40px;
+          left: 0;
+          background: #1D8FD4;
+          color: white;
+          padding: 8px 16px;
+          text-decoration: none;
+          z-index: 10001;
+          transition: top 0.2s;
+          font-family: 'Inter', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          border-radius: 0 0 4px 0;
+        }
+        
+        .skip-to-content:focus {
+          top: 0;
+        }
+
         /* ── NAVBAR ROOT ── */
         .navbar-root {
           width: 100%;
@@ -132,7 +162,7 @@ const Navbar = () => {
           font-size: 14px;
           font-weight: 500;
           text-decoration: none;
-          color: #e7eaf0;
+          color: #ffffff;
           transition: all 0.2s;
           display: flex;
           align-items: center;
@@ -141,17 +171,19 @@ const Navbar = () => {
           border-bottom: 2px solid transparent;
         }
         .navbar-link:hover { 
-          color: #1D8FD4; 
+          color: #ffffff;
+          opacity: 0.85;
         }
         .navbar-link.active { 
-          color: #1D8FD4; 
-          border-bottom-color: #1D8FD4;
+          color: #ffffff;
+          border-bottom-color: #ffffff;
           font-weight: 600;
         }
         .navbar-link svg {
           width: 16px;
           height: 16px;
-          opacity: 0.6;
+          opacity: 0.8;
+          color: #ffffff;
         }
 
         /* ── MOBILE MENU ── */
@@ -291,6 +323,9 @@ const Navbar = () => {
       >
         <TextToSpeech />
       </div>
+
+      {/* Accessibility Widget - appears on every page */}
+      <AccessibilityWidget />
     </>
   );
 };

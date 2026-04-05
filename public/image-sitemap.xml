@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://jomabelhf.org/programs</loc>
+    <image:image>
+      <image:loc>https://jomabelhf.org/static/media/outreach2.jpeg</image:loc>
+      <image:title>JoMabel Healthcare Foundation Medical Outreach</image:title>
+      <image:caption>Free medical consultations and screenings in Ufuma, Anambra State</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://jomabelhf.org/static/media/outreach5.jpeg</image:loc>
+      <image:title>JoMabel Healthcare Foundation Community Health Screening</image:title>
+      <image:caption>Community members receiving health education and screenings</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://jomabelhf.org/static/media/maternal-and-child-health-.jpg</image:loc>
+      <image:title>JoMabel Healthcare Foundation Maternal and Child Health Initiative</image:title>
+      <image:caption>Mothers and children receiving essential healthcare services</image:caption>
+    </image:image>
+  </url>
+</urlset>

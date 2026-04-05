@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import CampaignBanner from '../components/sections/CampaignBanner';
+import { Calendar, CheckCircle, RefreshCw } from 'lucide-react';
 
 const donateStyles = `
   /* ─── HERO ─────────────────────────────────────── */
@@ -138,6 +139,66 @@ const donateStyles = `
     gap: 12px;
   }
 
+  /* ─── RECURRING DONATION TOGGLE ─────────────────── */
+  .recurring-toggle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--color-surface);
+    padding: 12px 20px;
+    border-radius: 60px;
+    margin: 16px 0 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .recurring-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 20px;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .recurring-option.active {
+    background: var(--color-green);
+    color: #ffffff;
+  }
+  .recurring-option.inactive {
+    background: #F3F4F6;
+    color: #4B5563;
+  }
+  .recurring-option:hover {
+    transform: translateY(-1px);
+  }
+  .monthly-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 16px;
+  }
+  .monthly-amount {
+    background: #F3F4F6;
+    border: 1px solid #E5E7EB;
+    border-radius: 40px;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .monthly-amount.active {
+    background: var(--color-green);
+    border-color: var(--color-green);
+    color: #ffffff;
+  }
+  .monthly-amount:hover {
+    transform: translateY(-2px);
+  }
+
   /* ─── CURRENCY SWITCHER ─────────────────────────── */
   .currency-btn {
     display: flex;
@@ -261,6 +322,9 @@ const donateStyles = `
     .community-grid { grid-template-columns: repeat(2, 1fr); }
     .leadership-grid { grid-template-columns: repeat(2, 1fr); }
     .major-gift-grid { grid-template-columns: 1fr; max-width: 400px; }
+    .recurring-toggle { flex-direction: column; width: 100%; }
+    .recurring-option { justify-content: center; }
+    .monthly-options { justify-content: center; }
   }
   @media (max-width: 480px) {
     .donate-hero-btns { flex-direction: column; }
@@ -390,7 +454,6 @@ const DonorLevels = () => {
         </p>
       </div>
 
-      {/* Tab switcher */}
       <div className="donor-tabs">
         {tabs.map(t => (
           <button key={t.id} className="donor-tab"
@@ -406,7 +469,6 @@ const DonorLevels = () => {
         ))}
       </div>
 
-      {/* Community Giving */}
       {tab === 'community' && (
         <div className="community-grid">
           {communityLevels.map((level, i) => (
@@ -432,7 +494,6 @@ const DonorLevels = () => {
         </div>
       )}
 
-      {/* Leadership Giving */}
       {tab === 'leadership' && (
         <div className="leadership-grid">
           {leadershipLevels.map((level, i) => (
@@ -464,7 +525,6 @@ const DonorLevels = () => {
         </div>
       )}
 
-      {/* Major Gift */}
       {tab === 'major' && (
         <div>
           <div style={{ textAlign: 'center', marginBottom: '28px', maxWidth: '600px', margin: '0 auto 28px' }}>
@@ -501,9 +561,11 @@ const DonorLevels = () => {
   );
 };
 
-// ─── DONATION FORM ────────────────────────────────────────────────────────────
+// ─── DONATION FORM WITH RECURRING TOGGLE ──────────────────────────────────────
 const usdAmounts = [25, 50, 100, 250, 500, 1000];
 const ngnAmounts = [5000, 10000, 25000, 50000, 100000, 250000];
+const usdMonthlyAmounts = [10, 25, 50, 100, 250, 500];
+const ngnMonthlyAmounts = [2000, 5000, 10000, 25000, 50000, 100000];
 
 const impacts = {
   usd: [
@@ -526,18 +588,53 @@ const DonationForm = () => {
   const [custom, setCustom] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [isRecurring, setIsRecurring] = useState(false);
+  const [selectedMonthly, setSelectedMonthly] = useState<number | null>(25);
 
   const symbol = currency === 'usd' ? '$' : '₦';
-  const amounts = currency === 'usd' ? usdAmounts : ngnAmounts;
+  const amounts = isRecurring 
+    ? (currency === 'usd' ? usdMonthlyAmounts : ngnMonthlyAmounts)
+    : (currency === 'usd' ? usdAmounts : ngnAmounts);
 
   const handleCurrencySwitch = (c: 'usd' | 'ngn') => {
     setCurrency(c);
-    setSelected(c === 'usd' ? 50 : 10000);
+    const defaultAmount = c === 'usd' ? (isRecurring ? 25 : 50) : (isRecurring ? 10000 : 10000);
+    setSelected(defaultAmount);
+    setSelectedMonthly(c === 'usd' ? 25 : 10000);
+    setCustom('');
+  };
+
+  const handleRecurringToggle = (recurring: boolean) => {
+    setIsRecurring(recurring);
+    if (recurring) {
+      const defaultMonthly = currency === 'usd' ? 25 : 10000;
+      setSelectedMonthly(defaultMonthly);
+      setSelected(null);
+    } else {
+      const defaultOneTime = currency === 'usd' ? 50 : 10000;
+      setSelected(defaultOneTime);
+    }
+    setCustom('');
+  };
+
+  const handleMonthlySelect = (amt: number) => {
+    setSelectedMonthly(amt);
+    setSelected(null);
+    setCustom('');
+  };
+
+  const handleOneTimeSelect = (amt: number) => {
+    setSelected(amt);
+    setSelectedMonthly(null);
     setCustom('');
   };
 
   const formatAmount = (amt: number) =>
     currency === 'usd' ? `$${amt.toLocaleString()}` : `₦${amt.toLocaleString()}`;
+
+  const displayAmount = isRecurring 
+    ? (selectedMonthly ? formatAmount(selectedMonthly) : '')
+    : (selected ? formatAmount(selected) : '');
 
   return (
     <section style={{ backgroundColor: '#ffffff', fontFamily: 'var(--font-body)' }}>
@@ -568,6 +665,8 @@ const DonationForm = () => {
 
         <div className="donation-right">
           <h3 style={{ fontSize: 'clamp(15px, 2.5vw, 18px)', fontWeight: '700', color: '#111827', margin: 0 }}>Choose an amount to give</h3>
+          
+          {/* Currency Switcher */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
             <span style={{ fontSize: '13px', color: '#6b7280', fontWeight: '500' }}>Currency:</span>
             <div style={{ display: 'flex', gap: '10px' }}>
@@ -580,20 +679,59 @@ const DonationForm = () => {
               ))}
             </div>
           </div>
-          <div className="amount-grid">
-            {amounts.map((amt) => (
-              <button key={amt} onClick={() => { setSelected(amt); setCustom(''); }}
-                style={{ padding: '14px 8px', borderRadius: '8px', cursor: 'pointer', border: selected === amt ? '2px solid var(--color-navy)' : '1.5px solid #e5e7eb', backgroundColor: selected === amt ? 'var(--color-navy-light)' : '#ffffff', color: selected === amt ? 'var(--color-navy)' : '#374151', fontSize: 'clamp(12px, 1.8vw, 15px)', fontWeight: '700', transition: 'all 0.15s', fontFamily: 'inherit' }}>
-                {formatAmount(amt)}
-              </button>
-            ))}
+
+          {/* Recurring Donation Toggle */}
+          <div className="recurring-toggle">
+            <div 
+              className={`recurring-option ${!isRecurring ? 'active' : 'inactive'}`}
+              onClick={() => handleRecurringToggle(false)}
+            >
+              <span>💝</span>
+              One-Time Gift
+            </div>
+            <div 
+              className={`recurring-option ${isRecurring ? 'active' : 'inactive'}`}
+              onClick={() => handleRecurringToggle(true)}
+            >
+              <RefreshCw size={14} />
+              Monthly Donation
+            </div>
           </div>
+
+          {/* One-Time Amounts */}
+          {!isRecurring && (
+            <div className="amount-grid">
+              {amounts.map((amt) => (
+                <button key={amt} onClick={() => handleOneTimeSelect(amt)}
+                  style={{ padding: '14px 8px', borderRadius: '8px', cursor: 'pointer', border: selected === amt ? '2px solid var(--color-navy)' : '1.5px solid #e5e7eb', backgroundColor: selected === amt ? 'var(--color-navy-light)' : '#ffffff', color: selected === amt ? 'var(--color-navy)' : '#374151', fontSize: 'clamp(12px, 1.8vw, 15px)', fontWeight: '700', transition: 'all 0.15s', fontFamily: 'inherit' }}>
+                  {formatAmount(amt)}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Monthly Amounts */}
+          {isRecurring && (
+            <div className="monthly-options">
+              {amounts.map((amt) => (
+                <button key={amt} onClick={() => handleMonthlySelect(amt)}
+                  className={`monthly-amount ${selectedMonthly === amt ? 'active' : ''}`}
+                  style={{ background: selectedMonthly === amt ? 'var(--color-green)' : '#F3F4F6', borderColor: selectedMonthly === amt ? 'var(--color-green)' : '#E5E7EB', color: selectedMonthly === amt ? '#ffffff' : '#4B5563' }}>
+                  {formatAmount(amt)}/month
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Custom Amount */}
           <div style={{ position: 'relative' }}>
             <span style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#9ca3af', fontSize: '14px', fontWeight: '600', pointerEvents: 'none' }}>{symbol}</span>
-            <input type="number" placeholder="Enter a custom amount" value={custom}
-              onChange={e => { setCustom(e.target.value); setSelected(null); }}
+            <input type="number" placeholder={`Enter a custom ${isRecurring ? 'monthly ' : ''}amount`} value={custom}
+              onChange={e => { setCustom(e.target.value); setSelected(null); setSelectedMonthly(null); }}
               style={{ width: '100%', padding: '13px 16px 13px 28px', border: custom ? '1.5px solid var(--color-navy)' : '1.5px solid #e5e7eb', borderRadius: '8px', fontSize: '14px', color: '#111827', outline: 'none', boxSizing: 'border-box' as const, fontFamily: 'inherit' }} />
           </div>
+
+          {/* Donor Info */}
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
             <div>
               <label style={labelSt}>Full Name</label>
@@ -610,6 +748,17 @@ const DonationForm = () => {
               </div>
             </div>
           </div>
+
+          {/* Summary */}
+          {displayAmount && (
+            <div style={{ background: '#F0FDF4', border: '1px solid #BBF7D0', borderRadius: '10px', padding: '12px 16px' }}>
+              <p style={{ fontSize: '13px', color: '#166534', margin: 0, display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <CheckCircle size={16} />
+                You are donating <strong>{displayAmount}</strong> {isRecurring ? 'monthly' : 'as a one-time gift'} to JoMabel Healthcare Foundation.
+              </p>
+            </div>
+          )}
+
           <button
             onClick={() => { const el = document.getElementById('payment-section'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }}
             style={{ backgroundColor: 'var(--color-navy)', color: '#ffffff', border: 'none', borderRadius: '10px', padding: '16px', fontSize: '15px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', fontFamily: 'inherit', transition: 'background 0.2s' }}
@@ -639,7 +788,6 @@ const PaymentMethods = () => (
         </p>
       </div>
       <div className="payment-grid">
-        {/* PayPal */}
         <div className="payment-card payment-card-usa">
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <div style={{ width: '46px', height: '46px', borderRadius: '12px', background: '#003087', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -663,7 +811,6 @@ const PaymentMethods = () => (
           </div>
           <p style={{ fontSize: '11.5px', color: 'var(--color-text-muted)', margin: 0 }}>Account name: <strong style={{ color: 'var(--color-navy)' }}>JoMabel Healthcare Foundation</strong></p>
         </div>
-        {/* Zelle */}
         <div className="payment-card payment-card-usa">
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <div style={{ width: '46px', height: '46px', borderRadius: '12px', background: '#6d1ed4', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -687,7 +834,6 @@ const PaymentMethods = () => (
           </div>
           <p style={{ fontSize: '11.5px', color: 'var(--color-text-muted)', margin: 0 }}>Account name: <strong style={{ color: 'var(--color-navy)' }}>JoMabel Healthcare Foundation</strong></p>
         </div>
-        {/* Cash App */}
         <div className="payment-card payment-card-usa">
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <div style={{ width: '46px', height: '46px', borderRadius: '12px', background: '#00d632', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -711,7 +857,6 @@ const PaymentMethods = () => (
           </div>
           <p style={{ fontSize: '11.5px', color: 'var(--color-text-muted)', margin: 0 }}>Account name: <strong style={{ color: 'var(--color-navy)' }}>JoMabel Healthcare Foundation</strong></p>
         </div>
-        {/* First Bank Nigeria */}
         <div className="payment-card payment-card-nigeria">
           <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
             <div style={{ width: '46px', height: '46px', borderRadius: '12px', background: '#008751', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -787,10 +932,10 @@ const OtherWays = () => (
 // ─── FAQ ──────────────────────────────────────────────────────────────────────
 const faqs = [
   { q: 'Is my donation tax-deductible?', a: 'Yes. JoMabel Healthcare Foundation USA INC. is a registered 501(c)(3) nonprofit. Donations are tax-deductible to the extent allowed by law. You will receive a receipt upon confirmation.' },
+  { q: 'Can I set up a recurring monthly donation?', a: 'Yes! Simply select the "Monthly Donation" option and choose your preferred monthly amount. Your support will provide sustainable funding for our programs.' },
   { q: 'How will my donation be used?', a: 'All donations go directly toward facility construction, medical equipment, and community health programs in Ufuma, Anambra State, Nigeria. We are committed to full transparency in the stewardship of your gift.' },
   { q: 'How do I confirm my transfer was received?', a: 'After completing your transfer, please email claraogbaa2022@gmail.com with your name, donation amount, and payment method. We will acknowledge your gift and send a formal receipt within 2–3 business days.' },
   { q: 'Can I donate in honor or memory of someone?', a: 'Absolutely. Please include a tribute note in your payment reference or email us with the details. We will acknowledge your memorial or honorary gift and where appropriate notify the family.' },
-  { q: 'Can I set up a recurring gift?', a: 'Yes. Please email us at claraogbaa2022@gmail.com to arrange a recurring giving plan. We will provide payment details and a giving schedule that works for you.' },
   { q: 'What if I have more questions?', a: 'Please reach out to Dr. Clara Ada Ogbaa directly at claraogbaa2022@gmail.com or by phone at +1 (512) 508-0277. We are always happy to speak personally with our donors.' },
 ];
 

@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, Heart, Building2, Users } from 'lucide-react';
 import outreach4 from '../../assests/images/outreach4.jpeg';
 
 const CampaignBanner = () => {
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
+  const [animatedRaised, setAnimatedRaised] = useState(0);
+  const [animatedPercentage, setAnimatedPercentage] = useState(0);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  
   const raised = 7500000;
   const goal = 10000000;
   const percentage = Math.round((raised / goal) * 100);
@@ -12,8 +17,56 @@ const CampaignBanner = () => {
   const formatNaira = (amount: number): string =>
     '₦' + amount.toLocaleString('en-NG');
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Animate numbers when section becomes visible
+  useEffect(() => {
+    if (isVisible) {
+      // Animate raised amount
+      let startRaised = 0;
+      const raisedInterval = setInterval(() => {
+        if (startRaised < raised) {
+          startRaised += 100000;
+          setAnimatedRaised(prev => Math.min(prev + 100000, raised));
+        } else {
+          clearInterval(raisedInterval);
+        }
+      }, 20);
+
+      // Animate percentage
+      let startPercent = 0;
+      const percentInterval = setInterval(() => {
+        if (startPercent < percentage) {
+          startPercent++;
+          setAnimatedPercentage(prev => Math.min(prev + 1, percentage));
+        } else {
+          clearInterval(percentInterval);
+        }
+      }, 25);
+    }
+  }, [isVisible, raised, percentage]);
+
   return (
-    <div className="campaign-banner">
+    <div 
+      ref={sectionRef} 
+      className={`campaign-banner ${isVisible ? 'visible' : ''}`}
+    >
       <style>{`
         .campaign-banner {
           position: relative;
@@ -52,7 +105,7 @@ const CampaignBanner = () => {
           text-align: center;
         }
         
-        /* Tag */
+        /* Tag Animation */
         .campaign-tag {
           display: inline-block;
           font-size: 12px;
@@ -65,9 +118,12 @@ const CampaignBanner = () => {
           padding: 6px 16px;
           border-radius: 40px;
           margin-bottom: 24px;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
         
-        /* Title */
+        /* Title Animation */
         .campaign-title {
           font-family: var(--font-heading);
           font-size: clamp(32px, 5vw, 48px);
@@ -75,15 +131,30 @@ const CampaignBanner = () => {
           color: #ffffff;
           line-height: 1.2;
           margin-bottom: 20px;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+          transition-delay: 0.1s;
         }
         
-        /* Description */
+        /* Description Animation */
         .campaign-description {
           font-size: 18px;
           color: rgba(255,255,255,0.85);
           line-height: 1.6;
           max-width: 600px;
           margin: 0 auto 32px auto;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+          transition-delay: 0.2s;
+        }
+        
+        .campaign-banner.visible .campaign-tag,
+        .campaign-banner.visible .campaign-title,
+        .campaign-banner.visible .campaign-description {
+          opacity: 1;
+          transform: translateY(0);
         }
         
         /* Progress Card */
@@ -93,7 +164,17 @@ const CampaignBanner = () => {
           padding: 28px 32px;
           margin-bottom: 32px;
           box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+          transition-delay: 0.3s;
         }
+        
+        .campaign-banner.visible .progress-card {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        
         .progress-stats {
           display: flex;
           justify-content: space-between;
@@ -130,7 +211,12 @@ const CampaignBanner = () => {
           height: 100%;
           background: linear-gradient(90deg, #1D8FD4 0%, #16A34A 100%);
           border-radius: 100px;
-          transition: width 1s ease;
+          transition: width 1s ease-out;
+          width: 0%;
+        }
+        
+        .campaign-banner.visible .progress-bar-fill {
+          width: ${percentage}%;
         }
         
         /* Mini Stats Row */
@@ -146,7 +232,27 @@ const CampaignBanner = () => {
           align-items: center;
           gap: 10px;
           color: rgba(255,255,255,0.9);
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
+        
+        .campaign-banner.visible .mini-stat:nth-child(1) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.4s;
+        }
+        .campaign-banner.visible .mini-stat:nth-child(2) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.5s;
+        }
+        .campaign-banner.visible .mini-stat:nth-child(3) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.6s;
+        }
+        
         .mini-stat svg {
           width: 20px;
           height: 20px;
@@ -163,7 +269,17 @@ const CampaignBanner = () => {
           gap: 16px;
           justify-content: center;
           flex-wrap: wrap;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+          transition-delay: 0.7s;
         }
+        
+        .campaign-banner.visible .campaign-buttons {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        
         .btn-primary {
           background: #16A34A;
           color: #ffffff;
@@ -259,12 +375,12 @@ const CampaignBanner = () => {
           Anambra State — bringing dignified healthcare to thousands of families.
         </p>
 
-        {/* Progress Card */}
+        {/* Progress Card with Animated Numbers */}
         <div className="progress-card">
           <div className="progress-stats">
-            <div className="progress-percentage">{percentage}% Complete</div>
+            <div className="progress-percentage">{animatedPercentage}% Complete</div>
             <div className="progress-amounts">
-              <span className="progress-raised">{formatNaira(raised)}</span>
+              <span className="progress-raised">{formatNaira(animatedRaised)}</span>
               <span style={{ color: '#9CA3AF' }}> raised of </span>
               <span className="progress-goal">{formatNaira(goal)}</span>
               <span style={{ color: '#9CA3AF' }}> goal</span>
@@ -273,7 +389,7 @@ const CampaignBanner = () => {
           <div className="progress-bar">
             <div 
               className="progress-bar-fill" 
-              style={{ width: `${percentage}%` }}
+              style={{ width: `${animatedPercentage}%` }}
             />
           </div>
         </div>

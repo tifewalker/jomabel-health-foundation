@@ -120,7 +120,7 @@ const FounderStory = () => {
             </h2>
             <p className="founder-text">
               Dr. Clara Ada Ogbaa founded JoMabel Healthcare Foundation based on the belief 
-              that every person deserves access to quality healthcare — regardless of where 
+              that every person deserves access to quality healthcare regardless of where 
               they are born or what they can afford. A two-time cancer survivor and kidney 
               transplant recipient, Clara experienced firsthand the life-saving power of 
               quality medical care. She returned to her hometown of Ufuma, Nigeria, and 
@@ -129,7 +129,7 @@ const FounderStory = () => {
             <p className="founder-text">
               Today, Clara's vision is becoming reality. She cares for the sick, trains 
               local healthcare workers, and is transforming healthcare in rural southeastern 
-              Nigeria — saving lives and building a movement toward health equity. We carry 
+              Nigeria saving lives and building a movement toward health equity. We carry 
               forward her legacy and vision.
             </p>
             <button className="founder-btn" onClick={() => navigate('/about')}>

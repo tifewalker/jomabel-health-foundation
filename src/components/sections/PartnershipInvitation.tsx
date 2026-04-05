@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Heart, 
@@ -61,9 +61,32 @@ const partnerTypes = [
 
 const PartnershipInvitation = () => {
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className="partnership-page">
+    <div 
+      ref={sectionRef} 
+      className={`partnership-page ${isVisible ? 'visible' : ''}`}
+    >
       <style>{`
         .partnership-page {
           font-family: var(--font-body);
@@ -136,6 +159,9 @@ const PartnershipInvitation = () => {
           text-transform: uppercase;
           color: #1D8FD4;
           margin-bottom: 16px;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
         .ways-headline {
           font-family: var(--font-heading);
@@ -144,6 +170,10 @@ const PartnershipInvitation = () => {
           color: #111827;
           line-height: 1.2;
           margin-bottom: 20px;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+          transition-delay: 0.1s;
         }
         .ways-description {
           font-size: 18px;
@@ -151,6 +181,17 @@ const PartnershipInvitation = () => {
           max-width: 700px;
           margin: 0 auto;
           line-height: 1.6;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+          transition-delay: 0.2s;
+        }
+        
+        .partnership-page.visible .ways-label,
+        .partnership-page.visible .ways-headline,
+        .partnership-page.visible .ways-description {
+          opacity: 1;
+          transform: translateY(0);
         }
         
         /* Partner Cards Grid */
@@ -166,11 +207,37 @@ const PartnershipInvitation = () => {
           transition: all 0.3s ease;
           text-align: center;
           border: 1px solid #F0F0F0;
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
         }
+        
+        .partnership-page.visible .partner-card:nth-child(1) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.3s;
+        }
+        .partnership-page.visible .partner-card:nth-child(2) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.4s;
+        }
+        .partnership-page.visible .partner-card:nth-child(3) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.5s;
+        }
+        .partnership-page.visible .partner-card:nth-child(4) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.6s;
+        }
+        
         .partner-card:hover {
-          transform: translateY(-4px);
+          transform: translateY(-6px);
           box-shadow: 0 12px 32px rgba(0,0,0,0.1);
         }
+        
         .partner-icon {
           width: 64px;
           height: 64px;
@@ -179,12 +246,19 @@ const PartnershipInvitation = () => {
           display: flex;
           align-items: center;
           justify-content: center;
+          transition: transform 0.3s ease;
         }
+        
+        .partner-card:hover .partner-icon {
+          transform: scale(1.05);
+        }
+        
         .partner-icon svg {
           width: 32px;
           height: 32px;
           stroke-width: 1.5;
         }
+        
         .partner-title {
           font-family: var(--font-heading);
           font-size: 18px;
@@ -192,12 +266,14 @@ const PartnershipInvitation = () => {
           color: #111827;
           margin-bottom: 12px;
         }
+        
         .partner-desc {
           font-size: 14px;
           color: #6B7280;
           line-height: 1.6;
           margin-bottom: 24px;
         }
+        
         .partner-btn {
           background: none;
           border: none;
@@ -233,7 +309,27 @@ const PartnershipInvitation = () => {
         }
         .impact-number {
           text-align: center;
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
+        
+        .partnership-page.visible .impact-number:nth-child(1) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.7s;
+        }
+        .partnership-page.visible .impact-number:nth-child(2) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.8s;
+        }
+        .partnership-page.visible .impact-number:nth-child(3) {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.9s;
+        }
+        
         .impact-number-value {
           font-family: var(--font-heading);
           font-size: 44px;
@@ -257,7 +353,17 @@ const PartnershipInvitation = () => {
           align-items: center;
           gap: 40px;
           flex-wrap: wrap;
+          opacity: 0;
+          transform: translateY(30px);
+          transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+          transition-delay: 1s;
         }
+        
+        .partnership-page.visible .cta-banner {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        
         .cta-banner-content {
           flex: 1;
         }
@@ -361,7 +467,6 @@ const PartnershipInvitation = () => {
         }
       `}</style>
 
-
       {/* Ways to Give Section */}
       <div className="ways-section">
         <div className="ways-container">
@@ -369,7 +474,7 @@ const PartnershipInvitation = () => {
             <div className="ways-label">Ways to Give</div>
             <h2 className="ways-headline">There's a Place for You</h2>
             <p className="ways-description">
-              JoMabel Healthcare Foundation is actively seeking partners at every level 
+              JoMabel Healthcare Foundation is actively seeking partners at every level — 
               from individual donors to global institutions. There is a role here for you.
             </p>
           </div>
@@ -427,8 +532,8 @@ const PartnershipInvitation = () => {
         <div className="cta-banner-content">
           <h3 className="cta-banner-title">Ready to Make History With Us?</h3>
           <p className="cta-banner-text">
-            Whether you give $100 or $100,000 whether you're an individual, a foundation, 
-            or a corporation JoMabel Healthcare Foundation has a place for your partnership.
+            Whether you give $100 or $100,000 — whether you're an individual, a foundation, 
+            or a corporation — JoMabel Healthcare Foundation has a place for your partnership.
           </p>
         </div>
         <div className="cta-banner-buttons">

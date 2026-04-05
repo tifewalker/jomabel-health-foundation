@@ -2,8 +2,16 @@
 User-agent: *
 Allow: /
 
-# Disallow admin or private paths (if any)
-# Disallow: /admin/
-
 # Sitemap location
-Sitemap: https://jomabel.org/sitemap.xml
+Sitemap: https://jomabelhf.org/sitemap.xml
+
+# Crawl delay for slower servers
+Crawl-delay: 5
+
+# Allow Google Images to crawl
+User-agent: Googlebot-Image
+Allow: /
+
+# Allow Google to crawl all images
+User-agent: Googlebot
+Allow: /assests/images/
