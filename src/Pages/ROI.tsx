@@ -9,43 +9,26 @@ import heroImage from '../assests/images/outreach5.jpeg';
 
 const ROI = () => {
   const navigate = useNavigate();
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
-  
-  // Animated numbers
   const [animatedTotal, setAnimatedTotal] = useState(0);
+  const hasAnimated = useRef(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.3 }
-    );
+    // Start animation immediately when page loads
+    const targetTotal = 547500;
+    let currentTotal = 0;
+    
+    const totalInterval = setInterval(() => {
+      if (currentTotal < targetTotal) {
+        currentTotal += 5000;
+        if (currentTotal > targetTotal) currentTotal = targetTotal;
+        setAnimatedTotal(currentTotal);
+      } else {
+        clearInterval(totalInterval);
+      }
+    }, 20);
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
+    return () => clearInterval(totalInterval);
   }, []);
-
-  useEffect(() => {
-    if (isVisible) {
-      let startTotal = 0;
-      const totalInterval = setInterval(() => {
-        if (startTotal < 547500) {
-          startTotal += 5000;
-          setAnimatedTotal(prev => Math.min(prev + 5000, 547500));
-        } else {
-          clearInterval(totalInterval);
-        }
-      }, 15);
-    }
-  }, [isVisible]);
 
   const impactItems = [
     { label: 'Reduced travel cost', value: '$125,000', icon: DollarSign },
@@ -241,6 +224,11 @@ const ROI = () => {
           border-radius: 24px;
           padding: 32px;
           text-align: center;
+          transition: all 0.3s ease;
+        }
+        .total-impact:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 24px rgba(0,0,0,0.1);
         }
         .total-label {
           font-size: 14px;

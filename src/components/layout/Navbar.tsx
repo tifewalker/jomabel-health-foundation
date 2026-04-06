@@ -7,24 +7,73 @@ import TextToSpeech from './TextToSpeech';
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const location = useLocation();
 
- const menuItems = [
-  { id: 'home',     label: 'Home',              path: '/' },
-  { id: 'about',    label: 'About',             path: '/about' },
-  { id: 'campus',   label: 'Campaign', path: '/campaign' },
-  { id: 'programs', label: 'Programs',          path: '/programs' },
-  { id: 'impact',   label: 'Impact',            path: '/impact' },
-  { id: 'roi',      label: 'ROI',               path: '/roi' },
-  { id: 'donate',   label: 'Donate',            path: '/donate' },
-  { id: 'blog',     label: 'Blog',              path: '/blog' },
-  { id: 'contact',  label: 'Contact',           path: '/contact' },
+ // Dropdown menu structure
+const menuGroups = [
+  {
+    id: 'work-group',
+    label: 'Our Work',
+    items: [
+      { id: 'programs', label: 'Programs', path: '/programs' },
+      { id: 'campaign', label: 'Campaign', path: '/campaign' },
+      { id: 'impact', label: 'Impact', path: '/impact' },
+      { id: 'roi', label: 'ROI', path: '/roi' },
+    ]
+  },
+  {
+    id: 'give-group',
+    label: 'Give',
+    items: [
+      { id: 'donate', label: 'Donate Now', path: '/donate' },
+      { id: 'legacy', label: 'Legacy Giving', path: '/legacy' },
+    ]
+  },
+  {
+    id: 'connect-group',
+    label: 'Connect',
+    items: [
+      { id: 'blog', label: 'Blog', path: '/blog' },
+      { id: 'contact', label: 'Contact', path: '/contact' },
+    ]
+  }
+];
+  // Simple items (no dropdown)
+  const simpleItems = [
+  { id: 'home', label: 'Home', path: '/' },
+  { id: 'about', label: 'About', path: '/about' },
 ];
 
   const isActive = (path: string) => {
     if (path === '/') return location.pathname === '/';
+    if (path.includes('#')) {
+      const mainPath = path.split('#')[0];
+      return location.pathname === mainPath;
+    }
     return location.pathname.startsWith(path);
   };
+
+  const isDropdownItemActive = (items: { path: string }[]) => {
+    return items.some(item => {
+      if (item.path.includes('#')) {
+        const mainPath = item.path.split('#')[0];
+        return location.pathname === mainPath;
+      }
+      return location.pathname.startsWith(item.path);
+    });
+  };
+
+  const handleDropdownToggle = (dropdownId: string) => {
+    setOpenDropdown(openDropdown === dropdownId ? null : dropdownId);
+  };
+
+  // Close dropdown when clicking outside (for desktop)
+  React.useEffect(() => {
+    const handleClickOutside = () => setOpenDropdown(null);
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
 
   return (
     <>
@@ -157,6 +206,77 @@ const Navbar = () => {
           padding: 0;
           height: 52px;
         }
+        
+        /* Dropdown Styles */
+        .dropdown {
+          position: relative;
+        }
+        .dropdown-trigger {
+          font-family: 'Inter', sans-serif;
+          font-size: 14px;
+          font-weight: 500;
+          text-decoration: none;
+          color: #ffffff;
+          transition: all 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          padding: 8px 0;
+          border-bottom: 2px solid transparent;
+          cursor: pointer;
+          background: none;
+          border: none;
+        }
+        .dropdown-trigger:hover {
+          opacity: 0.85;
+        }
+        .dropdown-trigger.active {
+          border-bottom-color: #ffffff;
+          font-weight: 600;
+        }
+        .dropdown-trigger svg {
+          width: 16px;
+          height: 16px;
+          transition: transform 0.2s;
+        }
+        .dropdown-trigger.open svg {
+          transform: rotate(180deg);
+        }
+        .dropdown-menu {
+          position: absolute;
+          top: 100%;
+          left: 0;
+          background: #ffffff;
+          border-radius: 8px;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+          min-width: 200px;
+          overflow: hidden;
+          z-index: 100;
+          margin-top: 4px;
+        }
+        .dropdown-item {
+          display: block;
+          padding: 12px 20px;
+          font-size: 14px;
+          font-weight: 500;
+          color: #4B5563;
+          text-decoration: none;
+          transition: all 0.2s;
+          border-left: 3px solid transparent;
+        }
+        .dropdown-item:hover {
+          background: #F0F9FF;
+          color: #1D8FD4;
+          border-left-color: #1D8FD4;
+        }
+        .dropdown-item.active {
+          background: #EBF5FB;
+          color: #1D8FD4;
+          font-weight: 600;
+          border-left-color: #1D8FD4;
+        }
+        
+        /* Simple Link Styles */
         .navbar-link {
           font-family: 'Inter', sans-serif;
           font-size: 14px;
@@ -179,26 +299,25 @@ const Navbar = () => {
           border-bottom-color: #ffffff;
           font-weight: 600;
         }
-        .navbar-link svg {
-          width: 16px;
-          height: 16px;
-          opacity: 0.8;
-          color: #ffffff;
-        }
 
-        /* ── MOBILE MENU ── */
+        /* ── MOBILE MENU (with dropdowns) ── */
         .navbar-mobile {
           background: #ffffff;
           border-top: 1px solid #E5E7EB;
           padding: 16px 0 20px;
+          max-height: 80vh;
+          overflow-y: auto;
         }
         .navbar-mobile-links {
           display: flex;
           flex-direction: column;
         }
+        .navbar-mobile-item {
+          border-bottom: 1px solid #F3F4F6;
+        }
         .navbar-mobile-link {
           display: block;
-          padding: 12px clamp(20px, 4vw, 48px);
+          padding: 14px clamp(20px, 4vw, 48px);
           font-size: 15px;
           font-weight: 500;
           color: #4B5563;
@@ -207,6 +326,43 @@ const Navbar = () => {
         }
         .navbar-mobile-link:hover,
         .navbar-mobile-link.active {
+          color: #1D8FD4;
+          background: #F0F9FF;
+          border-left-color: #1D8FD4;
+        }
+        .navbar-mobile-dropdown-trigger {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 14px clamp(20px, 4vw, 48px);
+          font-size: 15px;
+          font-weight: 500;
+          color: #4B5563;
+          cursor: pointer;
+          background: none;
+          border: none;
+          width: 100%;
+          text-align: left;
+        }
+        .navbar-mobile-dropdown-trigger.active {
+          color: #1D8FD4;
+          background: #F0F9FF;
+        }
+        .navbar-mobile-submenu {
+          background: #F9FAFB;
+          padding-left: 20px;
+        }
+        .navbar-mobile-subitem {
+          display: block;
+          padding: 12px clamp(20px, 4vw, 48px) 12px calc(clamp(20px, 4vw, 48px) + 20px);
+          font-size: 14px;
+          font-weight: 500;
+          color: #6B7280;
+          text-decoration: none;
+          border-left: 3px solid transparent;
+        }
+        .navbar-mobile-subitem:hover,
+        .navbar-mobile-subitem.active {
           color: #1D8FD4;
           background: #F0F9FF;
           border-left-color: #1D8FD4;
@@ -270,21 +426,49 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* BOTTOM ROW: Navigation Menu (Different Background) */}
+        {/* BOTTOM ROW: Navigation Menu with Dropdowns */}
         <div className="navbar-bottom">
           <div className="navbar-bottom-inner">
             <ul className="navbar-links">
-              {menuItems.map((item) => (
+              {/* Simple Items (Home) */}
+              {simpleItems.map((item) => (
                 <li key={item.id}>
                   <Link
                     to={item.path}
                     className={`navbar-link${isActive(item.path) ? ' active' : ''}`}
                   >
                     {item.label}
-                    {item.id !== 'home' && item.id !== 'contact' && (
-                      <ChevronDown size={14} />
-                    )}
                   </Link>
+                </li>
+              ))}
+              
+              {/* Dropdown Groups */}
+              {menuGroups.map((group) => (
+                <li key={group.id} className="dropdown">
+                  <button
+                    className={`dropdown-trigger ${isDropdownItemActive(group.items) ? 'active' : ''} ${openDropdown === group.id ? 'open' : ''}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDropdownToggle(group.id);
+                    }}
+                  >
+                    {group.label}
+                    <ChevronDown size={14} />
+                  </button>
+                  {openDropdown === group.id && (
+                    <div className="dropdown-menu">
+                      {group.items.map((item) => (
+                        <Link
+                          key={item.id}
+                          to={item.path}
+                          className={`dropdown-item ${isActive(item.path) ? 'active' : ''}`}
+                          onClick={() => setOpenDropdown(null)}
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
@@ -295,16 +479,46 @@ const Navbar = () => {
         {mobileMenuOpen && (
           <div className="navbar-mobile">
             <div className="navbar-mobile-links">
-              {menuItems.map((item) => (
+              {/* Home */}
+              <div className="navbar-mobile-item">
                 <Link
-                  key={item.id}
-                  to={item.path}
-                  className={`navbar-mobile-link${isActive(item.path) ? ' active' : ''}`}
+                  to="/"
+                  className={`navbar-mobile-link${isActive('/') ? ' active' : ''}`}
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  {item.label}
+                  Home
                 </Link>
-              ))}
+              </div>
+              
+              {/* Mobile Dropdowns */}
+              {menuGroups.map((group) => {
+                const [isMobileOpen, setIsMobileOpen] = useState(false);
+                return (
+                  <div key={group.id} className="navbar-mobile-item">
+                    <button
+                      className={`navbar-mobile-dropdown-trigger ${isMobileOpen ? 'active' : ''}`}
+                      onClick={() => setIsMobileOpen(!isMobileOpen)}
+                    >
+                      {group.label}
+                      <ChevronDown size={16} style={{ transform: isMobileOpen ? 'rotate(180deg)' : 'rotate(0)' }} />
+                    </button>
+                    {isMobileOpen && (
+                      <div className="navbar-mobile-submenu">
+                        {group.items.map((item) => (
+                          <Link
+                            key={item.id}
+                            to={item.path}
+                            className={`navbar-mobile-subitem ${isActive(item.path) ? 'active' : ''}`}
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
             <Link to="/donate" className="navbar-mobile-donate" onClick={() => setMobileMenuOpen(false)}>
               Donate Now
